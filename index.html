@@ -68,6 +68,54 @@
         p {
             line-height: 1.6;
         }
+
+        img {
+            place-items: center;
+            width: 1000px;
+            height: auto; /* Keeps the aspect ratio intact */
+        }
+                .team {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .team-member {
+            flex: 1 1 calc(33.333% - 20px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .team-member img {
+            max-width: 100px;
+            height: auto;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+        }
+        .team-member .intro {
+            max-width: 220px;
+        }
+        .icons-and-widget {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .icons img {
+            max-width: 120px;
+            max-height: 100px;
+            width: auto;
+
+            height: auto;
+        }
     </style>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -97,34 +145,69 @@
         <section id="education">
             <h2>Education</h2>
             <ul>
-                <li>2015-2019 <b>B.E. in Computer Engineering</b>, Jinling Institute of Technology, Nanjing, China</li>
-                <li>2019-2021 <b>M.S. in Computer Science</b>, Georgetown University, Washington, DC</li>
                 <li>2021-present <b>Ph.D. in Computer Science</b>, Vanderbilt University, Nashville, TN</li>
+                <li>2019-2021 <b>M.S. in Computer Science</b>, Georgetown University, Washington, DC</li>
+                <li>2015-2019 <b>B.E. in Computer Engineering</b>, Jinling Institute of Technology, Nanjing, China</li>
+
             </ul>
         </section>
-                <section id="news">
+        <section id="news">
             <h2>News</h2>
             <ul>
-                <li>[May 2024] We are invited to TN State Gov. of Edu.'s K-12 Event at Peabody!</li>
-                <li>[Apr. 2024] SimER prototype first participates in real-world training!</li>
-                <li>[Mar. 2024] We win Vanderbilt Generative AI Seed Grant!</li>
-                <li>[Feb. 2024] We are at AAAI 2024 in Vancouver, CA.</li>
+                <li>[Aug. 2024] Our project SimER/Angie got funded by NSF(pre-announcement).
+                <li>[Aug. 2024] We were awarded by OpenAI Research Access Program.
+                <li>[Jul. 2024] We launched and deploy SimER/Angie V2 at DEC!
+                <li>[Jun. 2024] We hosted a Workshop on Future Technologies for Emergency Response and Public Safety! </li>
+                <li>[May 2024] We were invited to TN State Gov. of Edu.'s K-12 Event at Peabody!</li>
+                <li>[Apr. 2024] SimER/Angie prototype first participates in real-world training!</li>
+                <li>[Mar. 2024] We won Vanderbilt Generative AI Seed Grant!</li>
+                <li>[Feb. 2024] We were at AAAI 2024 in Vancouver, CA.</li>
                 <li>[Feb. 2024] Our work Auto311 is selected as Spotlight Oral Presentation (6%) at AAAI 2024!</li>
                 <li>[Jan. 2024] Serve as TA for Automated Verification.</li>
-                <li>[Jan. 2024] I win AAAI Scholarship and Volunteer Award!</li>
-                <li>[Dec. 2023] I win Vanderbilt Graduate Student Travel Grant!</li>
+                <li>[Jan. 2024] I won AAAI Scholarship and Volunteer Award!</li>
+                <li>[Dec. 2023] I won Vanderbilt Graduate Student Travel Grant!</li>
                 <li>[Dec. 2023] Our paper Auto311 is accepted by AAAI-24! See you in Vancouver!</li>
-                <li>[Nov. 2023] We are invited to Tennessee Smart Mobility Expo at Music City Center!</li>
             </ul>
         </section>
         <section id="about">
-            <h2>Research Projects</h2>
-            <p>
-                Customized Emergency Response Training<br>
-                Intelligent Emergency Response Systems<br>
-                Adaptable City Knowledge
-            </p>
-        </section>
+    <h2>Research Projects</h2>
+
+    <article>
+        <h3>Customized Emergency Response Training</h3>
+        <p>
+            Collaborating with Metro Nashville Department of Emergency Communications, we develop Angie/SimER. SimER is an AI-driven simulation environment to assist call-taker training under emergency response scenarios.
+        </p>
+        <p>
+            <b>Keywords: <i>LLMs, NLP, AI for Social Goods</i></b>
+        </p>
+        <img src="imgs/simer_overview.png" alt="Customized Emergency Response Training">
+    </article>
+
+    <article>
+        <h3>Intelligent Emergency Response Systems</h3>
+        <p>
+            We created an intelligent system that leverage data enhance response time and decision-making in emergencies. These systems use machine learning to improve coordination between protocols and streamline operations.
+        </p>
+        <p>
+            <b>Keywords: <i>AI/ML, NLP, AI for Social Goods</i></b>
+        </p>
+        <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199" class="learn-more">Learn More</a>
+        <img src="imgs/auto311.png" alt="Intelligent Emergency Response Systems">
+    </article>
+
+    <article>
+        <h3>Adaptable City Knowledge</h3>
+        <p>
+            The Adaptable City Knowledge project aims to create a dynamic, data-driven platform that helps cities respond to evolving challenges. From traffic management to disaster preparedness, this initiative fosters collaboration between city officials, businesses, and residents to promote resilience.
+        </p>
+        <p>
+            <b>Keywords: <i>AI/ML, NLP, Life-long Learning</i></b>
+        </p>
+        <a href="https://ieeexplore.ieee.org/abstract/document/9821044l" class="learn-more">Learn More</a>
+        <img src="imgs/CitySpecOverview.png" alt="Adaptable City Knowledge">
+    </article>
+
+</section>
         <section id="contact">
             <h2>Publication</h2>
             <p>
