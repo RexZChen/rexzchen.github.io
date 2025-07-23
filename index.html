@@ -3,171 +3,720 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zirong Chen</title>
+    <title>Zirong Chen - Computer Science Researcher</title>
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            box-sizing: border-box;
         }
-        header {
-            background-color: #555;
-            color: #fff;
-            padding: 1.5em 0;
-            text-align: center;
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #ecf0f1;
+            --bg-white: #ffffff;
+            --shadow: 0 2px 10px rgba(0,0,0,0.08);
+            --shadow-hover: 0 4px 20px rgba(0,0,0,0.12);
+            --header-gradient-start: #2c3e50;
+            --header-gradient-end: #34495e;
+            --article-bg: rgba(52, 152, 219, 0.05);
+            --border-color: rgba(0,0,0,0.05);
         }
-        nav {
-            background-color: #333;
-            text-align: center;
-            padding: 1em 0;
+
+        [data-theme="dark"] {
+            --primary-color: #ecf0f1;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-dark: #ecf0f1;
+            --text-light: #bdc3c7;
+            --bg-light: #1a1a1a;
+            --bg-white: #2c2c2c;
+            --shadow: 0 2px 10px rgba(0,0,0,0.3);
+            --shadow-hover: 0 4px 20px rgba(0,0,0,0.5);
+            --header-gradient-start: #1a1a1a;
+            --header-gradient-end: #2c2c2c;
+            --article-bg: rgba(52, 152, 219, 0.1);
+            --border-color: rgba(255,255,255,0.1);
         }
-        nav a {
-            margin: 0 1em;
-            text-decoration: none;
-            color: #fff;
-            font-weight: bold;
-            transition: color 0.3s;
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            overflow-x: hidden;
+            position: relative;
         }
-        nav a:hover {
-            color: #999;
-        }
-        main {
-            padding: 2em;
-            background-color: #fff;
-            margin: 2em auto;
-            max-width: 1000px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            border-radius: 10px;
-        }
-        footer {
-            text-align: center;
-            padding: 0.1em 0;
-            background-color: #333;
-            color: #fff;
+
+        /* Circuit board pattern background */
+        body::before {
+            content: '';
             position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(52, 152, 219, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(231, 76, 60, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(0, 255, 0, 0.03) 0%, transparent 50%),
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(52, 152, 219, 0.01) 10px,
+                    rgba(52, 152, 219, 0.01) 20px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(0, 255, 0, 0.01) 10px,
+                    rgba(0, 255, 0, 0.01) 20px
+                );
+            pointer-events: none;
+            z-index: 1;
+            animation: circuitPulse 20s ease-in-out infinite;
+        }
+
+        @keyframes circuitPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        [data-theme="dark"] body::before {
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(52, 152, 219, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(231, 76, 60, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(0, 255, 0, 0.05) 0%, transparent 50%),
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(52, 152, 219, 0.02) 10px,
+                    rgba(52, 152, 219, 0.02) 20px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(0, 255, 0, 0.02) 10px,
+                    rgba(0, 255, 0, 0.02) 20px
+                );
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--header-gradient-start) 0%, var(--header-gradient-end) 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                repeating-linear-gradient(90deg, transparent, transparent 35px, rgba(255,255,255,0.1) 35px, rgba(255,255,255,0.1) 70px),
+                repeating-linear-gradient(0deg, transparent, transparent 35px, rgba(255,255,255,0.1) 35px, rgba(255,255,255,0.1) 70px);
+            animation: slide 20s linear infinite;
+        }
+
+        @keyframes slide {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(70px, 70px); }
+        }
+
+        .header-symbols {
+            margin: 1.5rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .symbol {
+            font-size: 1.2rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .symbol:hover {
+            transform: scale(1.1) translateY(-3px);
+            border-color: var(--secondary-color);
+            background: rgba(52, 152, 219, 0.2);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .symbol.emergency:hover {
+            border-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.2);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .symbol.ai:hover {
+            border-color: #00ff00;
+            background: rgba(0, 255, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+        }
+
+        .symbol::after {
+            content: attr(title);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: rgba(0,0,0,0.8);
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .symbol:hover::after {
+            opacity: 1;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 2.5rem;
+            background-color: #00ff00;
+            animation: blink 1s infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .terminal-text {
+            font-family: 'Courier New', monospace;
+            color: #00ff00;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        [data-theme="dark"] .terminal-text {
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+        }
+
+        .header-info {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 1.5rem;
+        }
+
+        .cv-link {
+            display: inline-block;
+            padding: 0.7rem 2rem;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-family: 'Courier New', monospace;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cv-link::before {
+            content: '> ';
+            position: absolute;
+            left: -20px;
+            transition: left 0.3s ease;
+        }
+
+        .cv-link:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            padding-left: 2.5rem;
+        }
+
+        .cv-link:hover::before {
+            left: 10px;
+        }
+
+        nav {
+            background-color: var(--bg-white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding: 0 1rem;
+        }
+
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
             bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        nav a:hover::after {
             width: 100%;
         }
-        .icon {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            vertical-align: middle;
-            margin-right: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+        nav a:hover {
+            color: var(--secondary-color);
         }
+
+        main {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            background-color: var(--bg-white);
+            margin-bottom: 2rem;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        section:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        h2::before {
+            content: '## ';
+            color: var(--secondary-color);
+            font-weight: normal;
+            opacity: 0.5;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        section:hover h2::after {
+            width: 100px;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.8rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        h3::before {
+            content: '// ';
+            color: var(--secondary-color);
+            opacity: 0.5;
+        }
+
+        /* Code-style tags */
+        b {
+            background-color: rgba(52, 152, 219, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+        }
+
+        [data-theme="dark"] b {
+            background-color: rgba(52, 152, 219, 0.2);
+            border-color: rgba(52, 152, 219, 0.5);
+        }
+
         .about-me {
             display: flex;
             align-items: center;
-        }
-        h2 {
-            color: #555;
-        }
-        p {
-            line-height: 1.6;
+            gap: 2rem;
+            flex-wrap: wrap;
         }
 
-        img {
-            place-items: center;
-            width: 1000px;
-            height: auto; /* Keeps the aspect ratio intact */
+        .profile-pic {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--secondary-color);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
         }
-                .team {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+
+        .profile-pic:hover {
+            transform: scale(1.05);
         }
-        .team-member {
-            flex: 1 1 calc(33.333% - 20px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
+
+        .about-content {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-content p {
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .about-content a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .about-content a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: padding-left 0.3s ease;
+        }
+
+        ul li:hover {
+            padding-left: 10px;
+        }
+
+        ul li:last-child {
+            border-bottom: none;
+        }
+
+        #news ul li {
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        #news ul li:before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+        }
+
+        article {
+            margin: 2rem 0;
+            padding: 2rem;
+            background-color: var(--article-bg);
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        article::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        /* Special styling for emergency-related articles */
+        article:nth-child(2)::before {
+            background: radial-gradient(circle, rgba(231, 76, 60, 0.1) 0%, transparent 70%);
+        }
+
+        article img {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            margin: 1rem auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .learn-more {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .learn-more:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        #contact a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        #contact a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        #revolver-map {
             text-align: center;
         }
-        .team-member img {
-            max-width: 100px;
-            height: auto;
-            border-radius: 50%;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-        }
-        .team-member .intro {
-            max-width: 220px;
-        }
-        .icons-and-widget {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .icons {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .icons img {
-            max-width: 120px;
-            max-height: 100px;
-            width: auto;
 
-            height: auto;
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-light);
+            background-color: var(--bg-white);
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .about-me {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            section {
+                padding: 2rem 1.5rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            article img {
+                max-width: 100%;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--bg-white);
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            z-index: 1001;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .theme-toggle svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--primary-color);
+            stroke: var(--primary-color);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle svg circle,
+        .theme-toggle svg line {
+            fill: none;
+        }
+
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
     </style>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display: none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
     <header>
-        <h1>Zirong (Rex) Chen</h1>
+        <div class="header-pattern"></div>
+        <h1><span id="typed-text"></span><span class="cursor"></span></h1>
+        <p class="header-info">Ph.D. Candidate in Computer Science | Vanderbilt University</p>
+        <div class="header-symbols">
+            <span class="symbol ai" title="AI & Machine Learning">[AI]</span>
+            <span class="symbol emergency" title="Emergency Response">[911]</span>
+            <span class="symbol nlp" title="Natural Language Processing & Large Language Models">[NLP]</span>
+            <span class="symbol city" title="AI for Social Good">[Social Good]</span>
+        </div>
+        <a href="imgs/Zirong_Chen_CV_latest.pdf" class="cv-link" target="_blank">Download CV</a>
     </header>
+    
     <nav>
-        <a href="#home">About Me</a>
-        <a href="#education">Education</a>
-        <a href="#about">Research</a>
-        <a href="#contact">Publication</a>
+        <ul>
+            <li><a href="#home">About Me</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#news">News</a></li>
+            <li><a href="#about">Research</a></li>
+            <li><a href="#contact">Publications</a></li>
+        </ul>
     </nav>
+    
     <main>
         <section id="home">
             <h2>About Me</h2>
             <div class="about-me">
-                <img src="imgs/me.jpeg" alt="Icon" class="icon">
-                <p>Hello! My name is Zirong (Rex) Chen (陈子荣), currently pursuing a Ph.D. in Computer Science at <a href="https://www.vanderbilt.edu" target="_blank">Vanderbilt</a> under Professor <a href="https://meiyima.github.io/" target="_blank">Meiyi Ma</a>'s supervision.
-                    My research interest includes Natural Language Processing (NLP), Cyber-Physical Systems (CPS), and AI-driven applications under Smart Cities.
-                    I got my bachelor's (B.E. in Computer Engineering) in China and master's (M.S. in Computer Science) at Georgetown.
-                    I am also a former basketball player in high school and college.
-                </p>
+                <img src="imgs/me.jpeg" alt="Zirong Chen" class="profile-pic">
+                <div class="about-content">
+                    <p>Hello! My name is Zirong (Rex) Chen (陈子荣), currently pursuing a Ph.D. in Computer Science at <a href="https://www.vanderbilt.edu" target="_blank">Vanderbilt University</a> under Professor <a href="https://meiyima.github.io/" target="_blank">Meiyi Ma</a>'s supervision.
+                    My research interests include Natural Language Processing (NLP), Cyber-Physical Systems (CPS), and AI-driven applications for Smart Cities.
+                    I earned my bachelor's degree (B.E. in Computer Engineering) in China and my master's degree (M.S. in Computer Science) at Georgetown University.
+                    I am also a former basketball player in high school and college.</p>
+                </div>
             </div>
         </section>
+        
         <section id="education">
             <h2>Education</h2>
             <ul>
                 <li>2021-present <b>Ph.D. in Computer Science</b>, Vanderbilt University, Nashville, TN</li>
                 <li>2019-2021 <b>M.S. in Computer Science</b>, Georgetown University, Washington, DC</li>
                 <li>2015-2019 <b>B.E. in Computer Engineering</b>, Jinling Institute of Technology, Nanjing, China</li>
-
             </ul>
         </section>
+        
         <section id="news">
             <h2>News</h2>
             <ul>
-                <li>... Last Updated: April 2025 ...
-                <li>[Apr. 2025] Our work LogiDebrief is accepted by IJCAI-2025! See you in Montreal, CA!
-                <li>[Apr. 2025] Our project is awarded by Google again (Gemma3 Academic Program)!
-                <li>[Mar. 2025] Angie now has two solutions: desktop and web!
-                <li>[Feb. 2025] Sim911 and our newly developed debriefing function is now also available online!
-                <li>[Jan. 2025] Our work Sim911 is selected as Oral Spotlight (4.9%) at AAAI-25!
-                <li>[Dec. 2024] Our paper Sim911 is accepted by AAAI-25! See you in Philadelphia.
-                <li>[Oct. 2024] Our project is awarded by Google Academic Research Award!
-                <li>[Sep. 2024] We were invited (permanently) to present our work at LIVE session.
-                <li>[Sep. 2024] We were invited to Innovation Panel organized by Davidson County and Sheriff's Office.
-                <li>[Aug. 2024] Our project SimER/Angie got funded by NSF(pre-announcement).
-                <li>[Aug. 2024] We were awarded by OpenAI Research Access Program.
-                <li>[Jul. 2024] We launched and deploy SimER/Angie V2 at DEC!
-                <li>[Jun. 2024] We hosted a Workshop on Future Technologies for Emergency Response and Public Safety! </li>
+                <li>... Last Updated: April 2025 ...</li>
+                <li>[Apr. 2025] Our work LogiDebrief is accepted by IJCAI-2025! See you in Montreal, CA!</li>
+                <li>[Apr. 2025] Our project is awarded by Google again (Gemma3 Academic Program)!</li>
+                <li>[Mar. 2025] Angie now has two solutions: desktop and web!</li>
+                <li>[Feb. 2025] Sim911 and our newly developed debriefing function is now also available online!</li>
+                <li>[Jan. 2025] Our work Sim911 is selected as Oral Spotlight (4.9%) at AAAI-25!</li>
+                <li>[Dec. 2024] Our paper Sim911 is accepted by AAAI-25! See you in Philadelphia.</li>
+                <li>[Oct. 2024] Our project is awarded by Google Academic Research Award!</li>
+                <li>[Sep. 2024] We were invited (permanently) to present our work at LIVE session.</li>
+                <li>[Sep. 2024] We were invited to Innovation Panel organized by Davidson County and Sheriff's Office.</li>
+                <li>[Aug. 2024] Our project SimER/Angie got funded by NSF(pre-announcement).</li>
+                <li>[Aug. 2024] We were awarded by OpenAI Research Access Program.</li>
+                <li>[Jul. 2024] We launched and deploy SimER/Angie V2 at DEC!</li>
+                <li>[Jun. 2024] We hosted a Workshop on Future Technologies for Emergency Response and Public Safety!</li>
                 <li>[May 2024] We were invited to TN State Gov. of Edu.'s K-12 Event at Peabody!</li>
                 <li>[Apr. 2024] SimER/Angie prototype first participates in real-world training!</li>
                 <li>[Mar. 2024] We won Vanderbilt Generative AI Seed Grant!</li>
@@ -179,75 +728,130 @@
                 <li>[Dec. 2023] Our paper Auto311 is accepted by AAAI-24! See you in Vancouver!</li>
             </ul>
         </section>
+        
         <section id="about">
-    <h2>Research Projects</h2>
-    <article>
-        <h3>Logic-informed Call-taking Performance Debriefing</h3>
-        <p>
-            We decompose one-shot LLM runtime into modularized function calls enhanced with Signal Temporal Logic to evaluate call-taker's performance under real-world deployment.
-        </p>
-        <p>
-            <b>Keywords: <i>LLMs, NLP, AI for Social Goods</i></b>
-        </p>
-        <img src="imgs/logidebrief.png" alt="Logic-informed Call-taking Performance Debriefing">
-
-    </article>
-    <article>
-        <h3>Customized Emergency Response Training</h3>
-        <p>
-            Collaborating with Metro Nashville Department of Emergency Communications, we develop Angie/SimER. SimER is an AI-driven simulation environment to assist call-taker training under emergency response scenarios.
-        </p>
-        <p>
-            <b>Keywords: <i>LLMs, NLP, AI for Social Goods</i></b>
-        </p>
-        <p>
-            <a href="https://ojs.aaai.org/index.php/AAAI/article/view/35006" class="learn-more">Learn More</a>
-        </p>
-        <img src="imgs/simer_overview.png" alt="Customized Emergency Response Training">
-    </article>
-
-    <article>
-        <h3>Intelligent Emergency Response Systems</h3>
-        <p>
-            We created an intelligent system that leverage data enhance response time and decision-making in emergencies. These systems use machine learning to improve coordination between protocols and streamline operations.
-        </p>
-        <p>
-            <b>Keywords: <i>AI/ML, NLP, AI for Social Goods</i></b>
-        </p>
-        <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199" class="learn-more">Learn More</a>
-        <img src="imgs/auto311.png" alt="Intelligent Emergency Response Systems">
-    </article>
-
-    <article>
-        <h3>Adaptable City Knowledge</h3>
-        <p>
-            The Adaptable City Knowledge project aims to create a dynamic, data-driven platform that helps cities respond to evolving challenges. From traffic management to disaster preparedness, this initiative fosters collaboration between city officials, businesses, and residents to promote resilience.
-        </p>
-        <p>
-            <b>Keywords: <i>AI/ML, NLP, Life-long Learning</i></b>
-        </p>
-        <a href="https://ieeexplore.ieee.org/abstract/document/9821044l" class="learn-more">Learn More</a>
-        <img src="imgs/CitySpecOverview.png" alt="Adaptable City Knowledge">
-    </article>
-
-</section>
+            <h2>Research Projects</h2>
+            <article>
+                <h3>Logic-informed Call-taking Performance Debriefing</h3>
+                <p>We decompose one-shot LLM runtime into modularized function calls enhanced with Signal Temporal Logic to evaluate call-taker's performance under real-world deployment.</p>
+                <p><b>Keywords: <i>LLMs, NLP, AI for Social Goods</i></b></p>
+                <img src="imgs/logidebrief.png" alt="Logic-informed Call-taking Performance Debriefing">
+            </article>
+            
+            <article>
+                <h3>Customized Emergency Response Training</h3>
+                <p>Collaborating with Metro Nashville Department of Emergency Communications, we develop Angie/SimER. SimER is an AI-driven simulation environment to assist call-taker training under emergency response scenarios.</p>
+                <p><b>Keywords: <i>LLMs, NLP, AI for Social Goods</i></b></p>
+                <a href="https://ojs.aaai.org/index.php/AAAI/article/view/35006" class="learn-more">Learn More</a>
+                <img src="imgs/simer_overview.png" alt="Customized Emergency Response Training">
+            </article>
+            
+            <article>
+                <h3>Intelligent Emergency Response Systems</h3>
+                <p>We created an intelligent system that leverages data to enhance response time and decision-making in emergencies. These systems use machine learning to improve coordination between protocols and streamline operations.</p>
+                <p><b>Keywords: <i>AI/ML, NLP, AI for Social Goods</i></b></p>
+                <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199" class="learn-more">Learn More</a>
+                <img src="imgs/auto311.png" alt="Intelligent Emergency Response Systems">
+            </article>
+            
+            <article>
+                <h3>Adaptable City Knowledge</h3>
+                <p>The Adaptable City Knowledge project aims to create a dynamic, data-driven platform that helps cities respond to evolving challenges. From traffic management to disaster preparedness, this initiative fosters collaboration between city officials, businesses, and residents to promote resilience.</p>
+                <p><b>Keywords: <i>AI/ML, NLP, Life-long Learning</i></b></p>
+                <a href="https://ieeexplore.ieee.org/abstract/document/9821044" class="learn-more">Learn More</a>
+                <img src="imgs/CitySpecOverview.png" alt="Adaptable City Knowledge">
+            </article>
+        </section>
+        
         <section id="contact">
-            <h2>Publication</h2>
+            <h2>Publications</h2>
             <p>
-                [IJCAI 2025] <a> LogiDebrief: A Signal-Temporal Logic based Automated Debriefing Approach with Large Language Models Integration</a> <br>
-                [AAAI 2025] <a href="https://ojs.aaai.org/index.php/AAAI/article/view/35006">Sim911: Towards Effective and Equitable 9-1-1 Dispatcher Training with an LLM-Enabled Simulation</a> <br>
-                [AAAI 2024] <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199">Auto311: A Confidence-Guided Automated System for Non-emergency Calls</a> <br>
-                [Pervasive and Mobile Computing] <a href="https://www.sciencedirect.com/science/article/pii/S1574119223000603">CitySpec with shield: A secure intelligent assistant for requirement formalization</a> <br>
-                [IEEE SmartComp 2022] (Best Paper Finalist) <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9821044">Cityspec: An intelligent assistant system for requirement specification in smart cities</a> <br>
+                [IJCAI 2025] <a> LogiDebrief: A Signal-Temporal Logic based Automated Debriefing Approach with Large Language Models Integration</a><br>
+                [AAAI 2025] <a href="https://ojs.aaai.org/index.php/AAAI/article/view/35006">Sim911: Towards Effective and Equitable 9-1-1 Dispatcher Training with an LLM-Enabled Simulation</a><br>
+                [AAAI 2024] <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199">Auto311: A Confidence-Guided Automated System for Non-emergency Calls</a><br>
+                [Pervasive and Mobile Computing] <a href="https://www.sciencedirect.com/science/article/pii/S1574119223000603">CitySpec with shield: A secure intelligent assistant for requirement formalization</a><br>
+                [IEEE SmartComp 2022] (Best Paper Finalist) <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9821044">Cityspec: An intelligent assistant system for requirement specification in smart cities</a><br>
                 [IEEE SmartComp 2022] <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9820752">An intelligent assistant for converting city requirements to formal specification</a>
             </p>
         </section>
+        
         <section id="revolver-map">
             <h2>Visitor Map</h2>
-            <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=_DpzN4jsym39EjKuInOrNcu-fQx1Sh7WYuds9G9BdCw&cl=ffffff&w=a"></script>        </section>
+            <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=_DpzN4jsym39EjKuInOrNcu-fQx1Sh7WYuds9G9BdCw&cl=ffffff&w=a"></script>
+        </section>
     </main>
+    
     <footer>
         <p>&copy; 2024 Zirong Chen. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to 'light' mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        // Update icon based on theme
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            } else {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            }
+        }
+
+        // Typing effect
+        const typedTextSpan = document.getElementById('typed-text');
+        const textArray = ['Zirong (Rex) Chen', 'AI & LLM Researcher', 'NLP in Smart Cities', '陈子荣'];
+        const typingDelay = 100;
+        const erasingDelay = 50;
+        const newTextDelay = 2000;
+        let textArrayIndex = 0;
+        let charIndex = 0;
+
+        function type() {
+            if (charIndex < textArray[textArrayIndex].length) {
+                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, typingDelay);
+            } else {
+                setTimeout(erase, newTextDelay);
+            }
+        }
+
+        function erase() {
+            if (charIndex > 0) {
+                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex-1);
+                charIndex--;
+                setTimeout(erase, erasingDelay);
+            } else {
+                textArrayIndex++;
+                if(textArrayIndex >= textArray.length) textArrayIndex = 0;
+                setTimeout(type, typingDelay + 1100);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(type, newTextDelay + 250);
+        });
+    </script>
 </body>
 </html>
