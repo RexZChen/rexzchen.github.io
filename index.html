@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zirong (Rex) Chen - Ph.D. candidate in Computer Science at Vanderbilt University specializing in AI Safety, Trustworthy AI, and reliable AI systems for critical applications.">
     <title>Zirong Chen - Computer Science Researcher</title>
     <style>
         * {
@@ -460,16 +461,65 @@
             border-bottom: none;
         }
 
-        #news ul li {
-            padding-left: 1.5rem;
-            position: relative;
+        /* News section with color scheme */
+        #news ul {
+            list-style: none;
+            padding-left: 0;
         }
 
-        #news ul li:before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: var(--secondary-color);
+        #news ul li {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
+        }
+
+        #news ul li:hover {
+            transform: translateX(3px);
+            box-shadow: var(--shadow);
+        }
+
+        #news ul li:last-child {
+            border-bottom: none;
+        }
+
+        /* Category colors for better readability */
+        .news-publication {
+            border-left: 4px solid #2ecc71;
+            background-color: rgba(46, 204, 113, 0.08);
+            padding-left: 1.8rem;
+        }
+
+        .news-award {
+            border-left: 4px solid #f39c12;
+            background-color: rgba(243, 156, 18, 0.08);
+            padding-left: 1.8rem;
+        }
+
+        .news-event {
+            border-left: 4px solid #9b59b6;
+            background-color: rgba(155, 89, 182, 0.08);
+            padding-left: 1.8rem;
+        }
+
+        .news-product {
+            border-left: 4px solid #3498db;
+            background-color: rgba(52, 152, 219, 0.08);
+            padding-left: 1.8rem;
+        }
+
+        .news-service {
+            border-left: 4px solid #e67e22;
+            background-color: rgba(230, 126, 34, 0.08);
+            padding-left: 1.8rem;
+        }
+
+        .news-update {
+            border-left: 4px solid #95a5a6;
+            background-color: rgba(149, 165, 166, 0.08);
+            padding-left: 1.8rem;
         }
 
         article {
@@ -714,6 +764,15 @@
             color: var(--secondary-color);
         }
 
+        /* Highlight awards and achievements */
+        .highlight-award {
+            color: var(--accent-color);
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-right: 6px;
+            font-family: 'Courier New', monospace;
+        }
+
         /* Loading animation */
         .loader {
             position: fixed;
@@ -767,7 +826,80 @@
         }
 
         /* Improved mobile menu */
+        /* Mobile hamburger menu */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1002;
+            background: var(--bg-white);
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 3px 0;
+            transition: 0.3s;
+            transform-origin: center;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
         @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 250px;
+                height: 100vh;
+                background: var(--bg-white);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                padding: 5rem 2rem 2rem;
+                box-shadow: var(--shadow-hover);
+                transition: left 0.3s ease;
+                z-index: 1001;
+            }
+
+            nav ul.mobile-open {
+                left: 0;
+            }
+
+            nav ul li {
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+
+            nav a {
+                display: block;
+                width: 100%;
+                font-size: 1.1rem;
+                padding: 1rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+
             .back-to-top {
                 bottom: 20px;
                 right: 20px;
@@ -780,15 +912,6 @@
                 right: 15px;
                 width: 45px;
                 height: 45px;
-            }
-
-            nav ul {
-                padding: 0 0.5rem;
-            }
-
-            nav a {
-                font-size: 0.9rem;
-                padding: 0.4rem 0.8rem;
             }
 
             .header-symbols {
@@ -827,14 +950,18 @@
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
     </button>
+    <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
     <header>
         <div class="header-pattern"></div>
         <h1><span id="typed-text"></span><span class="cursor"></span></h1>
         <p class="header-info">Ph.D. Candidate in Computer Science | Vanderbilt University</p>
         <div class="header-symbols">
-            <span class="symbol ai" title="AI & Machine Learning">[AI]</span>
-            <span class="symbol emergency" title="Emergency Response">[911]</span>
-            <span class="symbol nlp" title="Natural Language Processing & Large Language Models">[NLP]</span>
+            <span class="symbol ai" title="Trustworthy AI & AI Safety">[Trustworthy AI]</span>
+            <span class="symbol nlp" title="Natural Language Processing & Large Language Models">[AI & NLP]</span>
             <span class="symbol city" title="AI for Social Good">[Social Good]</span>
         </div>
         <a href="imgs/Zirong_Chen_CV_latest.pdf" class="cv-link" target="_blank">Download CV</a>
@@ -847,6 +974,7 @@
             <li><a href="#news">News</a></li>
             <li><a href="#about">Research</a></li>
             <li><a href="#contact">Publications</a></li>
+            <li><a href="#contact-info">Contact</a></li>
         </ul>
     </nav>
     
@@ -857,7 +985,7 @@
                 <img src="imgs/me.jpeg" alt="Zirong Chen" class="profile-pic">
                 <div class="about-content">
                     <p>Hello! My name is Zirong (Rex) Chen (陈子荣), currently pursuing a Ph.D. in Computer Science at <a href="https://www.vanderbilt.edu" target="_blank">Vanderbilt University</a> under Professor <a href="https://meiyima.github.io/" target="_blank">Meiyi Ma</a>'s supervision.
-                    My research interests include Natural Language Processing (NLP), Cyber-Physical Systems (CPS), and AI-driven applications for Smart Cities.
+                    My research focuses on AI Safety and Trustworthy AI, with particular emphasis on Natural Language Processing (NLP), reliable AI systems for critical applications, and trustworthy AI-driven solutions for Smart Cities and emergency response.
                     I earned my bachelor's degree (B.E. in Computer Engineering) in China and my master's degree (M.S. in Computer Science) at Georgetown University.
                     I am also a former basketball player in high school and college.</p>
                 </div>
@@ -875,30 +1003,60 @@
         
         <section id="news">
             <h2>News</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; margin-bottom: 1.5rem; padding: 1.2rem; background: linear-gradient(135deg, rgba(52, 152, 219, 0.03), rgba(155, 89, 182, 0.03)); border-radius: 10px; border: 1px solid var(--border-color);">
+                <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; font-family: 'Courier New', monospace; padding: 0.3rem;">
+                    <div style="width: 20px; height: 4px; background-color: #2ecc71; border-radius: 2px;"></div>
+                    <span>Publications</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; font-family: 'Courier New', monospace; padding: 0.3rem;">
+                    <div style="width: 20px; height: 4px; background-color: #f39c12; border-radius: 2px;"></div>
+                    <span>Awards & Grants</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; font-family: 'Courier New', monospace; padding: 0.3rem;">
+                    <div style="width: 20px; height: 4px; background-color: #9b59b6; border-radius: 2px;"></div>
+                    <span>Events & Talks</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; font-family: 'Courier New', monospace; padding: 0.3rem;">
+                    <div style="width: 20px; height: 4px; background-color: #3498db; border-radius: 2px;"></div>
+                    <span>Product Launches</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; font-family: 'Courier New', monospace; padding: 0.3rem;">
+                    <div style="width: 20px; height: 4px; background-color: #e67e22; border-radius: 2px;"></div>
+                    <span>Academic Service</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; font-family: 'Courier New', monospace; padding: 0.3rem;">
+                    <div style="width: 20px; height: 4px; background-color: #95a5a6; border-radius: 2px;"></div>
+                    <span>Updates</span>
+                </div>
+            </div>
             <ul>
-                <li>... Last Updated: April 2025 ...</li>
-                <li>[Apr. 2025] Our work LogiDebrief is accepted by IJCAI-2025! See you in Montreal, CA!</li>
-                <li>[Apr. 2025] Our project is awarded by Google again (Gemma3 Academic Program)!</li>
-                <li>[Mar. 2025] Angie now has two solutions: desktop and web!</li>
-                <li>[Feb. 2025] Sim911 and our newly developed debriefing function is now also available online!</li>
-                <li>[Jan. 2025] Our work Sim911 is selected as Oral Spotlight (4.9%) at AAAI-25!</li>
-                <li>[Dec. 2024] Our paper Sim911 is accepted by AAAI-25! See you in Philadelphia.</li>
-                <li>[Oct. 2024] Our project is awarded by Google Academic Research Award!</li>
-                <li>[Sep. 2024] We were invited (permanently) to present our work at LIVE session.</li>
-                <li>[Sep. 2024] We were invited to Innovation Panel organized by Davidson County and Sheriff's Office.</li>
-                <li>[Aug. 2024] Our project SimER/Angie got funded by NSF(pre-announcement).</li>
-                <li>[Aug. 2024] We were awarded by OpenAI Research Access Program.</li>
-                <li>[Jul. 2024] We launched and deploy SimER/Angie V2 at DEC!</li>
-                <li>[Jun. 2024] We hosted a Workshop on Future Technologies for Emergency Response and Public Safety!</li>
-                <li>[May 2024] We were invited to TN State Gov. of Edu.'s K-12 Event at Peabody!</li>
-                <li>[Apr. 2024] SimER/Angie prototype first participates in real-world training!</li>
-                <li>[Mar. 2024] We won Vanderbilt Generative AI Seed Grant!</li>
-                <li>[Feb. 2024] We were at AAAI 2024 in Vancouver, CA.</li>
-                <li>[Feb. 2024] Our work Auto311 is selected as Spotlight Oral Presentation (6%) at AAAI 2024!</li>
-                <li>[Jan. 2024] Serve as TA for Automated Verification.</li>
-                <li>[Jan. 2024] I won AAAI Scholarship and Volunteer Award!</li>
-                <li>[Dec. 2023] I won Vanderbilt Graduate Student Travel Grant!</li>
-                <li>[Dec. 2023] Our paper Auto311 is accepted by AAAI-24! See you in Vancouver!</li>
+                <li class="news-update">... Last Updated: August 2025 ...</li>
+                <li class="news-event">[Aug. 2025] We presented LogiDebrief (oral + poster @ IJCAI) in Montreal, returned to Vandy, Anchor Down!</li>
+                <li class="news-award">[Jul. 2025] I won IJCAI volunteer scholarship!</li>
+                <li class="news-award">[Jun. 2025] Our project won <a href="https://cttc.co/article/20250605/vanderbilt-announces-innovation-catalyst-fund-awardees-february-2025-cycle" target="_blank">Vanderbilt Catalyst Funds</a>!</li>
+                <li class="news-service">[May 2025] I joined <a href="https://ailabs.epiqglobal.com/" target="_blank">Epiq AI Labs</a> as an AI Research Fellow (intern), researching under legal AI topics, see you in NYC!</li>
+                <li class="news-publication">[Apr. 2025] Our work LogiDebrief is accepted by IJCAI-2025! See you in Montreal, CA!</li>
+                <li class="news-award">[Apr. 2025] Our project is awarded by Google again (Gemma3 Academic Program)!</li>
+                <li class="news-product">[Mar. 2025] Angie now has two solutions: desktop and web!</li>
+                <li class="news-product">[Feb. 2025] Sim911 and our newly developed debriefing function is now also available online!</li>
+                <li class="news-publication">[Jan. 2025] Our work Sim911 is selected as Oral Spotlight (4.9%) at AAAI-25!</li>
+                <li class="news-publication">[Dec. 2024] Our paper Sim911 is accepted by AAAI-25! See you in Philadelphia.</li>
+                <li class="news-award">[Oct. 2024] Our project is awarded by <a href="https://research.google/programs-and-events/google-academic-research-awards/google-academic-research-award-program-recipients/" target="_blank">Google Academic Research Award</a>!</li>
+                <li class="news-event">[Sep. 2024] We were invited (permanently) to present our work at <a href="https://lab.vanderbilt.edu/live/2024/06/21/a-gen-ai-enabled-system-for-9-1-1-call-takers-training-in-emergency-response-simer/" target="_blank">LIVE session</a>.</li>
+                <li class="news-event">[Sep. 2024] We were invited to Innovation Panel organized by Davidson County and Sheriff's Office.</li>
+                <li class="news-award">[Aug. 2024] Our project SimER/Angie got funded by NSF(pre-announcement).</li>
+                <li class="news-award">[Aug. 2024] We were awarded by <a href="https://openai.com/form/researcher-access-program/" target="_blank">OpenAI Research Access Program</a>.</li>
+                <li class="news-product">[Jul. 2024] We launched and deploy SimER/Angie V2 at DEC!</li>
+                <li class="news-event">[Jun. 2024] We hosted a Workshop on Future Technologies for Emergency Response and Public Safety!</li>
+                <li class="news-event">[May 2024] We were invited to TN State Gov. of Edu.'s K-12 Event at Peabody!</li>
+                <li class="news-product">[Apr. 2024] SimER/Angie prototype first participates in real-world training!</li>
+                <li class="news-award">[Mar. 2024] We won Vanderbilt Generative AI Seed Grant!</li>
+                <li class="news-event">[Feb. 2024] We were at AAAI 2024 in Vancouver, CA.</li>
+                <li class="news-publication">[Feb. 2024] Our work Auto311 is selected as Spotlight Oral Presentation (6%) at AAAI 2024!</li>
+                <li class="news-service">[Jan. 2024] Serve as TA for Automated Verification.</li>
+                <li class="news-award">[Jan. 2024] I won AAAI Scholarship and Volunteer Award!</li>
+                <li class="news-award">[Dec. 2023] I won Vanderbilt Graduate Student Travel Grant!</li>
+                <li class="news-publication">[Dec. 2023] Our paper Auto311 is accepted by AAAI-24! See you in Vancouver!</li>
             </ul>
         </section>
         
@@ -906,25 +1064,26 @@
             <h2>Research Projects</h2>
             <article>
                 <h3>Logic-informed Call-taking Performance Debriefing</h3>
-                <p>We decompose one-shot LLM runtime into modularized function calls enhanced with Signal Temporal Logic to evaluate call-taker's performance under real-world deployment.</p>
-                <p><b>Keywords: <i>LLMs, NLP, AI for Social Goods</i></b></p>
-                <img src="imgs/logidebrief.png" alt="Logic-informed Call-taking Performance Debriefing">
+                <p>We develop trustworthy AI systems that decompose LLM runtime into modularized function calls enhanced with Signal Temporal Logic, ensuring reliable and interpretable performance evaluation for safety-critical call-taking scenarios.</p>
+                <p><b>Keywords: <i>Trustworthy AI, AI Safety, Reliable LLMs</i></b></p>
+                <a href="https://arxiv.org/pdf/2505.03985" class="learn-more" target="_blank">Learn More</a>
+                <img src="imgs/logidebrief.png" alt="LogiDebrief system architecture showing LLM integration with Signal Temporal Logic for automated debriefing">
             </article>
             
             <article>
                 <h3>Customized Emergency Response Training</h3>
-                <p>Collaborating with Metro Nashville Department of Emergency Communications, we develop Angie/SimER. SimER is an AI-driven simulation environment to assist call-taker training under emergency response scenarios.</p>
-                <p><b>Keywords: <i>LLMs, NLP, AI for Social Goods</i></b></p>
+                <p>Collaborating with Metro Nashville Department of Emergency Communications, we develop Angie/SimER - a safety-critical AI system that provides reliable, trustworthy simulation environments for call-taker training in high-stakes emergency response scenarios.</p>
+                <p><b>Keywords: <i>Safety-Critical AI, Trustworthy LLMs, Reliable Systems</i></b></p>
                 <a href="https://ojs.aaai.org/index.php/AAAI/article/view/35006" class="learn-more">Learn More</a>
-                <img src="imgs/simer_overview.png" alt="Customized Emergency Response Training">
+                <img src="imgs/simer_overview.png" alt="SimER system overview showing AI-driven simulation environment for call-taker training with Metro Nashville DEC">
             </article>
             
             <article>
-                <h3>Intelligent Emergency Response Systems</h3>
-                <p>We created an intelligent system that leverages data to enhance response time and decision-making in emergencies. These systems use machine learning to improve coordination between protocols and streamline operations.</p>
-                <p><b>Keywords: <i>AI/ML, NLP, AI for Social Goods</i></b></p>
+                <h3>Trustworthy Emergency Response Systems</h3>
+                <p>We develop reliable AI systems with built-in safety guarantees that enhance emergency response decision-making. Our trustworthy machine learning approaches ensure robust performance in critical situations while maintaining transparency and accountability.</p>
+                <p><b>Keywords: <i>AI Safety, Trustworthy ML, Reliable Decision Systems</i></b></p>
                 <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199" class="learn-more">Learn More</a>
-                <img src="imgs/auto311.png" alt="Intelligent Emergency Response Systems">
+                <img src="imgs/auto311.png" alt="Auto311 system diagram showing confidence-guided automated processing for non-emergency calls">
             </article>
             
             <article>
@@ -932,19 +1091,32 @@
                 <p>The Adaptable City Knowledge project aims to create a dynamic, data-driven platform that helps cities respond to evolving challenges. From traffic management to disaster preparedness, this initiative fosters collaboration between city officials, businesses, and residents to promote resilience.</p>
                 <p><b>Keywords: <i>AI/ML, NLP, Life-long Learning</i></b></p>
                 <a href="https://ieeexplore.ieee.org/abstract/document/9821044" class="learn-more">Learn More</a>
-                <img src="imgs/CitySpecOverview.png" alt="Adaptable City Knowledge">
+                <img src="imgs/CitySpecOverview.png" alt="CitySpec system architecture for intelligent requirement specification in smart cities with formal verification">
             </article>
         </section>
         
         <section id="contact">
             <h2>Publications</h2>
             <p>
-                [IJCAI 2025] <a> LogiDebrief: A Signal-Temporal Logic based Automated Debriefing Approach with Large Language Models Integration</a><br>
-                [AAAI 2025] <a href="https://ojs.aaai.org/index.php/AAAI/article/view/35006">Sim911: Towards Effective and Equitable 9-1-1 Dispatcher Training with an LLM-Enabled Simulation</a><br>
-                [AAAI 2024] <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199">Auto311: A Confidence-Guided Automated System for Non-emergency Calls</a><br>
+                [IJCAI-25] <span class="highlight-award">(Oral Spotlight - 13%)</span> <a href="https://arxiv.org/pdf/2505.03985" target="_blank">LogiDebrief: A Signal-Temporal Logic based Automated Debriefing Approach with Large Language Models Integration</a><br>
+                [AAAI-25] <span class="highlight-award">(Oral Spotlight - 4.9%)</span> <a href="https://ojs.aaai.org/index.php/AAAI/article/view/35006">Sim911: Towards Effective and Equitable 9-1-1 Dispatcher Training with an LLM-Enabled Simulation</a><br>
+                [AAAI-24] <span class="highlight-award">(Oral Spotlight - 6%)</span> <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199">Auto311: A Confidence-Guided Automated System for Non-emergency Calls</a><br>
                 [Pervasive and Mobile Computing] <a href="https://www.sciencedirect.com/science/article/pii/S1574119223000603">CitySpec with shield: A secure intelligent assistant for requirement formalization</a><br>
-                [IEEE SmartComp 2022] (Best Paper Finalist) <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9821044">Cityspec: An intelligent assistant system for requirement specification in smart cities</a><br>
-                [IEEE SmartComp 2022] <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9820752">An intelligent assistant for converting city requirements to formal specification</a>
+                [IEEE SmartComp 22] <span class="highlight-award">(Best Paper Finalist)</span> <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9821044">Cityspec: An intelligent assistant system for requirement specification in smart cities</a><br>
+                [IEEE SmartComp 22] <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9820752">An intelligent assistant for converting city requirements to formal specification</a>
+            </p>
+        </section>
+        
+        <section id="contact-info">
+            <h2>Contact</h2>
+            <p>
+                <strong>Email:</strong> zirong.chen AT vanderbilt.edu</a><br>
+                <strong>Office:</strong> <a href="https://www.isis.vanderbilt.edu/" target="_blank">Institute for Software Integrated Systems</a>, Vanderbilt University<br>
+                <strong>Address:</strong> 1025 16th Ave S, Nashville, TN 37212<br>
+                <strong>Links:</strong> 
+                <a href="https://scholar.google.com/citations?user=wo6wou8AAAAJ" target="_blank">Google Scholar</a> |
+                <a href="https://orcid.org/0000-0002-6466-4549" target="_blank">ORCID</a> |
+                <a href="https://www.linkedin.com/in/zirong-chen-567070190" target="_blank">LinkedIn</a>
             </p>
         </section>
         
@@ -955,7 +1127,7 @@
     </main>
     
     <footer>
-        <p>&copy; 2024 Zirong Chen. All rights reserved.</p>
+        <p>&copy; 2025 Zirong Chen. All rights reserved.</p>
     </footer>
 
     <!-- Back to top button -->
@@ -1000,7 +1172,7 @@
 
         // Enhanced typing effect with better timing
         const typedTextSpan = document.getElementById('typed-text');
-        const textArray = ['Zirong (Rex) Chen', 'AI & LLM Researcher', 'NLP in Smart Cities', '陈子荣'];
+        const textArray = ['Zirong (Rex) Chen', '陈子荣', 'AI & LLM Research', 'Trustworthy & Safety-Critical AI Research'];
         const typingDelay = 80;
         const erasingDelay = 40;
         const newTextDelay = 2500;
@@ -1093,6 +1265,31 @@
         document.querySelectorAll('section').forEach(section => {
             section.style.opacity = '0';
             observer.observe(section);
+        });
+
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navUl = document.querySelector('nav ul');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenuToggle.classList.toggle('active');
+            navUl.classList.toggle('mobile-open');
+        });
+
+        // Close mobile menu when clicking on a nav link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuToggle.classList.remove('active');
+                navUl.classList.remove('mobile-open');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuToggle.contains(e.target) && !navUl.contains(e.target)) {
+                mobileMenuToggle.classList.remove('active');
+                navUl.classList.remove('mobile-open');
+            }
         });
     </script>
 </body>
