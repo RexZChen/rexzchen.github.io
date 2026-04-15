@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>~/thoughts - Zirong Chen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #ecf0f1;
+            --bg-white: #ffffff;
+            --shadow: 0 2px 10px rgba(0,0,0,0.08);
+            --shadow-hover: 0 4px 20px rgba(0,0,0,0.12);
+            --header-gradient-start: #2c3e50;
+            --header-gradient-end: #34495e;
+            --border-color: rgba(0,0,0,0.05);
+            --tag-research: #3498db;
+            --tag-life: #2ecc71;
+            --tag-misc: #9b59b6;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #ecf0f1;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-dark: #ecf0f1;
+            --text-light: #bdc3c7;
+            --bg-light: #1a1a1a;
+            --bg-white: #2c2c2c;
+            --shadow: 0 2px 10px rgba(0,0,0,0.3);
+            --shadow-hover: 0 4px 20px rgba(0,0,0,0.5);
+            --header-gradient-start: #1a1a1a;
+            --header-gradient-end: #2c2c2c;
+            --border-color: rgba(255,255,255,0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            overflow-x: hidden;
+            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Circuit board pattern background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(52, 152, 219, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(231, 76, 60, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(0, 255, 0, 0.03) 0%, transparent 50%),
+                repeating-linear-gradient(
+                    45deg, transparent, transparent 10px,
+                    rgba(52, 152, 219, 0.01) 10px, rgba(52, 152, 219, 0.01) 20px
+                ),
+                repeating-linear-gradient(
+                    -45deg, transparent, transparent 10px,
+                    rgba(0, 255, 0, 0.01) 10px, rgba(0, 255, 0, 0.01) 20px
+                );
+            pointer-events: none;
+            z-index: 1;
+            animation: circuitPulse 20s ease-in-out infinite;
+        }
+
+        @keyframes circuitPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        [data-theme="dark"] body::before {
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(52, 152, 219, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(231, 76, 60, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(0, 255, 0, 0.05) 0%, transparent 50%),
+                repeating-linear-gradient(
+                    45deg, transparent, transparent 10px,
+                    rgba(52, 152, 219, 0.02) 10px, rgba(52, 152, 219, 0.02) 20px
+                ),
+                repeating-linear-gradient(
+                    -45deg, transparent, transparent 10px,
+                    rgba(0, 255, 0, 0.02) 10px, rgba(0, 255, 0, 0.02) 20px
+                );
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--header-gradient-start) 0%, var(--header-gradient-end) 100%);
+            color: white;
+            padding: 2.5rem 2rem;
+            position: relative;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image:
+                repeating-linear-gradient(90deg, transparent, transparent 35px, rgba(255,255,255,0.1) 35px, rgba(255,255,255,0.1) 70px),
+                repeating-linear-gradient(0deg, transparent, transparent 35px, rgba(255,255,255,0.1) 35px, rgba(255,255,255,0.1) 70px);
+            animation: slide 20s linear infinite;
+        }
+
+        @keyframes slide {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(70px, 70px); }
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 300;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 0.3rem;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 2rem;
+            background-color: #00ff00;
+            animation: blink 1s infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .header-sub {
+            font-family: 'Courier New', monospace;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+
+        .header-nav {
+            margin-top: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        .header-nav a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .header-nav a:hover {
+            color: #00ff00;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--bg-white);
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            z-index: 1001;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .theme-toggle svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--primary-color);
+            stroke: var(--primary-color);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle svg circle,
+        .theme-toggle svg line {
+            fill: none;
+        }
+
+        /* Main content */
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Tag filters */
+        .filters {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            font-family: 'Courier New', monospace;
+        }
+
+        .filter-btn {
+            padding: 0.4rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-white);
+            color: var(--text-light);
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .filter-btn.active {
+            color: white;
+            border-color: transparent;
+        }
+
+        .filter-btn[data-tag="all"].active {
+            background: var(--primary-color);
+        }
+
+        .filter-btn[data-tag="research"].active {
+            background: var(--tag-research);
+            border-color: var(--tag-research);
+        }
+
+        .filter-btn[data-tag="life"].active {
+            background: var(--tag-life);
+            border-color: var(--tag-life);
+        }
+
+        .filter-btn[data-tag="misc"].active {
+            background: var(--tag-misc);
+            border-color: var(--tag-misc);
+        }
+
+        /* Post entries */
+        .post {
+            background-color: var(--bg-white);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .post:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .post-header {
+            padding: 1.2rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-left: 4px solid transparent;
+            user-select: none;
+        }
+
+        .post[data-tag="research"] .post-header {
+            border-left-color: var(--tag-research);
+        }
+
+        .post[data-tag="life"] .post-header {
+            border-left-color: var(--tag-life);
+        }
+
+        .post[data-tag="misc"] .post-header {
+            border-left-color: var(--tag-misc);
+        }
+
+        .post-toggle {
+            font-family: 'Courier New', monospace;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .post.open .post-toggle {
+            transform: rotate(90deg);
+        }
+
+        .post-meta {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .post-title {
+            font-family: 'Courier New', monospace;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .post-date {
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 0.2rem;
+        }
+
+        .post-tag {
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 3px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .post-tag.research { background: var(--tag-research); }
+        .post-tag.life { background: var(--tag-life); }
+        .post-tag.misc { background: var(--tag-misc); }
+
+        .post-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .post.open .post-body {
+            max-height: 2000px;
+        }
+
+        .post-content {
+            padding: 0 1.5rem 1.5rem 2.5rem;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-light);
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.2rem;
+            margin-left: 0.5rem;
+        }
+
+        .post-content p {
+            margin-bottom: 1rem;
+        }
+
+        .post-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .post-content a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .post-content a:hover {
+            text-decoration: underline;
+        }
+
+        .post-content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 1rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .post-content pre {
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .post-content h2, .post-content h3, .post-content h4 {
+            color: var(--text-dark);
+        }
+
+        /* Terminal separator */
+        .terminal-line {
+            font-family: 'Courier New', monospace;
+            color: var(--text-light);
+            opacity: 0.3;
+            text-align: center;
+            margin: 2rem 0;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            font-family: 'Courier New', monospace;
+            color: var(--text-light);
+        }
+
+        .empty-state .prompt {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-light);
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 2rem 1.5rem;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            main {
+                padding: 0 1rem;
+            }
+
+            .post-header {
+                padding: 1rem;
+            }
+
+            .post-content {
+                padding: 0 1rem 1rem 1.5rem;
+            }
+
+            .theme-toggle {
+                top: 15px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .post {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display: none;">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+    </button>
+
+    <header>
+        <div class="header-pattern"></div>
+        <div class="header-content">
+            <h1>~/random_thoughts<span class="cursor"></span></h1>
+            <p class="header-sub">notes on research, life, and everything in between</p>
+            <p class="header-nav"><span style="color: rgba(255,255,255,0.4);">$</span> <a href="index.html">cd ~/home</a></p>
+        </div>
+    </header>
+
+    <main>
+        <div class="filters" id="filters"></div>
+        <div id="posts"></div>
+    </main>
+
+    <footer>
+        <p>EOF</p>
+    </footer>
+
+    <script>
+        // Lightweight markdown renderer (handles paragraphs, bold, italic, links, images, code blocks, headings, lists, hr)
+        function renderMarkdown(md) {
+            let html = md
+                // code blocks
+                .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
+                // inline code
+                .replace(/`([^`]+)`/g, '<code style="background:var(--border-color);padding:2px 6px;border-radius:3px;font-size:0.9em;">$1</code>')
+                // images
+                .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width:100%;border-radius:8px;margin:1rem 0;box-shadow:var(--shadow);">')
+                // links
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+                // headings
+                .replace(/^### (.+)$/gm, '<h4 style="margin:1rem 0 0.5rem;font-family:Courier New,monospace;">$1</h4>')
+                .replace(/^## (.+)$/gm, '<h3 style="margin:1.2rem 0 0.5rem;font-family:Courier New,monospace;">$1</h3>')
+                .replace(/^# (.+)$/gm, '<h2 style="margin:1.5rem 0 0.5rem;font-family:Courier New,monospace;">$1</h2>')
+                // bold & italic
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                // horizontal rule
+                .replace(/^---$/gm, '<hr style="border:none;border-top:1px solid var(--border-color);margin:1.5rem 0;">')
+                // unordered lists
+                .replace(/^- (.+)$/gm, '<li>$1</li>');
+
+            // wrap consecutive <li> in <ul>
+            html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul style="list-style:disc;padding-left:1.5rem;margin:0.5rem 0;">$1</ul>');
+
+            // paragraphs: split by double newlines, wrap non-tag blocks in <p>
+            html = html.split(/\n\n+/).map(block => {
+                block = block.trim();
+                if (!block) return '';
+                if (/^<[a-z]/.test(block)) return block;
+                return '<p>' + block.replace(/\n/g, '<br>') + '</p>';
+            }).join('\n');
+
+            return html;
+        }
+
+        // State
+        let posts = [];
+        let activeTag = 'all';
+        const contentCache = {};
+        const filtersEl = document.getElementById('filters');
+        const postsEl = document.getElementById('posts');
+
+        // Fetch manifest and render
+        fetch('thoughts/posts.json')
+            .then(r => r.json())
+            .then(data => {
+                posts = data.sort((a, b) => b.date.localeCompare(a.date));
+                buildFilters();
+                renderPosts();
+            })
+            .catch(() => {
+                postsEl.innerHTML = `
+                    <div class="empty-state">
+                        <div class="prompt">$ cat thoughts.txt</div>
+                        <div>error: could not load posts.</div>
+                    </div>`;
+            });
+
+        function buildFilters() {
+            const tags = ['all', ...new Set(posts.map(p => p.tag))];
+            filtersEl.innerHTML = '';
+            tags.forEach(tag => {
+                const btn = document.createElement('button');
+                btn.className = `filter-btn ${tag === activeTag ? 'active' : ''}`;
+                btn.dataset.tag = tag;
+                btn.textContent = `[${tag}]`;
+                btn.addEventListener('click', () => {
+                    activeTag = tag;
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderPosts();
+                });
+                filtersEl.appendChild(btn);
+            });
+        }
+
+        function renderPosts() {
+            const filtered = activeTag === 'all' ? posts : posts.filter(p => p.tag === activeTag);
+
+            if (filtered.length === 0) {
+                postsEl.innerHTML = `
+                    <div class="empty-state">
+                        <div class="prompt">$ cat thoughts.txt</div>
+                        <div>no entries found.</div>
+                    </div>`;
+                return;
+            }
+
+            postsEl.innerHTML = filtered.map((post, i) => `
+                <div class="post" data-tag="${post.tag}" data-file="${post.file}" style="animation-delay: ${i * 0.05}s">
+                    <div class="post-header" onclick="togglePost(this.parentElement)">
+                        <span class="post-toggle">></span>
+                        <div class="post-meta">
+                            <div class="post-title">${post.title}</div>
+                            <div class="post-date">${post.date}</div>
+                        </div>
+                        <span class="post-tag ${post.tag}">${post.tag}</span>
+                    </div>
+                    <div class="post-body">
+                        <div class="post-content"><span style="color:var(--text-light);opacity:0.5;font-family:Courier New,monospace;font-size:0.85rem;">loading...</span></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function togglePost(postEl) {
+            const isOpening = !postEl.classList.contains('open');
+            postEl.classList.toggle('open');
+
+            if (isOpening) {
+                const file = postEl.dataset.file;
+                const contentEl = postEl.querySelector('.post-content');
+
+                if (contentCache[file]) {
+                    contentEl.innerHTML = contentCache[file];
+                    return;
+                }
+
+                fetch('thoughts/' + file)
+                    .then(r => {
+                        if (!r.ok) throw new Error('Not found');
+                        return r.text();
+                    })
+                    .then(md => {
+                        const html = renderMarkdown(md);
+                        contentCache[file] = html;
+                        contentEl.innerHTML = html;
+                    })
+                    .catch(() => {
+                        contentEl.innerHTML = '<span style="color:var(--accent-color);font-family:Courier New,monospace;font-size:0.85rem;">error: could not load post.</span>';
+                    });
+            }
+        }
+
+        // Theme toggle (synced with main site via localStorage)
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        const html = document.documentElement;
+
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const current = html.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateThemeIcon(next);
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            } else {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
