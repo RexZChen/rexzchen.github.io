@@ -1,8 +1,14 @@
 [
     {
-        "title": "Hello World",
+        "title": "PhD Survival Under Autoresearch",
+        "date": "2026-04-16",
+        "tag": "research",
+        "file": "phd-survival-under-autoresearch.md"
+    },
+    {
+        "title": "Nihilism and Imposter Syndrome",
         "date": "2026-04-15",
         "tag": "misc",
-        "file": "hello-world.md"
+        "file": "nihilism-and-imposter-syndrome.md"
     }
 ]
