@@ -302,6 +302,91 @@
             .theme-toggle { top: 15px; right: 15px; }
         }
 
+        /* ===== Warm aurora glass =====
+           Web glassmorphism approximation (NOT official Apple Liquid Glass). Matches the
+           homepage: a faint warm aurora behind the page, and each thought floats as a
+           frosted glass card. The header, filters and footer stay flat over the aurora. */
+        :root {
+            --glass-blur: blur(20px) saturate(180%);
+            --glass-bg: linear-gradient(135deg, rgba(255,250,242,0.58), rgba(255,246,236,0.26));
+            --glass-border: rgba(255,255,255,0.5);
+            --glass-shadow: inset 0 1px 0 rgba(255,255,255,0.55), 0 16px 44px rgba(80,55,35,0.12);
+        }
+
+        [data-theme="dark"] {
+            --glass-bg: linear-gradient(135deg, rgba(78,62,50,0.5), rgba(38,31,25,0.44));
+            --glass-border: rgba(236,229,218,0.15);
+            --glass-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 16px 44px rgba(0,0,0,0.5);
+        }
+
+        /* Warm aurora field, fixed behind all content (z-index keeps it under the text) */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: -20%;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                radial-gradient(38% 48% at 18% 22%, rgba(208,138,94,0.20), transparent 60%),
+                radial-gradient(34% 44% at 82% 16%, rgba(168,100,60,0.16), transparent 62%),
+                radial-gradient(44% 52% at 74% 82%, rgba(143,82,48,0.15), transparent 64%),
+                radial-gradient(38% 44% at 24% 88%, rgba(230,200,150,0.17), transparent 62%);
+            filter: blur(16px);
+            animation: auroraDrift 42s ease-in-out infinite alternate;
+        }
+
+        [data-theme="dark"] body::before {
+            background:
+                radial-gradient(38% 48% at 18% 22%, rgba(208,138,94,0.16), transparent 60%),
+                radial-gradient(34% 44% at 82% 16%, rgba(120,72,44,0.20), transparent 62%),
+                radial-gradient(44% 52% at 74% 82%, rgba(96,60,40,0.24), transparent 64%),
+                radial-gradient(38% 44% at 24% 88%, rgba(150,110,70,0.14), transparent 62%);
+        }
+
+        @keyframes auroraDrift {
+            0%   { transform: translate3d(-1.5%, -1%, 0) scale(1.03); }
+            100% { transform: translate3d(1.5%, 2%, 0) scale(1.07); }
+        }
+
+        /* Theme toggle as glass */
+        .theme-toggle {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        /* Each thought floats as its own frosted glass card */
+        .post {
+            margin-bottom: 1rem;
+            padding: 0 1.6rem;
+            border-bottom: none;
+            border-radius: 16px;
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        @media (max-width: 768px) {
+            .post { padding: 0 1.2rem; }
+        }
+
+        /* Fallbacks: drop the aurora and serve solid panels */
+        @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+            .theme-toggle, .post { background: var(--bg-white); }
+        }
+        @media (prefers-reduced-transparency: reduce) {
+            body::before { display: none; }
+            .theme-toggle, .post {
+                background: var(--bg-white);
+                -webkit-backdrop-filter: none;
+                backdrop-filter: none;
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             * {
                 transition: none !important;

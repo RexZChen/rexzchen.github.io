@@ -527,6 +527,129 @@
             footer { padding: 2.2rem 1.25rem 2.6rem; }
         }
 
+        /* ===== Warm aurora glass =====
+           A web glassmorphism approximation (NOT official Apple Liquid Glass, which is native
+           to Apple platforms only): backdrop-filter + layered borders + a soft highlight.
+           A faint warm aurora sits behind the page so the frosted panels have real color to
+           refract; the rail, project cards and publications float as glass over it. */
+        :root {
+            --glass-blur: blur(20px) saturate(180%);
+            --glass-bg: linear-gradient(135deg, rgba(255,250,242,0.58), rgba(255,246,236,0.26));
+            --glass-border: rgba(255,255,255,0.5);
+            --glass-shadow: inset 0 1px 0 rgba(255,255,255,0.55), 0 16px 44px rgba(80,55,35,0.12);
+        }
+
+        [data-theme="dark"] {
+            --glass-bg: linear-gradient(135deg, rgba(78,62,50,0.5), rgba(38,31,25,0.44));
+            --glass-border: rgba(236,229,218,0.15);
+            --glass-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 16px 44px rgba(0,0,0,0.5);
+        }
+
+        /* Warm aurora field, fixed behind all content (z-index keeps it under the text) */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: -20%;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                radial-gradient(38% 48% at 18% 22%, rgba(208,138,94,0.20), transparent 60%),
+                radial-gradient(34% 44% at 82% 16%, rgba(168,100,60,0.16), transparent 62%),
+                radial-gradient(44% 52% at 74% 82%, rgba(143,82,48,0.15), transparent 64%),
+                radial-gradient(38% 44% at 24% 88%, rgba(230,200,150,0.17), transparent 62%);
+            filter: blur(16px);
+            animation: auroraDrift 42s ease-in-out infinite alternate;
+        }
+
+        [data-theme="dark"] body::before {
+            background:
+                radial-gradient(38% 48% at 18% 22%, rgba(208,138,94,0.16), transparent 60%),
+                radial-gradient(34% 44% at 82% 16%, rgba(120,72,44,0.20), transparent 62%),
+                radial-gradient(44% 52% at 74% 82%, rgba(96,60,40,0.24), transparent 64%),
+                radial-gradient(38% 44% at 24% 88%, rgba(150,110,70,0.14), transparent 62%);
+        }
+
+        @keyframes auroraDrift {
+            0%   { transform: translate3d(-1.5%, -1%, 0) scale(1.03); }
+            100% { transform: translate3d(1.5%, 2%, 0) scale(1.07); }
+        }
+
+        /* Theme toggle as glass */
+        .theme-toggle {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        /* Rail as a frosted glass card */
+        .rail {
+            padding: 1.9rem 1.5rem;
+            border-radius: 18px;
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        /* Each research project floats as its own glass card */
+        article {
+            padding: 1.6rem 1.6rem 1.8rem;
+            margin-top: 1.4rem;
+            border-radius: 18px;
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+        article:first-of-type { padding-top: 1.6rem; margin-top: 0.4rem; }
+        article + article { border-top: none; }
+
+        /* Publications grouped onto one glass card */
+        .pub-list {
+            padding: 0.4rem 1.6rem;
+            border-radius: 18px;
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: var(--glass-blur);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+        }
+
+        @media (max-width: 860px) {
+            /* Keep the rail flat on mobile (full-width glass cards get heavy); frost the nav */
+            .rail {
+                background: none;
+                -webkit-backdrop-filter: none;
+                backdrop-filter: none;
+                border: none;
+                box-shadow: none;
+                padding: 2.25rem 0 0;
+            }
+            .rail-nav {
+                background: var(--glass-bg);
+                -webkit-backdrop-filter: var(--glass-blur);
+                backdrop-filter: var(--glass-blur);
+                border-bottom: 1px solid var(--glass-border);
+            }
+        }
+
+        /* Fallbacks: drop the aurora and serve solid panels */
+        @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+            .theme-toggle, .rail, article, .pub-list { background: var(--bg-white); }
+        }
+        @media (prefers-reduced-transparency: reduce) {
+            body::before { display: none; }
+            .theme-toggle, .rail, article, .pub-list, .rail-nav {
+                background: var(--bg-white);
+                -webkit-backdrop-filter: none;
+                backdrop-filter: none;
+            }
+        }
+
         /* ---------- Reduced motion ---------- */
         @media (prefers-reduced-motion: reduce) {
             * {
