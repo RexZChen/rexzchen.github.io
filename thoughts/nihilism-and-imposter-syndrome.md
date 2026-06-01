@@ -4,7 +4,7 @@ like, imposter syndrome is that voice going *bro you're not good enough for this
 
 i got it both at the same time shortly after i started my phd. all the time. you submit to a top venue and your brain goes "lol you just got lucky." then you get a rejection and it's like "well nothing matters so who cares." somehow both feel true and neither is helpful.
 
-but here's some kinda weird equilibrium — can they cancel each other out? like if nothing matters, then why does it matter that you're not good enough? and if you really thought you weren't good enough, why do you care so much about something that supposedly doesn't matter?
+but here's some kinda weird equilibrium: can they cancel each other out? like if nothing matters, then why does it matter that you're not good enough? and if you really thought you weren't good enough, why do you care so much about something that supposedly doesn't matter?
 
 they literally contradict each other. neither one is telling you the full story.
 

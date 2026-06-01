@@ -12,7 +12,7 @@ and that's fine for engineering. that's debugging. that's fixing things that are
 
 but in a more researchy setup, the workflow is flipped. it's bottom up: (1) propose hypotheses about *potential* failures and verify them with surfacable evidence, and (2) transform those failures into design choices that mitigate the gaps.
 
-see the difference? one reacts to what's broken. the other imagines what *could* be broken — and builds around it before it happens. that second thing is the actual hard part of research, and it requires a kind of taste and intuition that current tools just don't have.
+see the difference? one reacts to what's broken. the other imagines what *could* be broken, and builds around it before it happens. that second thing is the actual hard part of research, and it requires a kind of taste and intuition that current tools just don't have.
 
 like, ai can help you run experiments faster, write boilerplate, summarize papers, sure. but can it look at a system and go "hmm, i have a feeling this will fall apart under X condition, let me design around that"? not really. not yet. it doesn't have that gut feeling you build from reading 200 papers and failing 15 times.
 

@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Zirong (Rex) Chen - Ph.D. candidate in Computer Science at Vanderbilt University specializing in AI Safety, Trustworthy AI, and reliable AI systems for critical applications.">
     <title>Zirong Chen - Computer Science Researcher</title>
+
+    <!-- Social / sharing meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Zirong (Rex) Chen - Computer Science Researcher">
+    <meta property="og:description" content="Ph.D. candidate at Vanderbilt University working on AI Safety, Trustworthy AI, and reliable AI for emergency response and smart cities.">
+    <meta property="og:image" content="imgs/me.jpeg">
+    <meta name="twitter:card" content="summary">
+    <meta name="theme-color" content="#f6f2ea">
+
+    <!-- Favicon: terminal prompt mark (a small nod) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23161b22'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='15' font-weight='700' fill='%232f9e54' text-anchor='middle'%3E%3E_%3C/text%3E%3C/svg%3E">
+
+    <!-- Typefaces: Geist (everything) + JetBrains Mono (small labels only) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,940 +29,516 @@
         }
 
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --text-dark: #2c3e50;
-            --text-light: #7f8c8d;
-            --bg-light: #ecf0f1;
-            --bg-white: #ffffff;
-            --shadow: 0 2px 10px rgba(0,0,0,0.08);
-            --shadow-hover: 0 4px 20px rgba(0,0,0,0.12);
-            --header-gradient-start: #2c3e50;
-            --header-gradient-end: #34495e;
-            --article-bg: rgba(52, 152, 219, 0.05);
-            --border-color: rgba(0,0,0,0.05);
+            --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+            --sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+            --primary-color: #211d18;   /* ink: headings + strong text */
+            --secondary-color: #8f5230; /* clay: link / accent text (AA on paper) */
+            --secondary-hover: #743f22;
+            --accent-color: #a8643c;    /* lighter clay: larger / bold accents */
+            --text-dark: #211d18;
+            --text-light: #635b51;      /* muted secondary text */
+            --bg-light: #f6f2ea;        /* warm paper, the page */
+            --bg-white: #faf7f0;        /* rare raised surface (code) */
+            --border-color: #e6ded0;    /* hairlines */
+            --shadow: 0 1px 2px rgba(33,29,24,0.06);
         }
 
         [data-theme="dark"] {
-            --primary-color: #ecf0f1;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --text-dark: #ecf0f1;
-            --text-light: #bdc3c7;
-            --bg-light: #1a1a1a;
-            --bg-white: #2c2c2c;
-            --shadow: 0 2px 10px rgba(0,0,0,0.3);
-            --shadow-hover: 0 4px 20px rgba(0,0,0,0.5);
-            --header-gradient-start: #1a1a1a;
-            --header-gradient-end: #2c2c2c;
-            --article-bg: rgba(52, 152, 219, 0.1);
-            --border-color: rgba(255,255,255,0.1);
+            --primary-color: #ece5da;
+            --secondary-color: #d08a5e;
+            --secondary-hover: #e0a079;
+            --accent-color: #d08a5e;
+            --text-dark: #ece5da;
+            --text-light: #a59a8c;
+            --bg-light: #1a1714;
+            --bg-white: #221d18;
+            --border-color: rgba(236,229,218,0.10);
+            --shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-            line-height: 1.6;
+            font-family: var(--sans);
+            font-size: 1rem;
+            line-height: 1.7;
             color: var(--text-dark);
             background-color: var(--bg-light);
-            overflow-x: hidden;
-            position: relative;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Circuit board pattern background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(52, 152, 219, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(231, 76, 60, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(0, 255, 0, 0.03) 0%, transparent 50%),
-                repeating-linear-gradient(
-                    45deg,
-                    transparent,
-                    transparent 10px,
-                    rgba(52, 152, 219, 0.01) 10px,
-                    rgba(52, 152, 219, 0.01) 20px
-                ),
-                repeating-linear-gradient(
-                    -45deg,
-                    transparent,
-                    transparent 10px,
-                    rgba(0, 255, 0, 0.01) 10px,
-                    rgba(0, 255, 0, 0.01) 20px
-                );
-            pointer-events: none;
-            z-index: 1;
-            animation: circuitPulse 20s ease-in-out infinite;
+        ::selection {
+            background: color-mix(in srgb, var(--accent-color) 22%, transparent);
         }
 
-        @keyframes circuitPulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+        /* ---------- Layout shell: sticky rail + content ---------- */
+        .layout {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 2.5rem 1rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 4.5rem;
+            align-items: start;
         }
 
-        [data-theme="dark"] body::before {
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(52, 152, 219, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(231, 76, 60, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(0, 255, 0, 0.05) 0%, transparent 50%),
-                repeating-linear-gradient(
-                    45deg,
-                    transparent,
-                    transparent 10px,
-                    rgba(52, 152, 219, 0.02) 10px,
-                    rgba(52, 152, 219, 0.02) 20px
-                ),
-                repeating-linear-gradient(
-                    -45deg,
-                    transparent,
-                    transparent 10px,
-                    rgba(0, 255, 0, 0.02) 10px,
-                    rgba(0, 255, 0, 0.02) 20px
-                );
+        .rail {
+            position: sticky;
+            top: 2.5rem;
+            align-self: start;
+            padding-top: 3.25rem;
         }
 
-        header {
-            background: linear-gradient(135deg, var(--header-gradient-start) 0%, var(--header-gradient-end) 100%);
-            color: white;
-            padding: 3rem 0;
-            text-align: center;
-            position: relative;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
-
-        .header-pattern {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.1;
-            background-image: 
-                repeating-linear-gradient(90deg, transparent, transparent 35px, rgba(255,255,255,0.1) 35px, rgba(255,255,255,0.1) 70px),
-                repeating-linear-gradient(0deg, transparent, transparent 35px, rgba(255,255,255,0.1) 35px, rgba(255,255,255,0.1) 70px);
-            animation: slide 20s linear infinite;
-        }
-
-        @keyframes slide {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(70px, 70px); }
-        }
-
-        .header-symbols {
-            margin: 1.5rem 0;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .symbol {
-            font-size: 1.2rem;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            padding: 0.5rem 1rem;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            background: rgba(0,0,0,0.2);
-        }
-
-        .symbol:hover {
-            transform: scale(1.1) translateY(-3px);
-            border-color: var(--secondary-color);
-            background: rgba(52, 152, 219, 0.2);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
-        }
-
-        .symbol.emergency:hover {
-            border-color: #e74c3c;
-            background: rgba(231, 76, 60, 0.2);
-            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
-        }
-
-        .symbol.ai:hover {
-            border-color: #3498db;
-            background: rgba(52, 152, 219, 0.2);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
-        }
-
-        .symbol.nlp:hover {
-            border-color: #9b59b6;
-            background: rgba(155, 89, 182, 0.2);
-            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
-        }
-
-        .symbol.city:hover {
-            border-color: #2ecc71;
-            background: rgba(46, 204, 113, 0.2);
-            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
-        }
-
-        .symbol::after {
-            content: attr(title);
-            position: absolute;
-            bottom: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.7rem;
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            background: rgba(0,0,0,0.8);
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .symbol:hover::after {
-            opacity: 1;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            font-weight: 300;
-            letter-spacing: 1px;
-            margin-bottom: 0.5rem;
-            font-family: 'Courier New', monospace;
-            position: relative;
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 3px;
-            height: 2.5rem;
-            background-color: #00ff00;
-            animation: blink 1s infinite;
-            vertical-align: text-bottom;
-            margin-left: 2px;
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
-        .terminal-text {
-            font-family: 'Courier New', monospace;
-            color: #00ff00;
-            text-shadow: 0 0 5px #00ff00;
-        }
-
-        [data-theme="dark"] .terminal-text {
-            color: #00ff00;
-            text-shadow: 0 0 10px #00ff00;
-        }
-
-        .header-info {
-            font-size: 1.1rem;
-            color: rgba(255,255,255,0.9);
+        .rail-photo {
+            width: 104px;
+            height: 104px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            display: block;
             margin-bottom: 1.5rem;
         }
 
-        .cv-link {
-            display: inline-block;
-            padding: 0.7rem 2rem;
-            background-color: var(--secondary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            font-family: 'Courier New', monospace;
-            position: relative;
-            overflow: hidden;
+        .rail h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.2;
+            color: var(--primary-color);
         }
 
-        .cv-link::before {
-            content: '> ';
-            position: absolute;
-            left: -20px;
-            transition: left 0.3s ease;
+        .rail-cn {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-top: 0.2rem;
         }
 
-        .cv-link:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            padding-left: 2.5rem;
-        }
-
-        .cv-link:hover::before {
-            left: 10px;
-        }
-
-        nav {
-            background-color: var(--bg-white);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow);
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-            padding: 0 1rem;
-        }
-
-        nav a {
+        .rail-title {
+            margin-top: 1rem;
+            font-size: 0.92rem;
+            line-height: 1.5;
             color: var(--text-dark);
+        }
+
+        .rail-title .muted { color: var(--text-light); }
+
+        .rail-tagline {
+            margin-top: 0.65rem;
+            font-size: 0.82rem;
+            line-height: 1.55;
+            color: var(--text-light);
+        }
+
+        .rail-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.05rem;
+            margin: 1.8rem 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .rail-nav a {
+            font-size: 0.9rem;
+            color: var(--text-light);
             text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            position: relative;
+            padding: 0.3rem 0;
+            transition: color 0.18s ease;
         }
 
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background-color: var(--secondary-color);
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
+        .rail-nav a:hover { color: var(--text-dark); }
 
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        nav a:hover {
+        .rail-nav a.active {
             color: var(--secondary-color);
+            font-weight: 500;
         }
 
-        main {
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 0 2rem;
+        .rail-links {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.6rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
         }
+
+        .rail-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.18s ease;
+        }
+
+        .rail-links a:hover {
+            color: var(--secondary-hover);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .cv-button {
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 0.42rem 0.95rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            margin-bottom: 0.25rem;
+            transition: background-color 0.18s ease, color 0.18s ease;
+        }
+
+        .cv-button:hover {
+            background-color: var(--secondary-color);
+            color: var(--bg-light);
+            text-decoration: none;
+        }
+
+        /* ---------- Content ---------- */
+        main { min-width: 0; }
 
         section {
-            background-color: var(--bg-white);
-            margin-bottom: 2rem;
-            padding: 3rem;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-color);
+            scroll-margin-top: 1.5rem;
         }
 
-        section:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
+        section:first-child {
+            padding-top: 3.25rem;
+            border-top: none;
         }
 
         h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.015em;
             color: var(--primary-color);
-            font-size: 2rem;
             margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-            font-family: 'Courier New', monospace;
-        }
-
-        h2::before {
-            content: '## ';
-            color: var(--secondary-color);
-            font-weight: normal;
-            opacity: 0.5;
-        }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background-color: var(--secondary-color);
-            transition: width 0.3s ease;
-        }
-
-        section:hover h2::after {
-            width: 100px;
         }
 
         h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
             color: var(--primary-color);
-            font-size: 1.3rem;
-            margin: 1.5rem 0 0.8rem 0;
-            font-family: 'Courier New', monospace;
+            margin-bottom: 0.5rem;
         }
 
-        h3::before {
-            content: '// ';
-            color: var(--secondary-color);
-            opacity: 0.5;
-        }
-
-        /* Code-style tags */
-        b {
-            background-color: rgba(52, 152, 219, 0.1);
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95em;
-            border: 1px solid rgba(52, 152, 219, 0.3);
-        }
-
-        [data-theme="dark"] b {
-            background-color: rgba(52, 152, 219, 0.2);
-            border-color: rgba(52, 152, 219, 0.5);
-        }
-
-        .about-me {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .profile-pic {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--secondary-color);
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-
-        .profile-pic:hover {
-            transform: scale(1.05);
-        }
-
-        .about-content {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .about-content p {
+        .section-note {
+            font-size: 0.82rem;
             color: var(--text-light);
-            line-height: 1.8;
-            font-size: 1.05rem;
+            margin-top: -0.9rem;
+            margin-bottom: 1.6rem;
         }
 
-        .about-content a {
+        .muted { color: var(--text-light); }
+
+        main a {
             color: var(--secondary-color);
             text-decoration: none;
-            transition: color 0.3s ease;
+            text-underline-offset: 3px;
+            transition: color 0.18s ease;
         }
 
-        .about-content a:hover {
-            color: var(--accent-color);
+        main a:hover {
+            color: var(--secondary-hover);
             text-decoration: underline;
         }
 
-        ul {
-            list-style: none;
-            padding-left: 0;
+        /* About */
+        .about-content p {
+            color: var(--text-dark);
+            font-size: 1.05rem;
+            max-width: 60ch;
+            text-wrap: pretty;
         }
 
-        ul li {
-            padding: 0.8rem 0;
+        .about-content p + p { margin-top: 1rem; }
+
+        /* Education */
+        .edu-list { list-style: none; }
+
+        .edu-list li {
+            display: flex;
+            gap: 1.4rem;
+            padding: 0.85rem 0;
             border-bottom: 1px solid var(--border-color);
-            transition: padding-left 0.3s ease;
         }
 
-        ul li:hover {
-            padding-left: 10px;
+        .edu-list li:last-child { border-bottom: none; }
+
+        .edu-year {
+            flex: 0 0 5.5rem;
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            color: var(--text-light);
+            padding-top: 0.2rem;
         }
 
-        ul li:last-child {
-            border-bottom: none;
+        .edu-body strong {
+            font-weight: 600;
+            color: var(--primary-color);
         }
 
-        /* News section with color scheme */
-        #news ul {
-            list-style: none;
-            padding-left: 0;
+        .edu-body .muted { font-size: 0.92rem; }
+
+        /* News */
+        .news-group + .news-group { margin-top: 1.8rem; }
+
+        .news-year {
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            letter-spacing: 0.06em;
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
         }
 
-        #news ul li {
-            padding: 0.8rem;
+        .news-list { list-style: none; }
+
+        .news-list li {
+            display: flex;
+            gap: 1.2rem;
+            padding: 0.6rem 0;
             border-bottom: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            position: relative;
-            margin-bottom: 0.5rem;
-            border-radius: 5px;
+            font-size: 0.93rem;
+            align-items: baseline;
         }
 
-        #news ul li:hover {
-            transform: translateX(3px);
-            box-shadow: var(--shadow);
+        .news-list li:last-child { border-bottom: none; }
+
+        .news-date {
+            flex: 0 0 2.8rem;
+            font-family: var(--mono);
+            font-size: 0.74rem;
+            color: var(--text-light);
         }
 
-        #news ul li:last-child {
-            border-bottom: none;
+        .news-text { flex: 1; color: var(--text-dark); }
+
+        /* Research projects */
+        article { padding: 1.9rem 0; }
+
+        article:first-of-type { padding-top: 0.4rem; }
+
+        article + article { border-top: 1px solid var(--border-color); }
+
+        article p {
+            color: var(--text-light);
+            max-width: 68ch;
+            text-wrap: pretty;
         }
 
-        /* Category colors for better readability */
-        .news-publication {
-            border-left: 4px solid #2ecc71;
-            background-color: rgba(46, 204, 113, 0.08);
-            padding-left: 1.8rem;
+        .keywords {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 0.7rem;
         }
 
-        .news-award {
-            border-left: 4px solid #d9534f;
-            background-color: rgba(217, 83, 79, 0.08);
-            padding-left: 1.8rem;
-        }
-
-        .news-event {
-            border-left: 4px solid #9b59b6;
-            background-color: rgba(155, 89, 182, 0.08);
-            padding-left: 1.8rem;
-        }
-
-        .news-product {
-            border-left: 4px solid #3498db;
-            background-color: rgba(52, 152, 219, 0.08);
-            padding-left: 1.8rem;
-        }
-
-        .news-service {
-            border-left: 4px solid #f0c419;
-            background-color: rgba(240, 196, 25, 0.08);
-            padding-left: 1.8rem;
-        }
-
-        .news-update {
-            border-left: 4px solid #95a5a6;
-            background-color: rgba(149, 165, 166, 0.08);
-            padding-left: 1.8rem;
-        }
-
-        article {
-            margin: 2rem 0;
-            padding: 2rem;
-            background-color: var(--article-bg);
-            border-radius: 8px;
-            border-left: 4px solid var(--secondary-color);
-            position: relative;
-            overflow: hidden;
-        }
-
-        article::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: pulse 4s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(0.8); opacity: 0.5; }
-            50% { transform: scale(1.2); opacity: 0.8; }
-        }
-
-        /* Special styling for emergency-related articles */
-        article:nth-child(2)::before {
-            background: radial-gradient(circle, rgba(231, 76, 60, 0.1) 0%, transparent 70%);
-        }
-
-        article img {
-            width: 100%;
-            max-width: 800px;
-            height: auto;
-            margin: 1rem auto;
-            display: block;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
+        .keywords em {
+            font-style: italic;
+            color: var(--text-dark);
         }
 
         .learn-more {
             display: inline-block;
-            margin-top: 0.5rem;
+            margin-top: 0.85rem;
             color: var(--secondary-color);
             text-decoration: none;
+            font-size: 0.88rem;
             font-weight: 500;
-            transition: color 0.3s ease;
         }
 
         .learn-more:hover {
-            color: var(--accent-color);
+            color: var(--secondary-hover);
             text-decoration: underline;
+            text-underline-offset: 3px;
         }
 
-        #contact a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            transition: color 0.3s ease;
+        article img {
+            width: 100%;
+            max-width: 720px;
+            height: auto;
+            margin-top: 1.4rem;
+            display: block;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
         }
 
-        #contact a:hover {
-            color: var(--accent-color);
-            text-decoration: underline;
+        /* Publications */
+        .pub-list { list-style: none; }
+
+        .pub-list li {
+            padding: 0.85rem 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.93rem;
+            line-height: 1.55;
         }
 
-        #revolver-map {
-            text-align: center;
-        }
+        .pub-list li:last-child { border-bottom: none; }
 
-        footer {
-            text-align: center;
-            padding: 2rem 0;
+        .pub-venue {
+            font-family: var(--mono);
+            font-size: 0.74rem;
             color: var(--text-light);
-            background-color: var(--bg-white);
-            margin-top: 3rem;
+            margin-right: 0.45rem;
         }
 
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2rem;
-            }
-
-            .about-me {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            section {
-                padding: 2rem 1.5rem;
-            }
-
-            nav ul {
-                gap: 1rem;
-            }
-
-            article img {
-                max-width: 100%;
-            }
+        .pub-award {
+            color: var(--accent-color);
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-right: 0.35rem;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .pub-list a {
+            color: var(--text-dark);
+            text-decoration: none;
+            background-image: linear-gradient(var(--secondary-color), var(--secondary-color));
+            background-size: 0 1px;
+            background-repeat: no-repeat;
+            background-position: left bottom;
+            padding-bottom: 1px;
+            transition: background-size 0.28s ease, color 0.2s ease;
         }
 
-        section {
-            animation: fadeIn 0.6s ease-out;
+        .pub-list a:hover {
+            background-size: 100% 1px;
+            color: var(--secondary-color);
         }
 
+        /* Contact */
+        #contact-info p {
+            line-height: 2;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        /* Visitor map */
+        #revolver-map .map-wrap {
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        /* Footer */
+        footer {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 2.5rem 2.5rem 3rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-light);
+            font-size: 0.82rem;
+        }
+
+        .egg {
+            display: inline-block;
+            margin-top: 0.7rem;
+            font-family: var(--mono);
+            font-size: 0.74rem;
+            letter-spacing: 0.04em;
+            color: var(--text-light);
+            opacity: 0.3;
+            text-decoration: none;
+            transition: opacity 0.4s ease, color 0.4s ease;
+        }
+
+        .egg:hover {
+            opacity: 0.95;
+            color: var(--secondary-color);
+        }
+
+        /* Theme toggle */
         .theme-toggle {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: var(--bg-white);
-            border: 2px solid var(--primary-color);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            top: 18px;
+            right: 18px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow);
             z-index: 1001;
+            transition: border-color 0.18s ease;
         }
 
-        .theme-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: var(--shadow-hover);
-        }
+        .theme-toggle:hover { border-color: var(--secondary-color); }
 
         .theme-toggle svg {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             fill: var(--primary-color);
             stroke: var(--primary-color);
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
-            transition: all 0.3s ease;
         }
 
         .theme-toggle svg circle,
-        .theme-toggle svg line {
-            fill: none;
-        }
+        .theme-toggle svg line { fill: none; }
 
-        body {
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        * {
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-        }
-
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Back to top button */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow-hover);
-            z-index: 999;
-        }
-
-        .back-to-top.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-5px);
-            background-color: #2980b9;
-            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
-        }
-
-        .back-to-top svg {
-            width: 24px;
-            height: 24px;
-            fill: white;
-        }
-
-        /* Enhanced CV button pulse */
-        @keyframes subtlePulse {
-            0% {
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2), 0 0 0 0 rgba(52, 152, 219, 0.4);
-            }
-            70% {
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2), 0 0 0 10px rgba(52, 152, 219, 0);
-            }
-            100% {
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2), 0 0 0 0 rgba(52, 152, 219, 0);
-            }
-        }
-
-        .cv-link {
-            animation: subtlePulse 2s infinite;
-        }
-
-        /* Enhanced publication links */
-        #contact a {
-            display: inline-block;
-            position: relative;
-            padding: 2px 0;
-            background: linear-gradient(to right, var(--secondary-color) 0%, var(--secondary-color) 100%);
-            background-size: 0% 2px;
-            background-repeat: no-repeat;
-            background-position: left bottom;
-            transition: all 0.3s ease;
-        }
-
-        #contact a:hover {
-            background-size: 100% 2px;
-            color: var(--secondary-color);
-        }
-
-        /* Highlight awards and achievements */
-        .highlight-award {
-            color: var(--accent-color);
-            font-size: 0.85em;
-            font-weight: 600;
-            margin-right: 6px;
-            font-family: 'Courier New', monospace;
-        }
-
-        /* Loading animation */
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-white);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-
-        .loader.hide {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .loader-dots {
-            display: flex;
-            gap: 10px;
-        }
-
-        .loader-dots div {
-            width: 15px;
-            height: 15px;
-            background-color: var(--secondary-color);
-            border-radius: 50%;
-            animation: loaderPulse 1.4s ease-in-out infinite;
-        }
-
-        .loader-dots div:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .loader-dots div:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes loaderPulse {
-            0%, 60%, 100% {
-                transform: scale(0.8);
-                opacity: 0.5;
-            }
-            30% {
-                transform: scale(1.2);
-                opacity: 1;
-            }
-        }
-
-        /* Improved mobile menu */
-        /* Mobile hamburger menu */
-        .mobile-menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 0.5rem;
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1002;
-            background: var(--bg-white);
-            border-radius: 5px;
-            box-shadow: var(--shadow);
-        }
-
-        .mobile-menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background-color: var(--primary-color);
-            margin: 3px 0;
-            transition: 0.3s;
-            transform-origin: center;
-        }
-
-        .mobile-menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .mobile-menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .mobile-menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-toggle {
-                display: flex;
-            }
-
-            nav ul {
-                position: fixed;
-                top: 0;
-                left: -100%;
-                width: 250px;
-                height: 100vh;
-                background: var(--bg-white);
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: flex-start;
-                padding: 5rem 2rem 2rem;
-                box-shadow: var(--shadow-hover);
-                transition: left 0.3s ease;
-                z-index: 1001;
-            }
-
-            nav ul.mobile-open {
-                left: 0;
-            }
-
-            nav ul li {
-                width: 100%;
-                margin: 0.5rem 0;
-            }
-
-            nav a {
+        /* ---------- Mobile ---------- */
+        @media (max-width: 860px) {
+            .layout {
                 display: block;
-                width: 100%;
-                font-size: 1.1rem;
-                padding: 1rem;
+                padding: 0 1.25rem 1rem;
+            }
+
+            .rail {
+                position: static;
+                padding-top: 2.25rem;
+            }
+
+            .rail-nav {
+                flex-direction: row;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                gap: 1.1rem;
+                position: sticky;
+                top: 0;
+                z-index: 50;
+                margin: 1.6rem -1.25rem 0;
+                padding: 0.7rem 3.6rem 0.7rem 1.25rem;
+                background-color: var(--bg-light);
+                border-top: none;
                 border-bottom: 1px solid var(--border-color);
+                scrollbar-width: none;
             }
 
-            .back-to-top {
-                bottom: 20px;
-                right: 20px;
-                width: 45px;
-                height: 45px;
+            .rail-nav::-webkit-scrollbar { display: none; }
+
+            .rail-nav a { white-space: nowrap; padding: 0; }
+
+            .rail-links {
+                margin-top: 1.4rem;
             }
 
-            .theme-toggle {
-                top: 15px;
-                right: 15px;
-                width: 45px;
-                height: 45px;
-            }
+            section { padding: 2.2rem 0; scroll-margin-top: 4rem; }
+            section:first-child { padding-top: 1.8rem; }
 
-            .header-symbols {
-                gap: 1rem;
-            }
+            article img { max-width: 100%; }
 
-            .symbol {
-                font-size: 1rem;
-                padding: 0.4rem 0.8rem;
+            footer { padding: 2.2rem 1.25rem 2.6rem; }
+        }
+
+        /* ---------- Reduced motion ---------- */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+                scroll-behavior: auto !important;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Loading animation -->
-    <div class="loader" id="loader">
-        <div class="loader-dots">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle color theme">
         <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display: none;">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -962,367 +554,267 @@
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
     </button>
-    <div class="mobile-menu-toggle" id="mobile-menu-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <header>
-        <div class="header-pattern"></div>
-        <h1><span id="typed-text"></span><span class="cursor"></span></h1>
-        <p class="header-info">Ph.D. Candidate in Computer Science | Vanderbilt University</p>
-        <div class="header-symbols">
-            <span class="symbol ai" title="Trustworthy AI & AI Safety">[Trustworthy AI]</span>
-            <span class="symbol nlp" title="Natural Language Processing & Large Language Models">[AI & NLP]</span>
-            <span class="symbol city" title="AI for Social Good">[Social Good]</span>
-        </div>
-        <a href="imgs/Zirong_Chen_CV_latest.pdf" class="cv-link" target="_blank">Download CV</a>
-    </header>
-    
-    <nav>
-        <ul>
-            <li><a href="#home">About Me</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#news">News</a></li>
-            <li><a href="#about">Research</a></li>
-            <li><a href="#contact">Publications</a></li>
-            <li><a href="#contact-info">Contact</a></li>
-        </ul>
-    </nav>
-    
-    <main>
-        <section id="home">
-            <h2>About Me</h2>
-            <div class="about-me">
-                <img src="imgs/me.jpeg" alt="Zirong Chen" class="profile-pic">
-                <div class="about-content">
-                    <p>Hello! My name is Zirong (Rex) Chen (陈子荣), currently pursuing a Ph.D. in Computer Science at <a href="https://www.vanderbilt.edu" target="_blank">Vanderbilt University</a> under Professor <a href="https://meiyima.github.io/" target="_blank">Meiyi Ma</a>'s supervision.
-                    My research focuses on AI Safety and Trustworthy AI, with particular emphasis on Natural Language Processing (NLP), reliable AI systems for critical applications, and trustworthy AI-driven solutions for Smart Cities and emergency response.
-                    I earned my bachelor's degree (B.E. in Computer Engineering) in China and my master's degree (M.S. in Computer Science) at Georgetown University.
-                    I am also a former basketball player in high school and college.</p>
-                </div>
-            </div>
-        </section>
-        
-        <section id="education">
-            <h2>Education</h2>
-            <ul>
-                <li>2021-2026(expected) <b>Ph.D. in Computer Science</b>, Vanderbilt University, Nashville, TN</li>
-                <li>2019-2021 <b>M.S. in Computer Science</b>, Georgetown University, Washington, DC</li>
-                <li>2015-2019 <b>B.E. in Computer Engineering</b>, Jinling Institute of Technology, Nanjing, China</li>
-            </ul>
-        </section>
-        
-        <section id="news">
-            <h2>News</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; margin-bottom: 1.5rem; padding: 1.2rem; background: linear-gradient(135deg, rgba(52, 152, 219, 0.03), rgba(155, 89, 182, 0.03)); border-radius: 10px; border: 1px solid var(--border-color);">
-                <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; font-family: 'Courier New', monospace; padding: 0.3rem;">
-                    <div style="width: 20px; height: 4px; background-color: #2ecc71; border-radius: 2px;"></div>
-                    <span>Publications</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; font-family: 'Courier New', monospace; padding: 0.3rem;">
-                    <div style="width: 20px; height: 4px; background-color: #d9534f; border-radius: 2px;"></div>
-                    <span>Awards & Grants</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; font-family: 'Courier New', monospace; padding: 0.3rem;">
-                    <div style="width: 20px; height: 4px; background-color: #9b59b6; border-radius: 2px;"></div>
-                    <span>Events & Talks</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; font-family: 'Courier New', monospace; padding: 0.3rem;">
-                    <div style="width: 20px; height: 4px; background-color: #3498db; border-radius: 2px;"></div>
-                    <span>Product Launches</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; font-family: 'Courier New', monospace; padding: 0.3rem;">
-                    <div style="width: 20px; height: 4px; background-color: #f0c419; border-radius: 2px;"></div>
-                    <span>Academic Service</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; font-family: 'Courier New', monospace; padding: 0.3rem;">
-                    <div style="width: 20px; height: 4px; background-color: #95a5a6; border-radius: 2px;"></div>
-                    <span>Updates</span>
-                </div>
-            </div>
-            <ul>
-                <li class="news-update">... Last Updated: April 2026 ...</li>
-                <li class="news-publication">[Apr. 2026] Our paper <a href="https://arxiv.org/pdf/2603.05361" target="_blank">PACE: A Personalized Adaptive Curriculum Engine for 9-1-1 Call-taker Training</a> is accepted by IJCAI-26 and ECAI-26 (23.96% acceptance rate)! See you in Bremen, Germany!</li>
-                <li class="news-event">[Mar. 2026] Invited talk "Empowering 9-1-1 Training with Trustworthy AI" at Trustworthy AI Community, <a href="https://www.ericsson.com/en" target="_blank">Ericsson AB</a>, Sweden by <a href="https://sites.google.com/view/rafiainam/home" target="_blank">Dr. Rafia Inam</a>. See you (virtually) in Sweden!</li>
-                <li class="news-publication">[Feb. 2026] Our LogiEx (Integrating Formal Logic and LLMs for Explainable Transit Planning) is accepted by ICCPS-2026! Shoutout to first author: <a href="https://ziyanan.github.io/" target="_blank">Ziyan An</a>.</li>
-                <li class="news-product">[Jan. 2026] We demoed the first version of our dispatching simulator under the Angie platform at MNDEC with domain experts!</li>
-                <li class="news-event">[Nov. 2025] Invited talk "Neurosymbolic AI for Safety-Critical Systems" at <a href="https://dtai.cs.kuleuven.be/" target="_blank">DTAI Lab</a>, <a href="https://www.kuleuven.be/english/kuleuven" target="_blank">KU Leuven</a> by <a href="https://scholar.google.com/citations?user=dgobB6AAAAAJ&hl=en" target="_blank">Dr. Luc De Raedt</a> and <a href="https://jessa.github.io/" target="_blank">Dr. Jessa Bekker</a>. See you (virtually) in Belgium!</li>
-                <li class="news-publication">[Nov. 2025] Our LwP (Learning with Preserving) is accepted by AAAI-2026 as Oral Spotlight! See you in Singapore! Shoutout to first authors: <a href="https://hcwdavid.github.io/" target="_blank">David Wang</a>, <a href="https://www.linkedin.com/in/siwoo-bae-78a52332b/" target="_blank">Siwoo Bae</a>.</li>
-                <li class="news-event">[Oct. 2025] Invited guest talk on our Angie work at <a href="https://hoques.com/" target="_blank">Dr. Ehsan Hoque</a>'s <a href="https://roc-hci.com/" target="_blank">ROC-HCI Lab</a> at University of Rochester.</li>
-                <li class="news-event">[Aug. 2025] We presented LogiDebrief (oral + poster @ IJCAI) in Montreal, returned to Vandy, Anchor Down!</li>
-                <li class="news-award">[Jul. 2025] I won IJCAI volunteer scholarship!</li>
-                <li class="news-award">[Jun. 2025] Our project won <a href="https://cttc.co/article/20250605/vanderbilt-announces-innovation-catalyst-fund-awardees-february-2025-cycle" target="_blank">Vanderbilt Catalyst Funds</a>!</li>
-                <li class="news-service">[May 2025] I joined <a href="https://ailabs.epiqglobal.com/" target="_blank">Epiq AI Labs</a> as an AI Research Fellow (intern), researching under legal AI topics, see you in NYC!</li>
-                <li class="news-publication">[Apr. 2025] Our work LogiDebrief is accepted by IJCAI-2025! See you in Montreal, CA!</li>
-                <li class="news-award">[Apr. 2025] Our project is awarded by Google again (Gemma3 Academic Program)!</li>
-                <li class="news-product">[Mar. 2025] Angie now has two solutions: desktop and web!</li>
-                <li class="news-product">[Feb. 2025] Sim911 and our newly developed debriefing function is now also available online!</li>
-                <li class="news-publication">[Jan. 2025] Our work Sim911 is selected as Oral Spotlight (4.9%) at AAAI-25!</li>
-                <li class="news-publication">[Dec. 2024] Our paper Sim911 is accepted by AAAI-25! See you in Philadelphia.</li>
-                <li class="news-award">[Oct. 2024] Our project is awarded by <a href="https://research.google/programs-and-events/google-academic-research-awards/google-academic-research-award-program-recipients/" target="_blank">Google Academic Research Award</a>!</li>
-                <li class="news-event">[Sep. 2024] We were invited (permanently) to present our work at <a href="https://lab.vanderbilt.edu/live/2024/06/21/a-gen-ai-enabled-system-for-9-1-1-call-takers-training-in-emergency-response-simer/" target="_blank">LIVE session</a>.</li>
-                <li class="news-event">[Sep. 2024] We were invited to Innovation Panel organized by Davidson County and Sheriff's Office.</li>
-                <li class="news-award">[Aug. 2024] Our project SimER/Angie got funded by NSF(pre-announcement).</li>
-                <li class="news-award">[Aug. 2024] We were awarded by <a href="https://openai.com/form/researcher-access-program/" target="_blank">OpenAI Research Access Program</a>.</li>
-                <li class="news-product">[Jul. 2024] We launched and deploy SimER/Angie V2 at DEC!</li>
-                <li class="news-event">[Jun. 2024] We hosted a Workshop on Future Technologies for Emergency Response and Public Safety!</li>
-                <li class="news-event">[May 2024] We were invited to TN State Gov. of Edu.'s K-12 Event at Peabody!</li>
-                <li class="news-product">[Apr. 2024] SimER/Angie prototype first participates in real-world training!</li>
-                <li class="news-award">[Mar. 2024] We won Vanderbilt Generative AI Seed Grant!</li>
-                <li class="news-event">[Feb. 2024] We were at AAAI 2024 in Vancouver, CA.</li>
-                <li class="news-publication">[Feb. 2024] Our work Auto311 is selected as Spotlight Oral Presentation (6%) at AAAI 2024!</li>
-                <li class="news-service">[Jan. 2024] Serve as TA for Automated Verification.</li>
-                <li class="news-award">[Jan. 2024] I won AAAI Scholarship and Volunteer Award!</li>
-                <li class="news-award">[Dec. 2023] I won Vanderbilt Graduate Student Travel Grant!</li>
-                <li class="news-publication">[Dec. 2023] Our paper Auto311 is accepted by AAAI-24! See you in Vancouver!</li>
-            </ul>
-        </section>
-        
-        <section id="about">
-            <h2>Research Projects</h2>
-            <article>
-                <h3>Personalized Adaptive Curriculum for 9-1-1 Training</h3>
-                <p>PACE is a personalized adaptive curriculum engine that tailors 9-1-1 call-taker training to individual trainees. By modeling trainee proficiency and dynamically adjusting scenario difficulty, PACE delivers targeted practice that improves learning efficiency in safety-critical emergency response training.</p>
-                <p><b>Keywords: <i>Adaptive Learning, Trustworthy AI, Safety-Critical Training</i></b></p>
-                <a href="https://arxiv.org/pdf/2603.05361" class="learn-more" target="_blank">Learn More</a>
-                <img src="imgs/PACE.png" alt="PACE system architecture showing personalized adaptive curriculum engine for 9-1-1 call-taker training">
-            </article>
 
-            <article>
-                <h3>Logic-informed Call-taking Performance Debriefing</h3>
-                <p>We develop trustworthy AI systems that decompose LLM runtime into modularized function calls enhanced with Signal Temporal Logic, ensuring reliable and interpretable performance evaluation for safety-critical call-taking scenarios.</p>
-                <p><b>Keywords: <i>Trustworthy AI, AI Safety, Reliable LLMs</i></b></p>
-                <a href="https://arxiv.org/pdf/2505.03985" class="learn-more" target="_blank">Learn More</a>
-                <img src="imgs/logidebrief.png" alt="LogiDebrief system architecture showing LLM integration with Signal Temporal Logic for automated debriefing">
-            </article>
-            
-            <article>
-                <h3>Customized Emergency Response Training</h3>
-                <p>Collaborating with Metro Nashville Department of Emergency Communications, we develop Angie/SimER - a safety-critical AI system that provides reliable, trustworthy simulation environments for call-taker training in high-stakes emergency response scenarios.</p>
-                <p><b>Keywords: <i>Safety-Critical AI, Trustworthy LLMs, Reliable Systems</i></b></p>
-                <a href="https://ojs.aaai.org/index.php/AAAI/article/view/35006" class="learn-more">Learn More</a>
-                <img src="imgs/simer_overview.png" alt="SimER system overview showing AI-driven simulation environment for call-taker training with Metro Nashville DEC">
-            </article>
-            
-            <article>
-                <h3>Trustworthy Emergency Response Systems</h3>
-                <p>We develop reliable AI systems with built-in safety guarantees that enhance emergency response decision-making. Our trustworthy machine learning approaches ensure robust performance in critical situations while maintaining transparency and accountability.</p>
-                <p><b>Keywords: <i>AI Safety, Trustworthy ML, Reliable Decision Systems</i></b></p>
-                <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199" class="learn-more">Learn More</a>
-                <img src="imgs/auto311.png" alt="Auto311 system diagram showing confidence-guided automated processing for non-emergency calls">
-            </article>
-            
-            <article>
-                <h3>Adaptable City Knowledge</h3>
-                <p>The Adaptable City Knowledge project aims to create a dynamic, data-driven platform that helps cities respond to evolving challenges. From traffic management to disaster preparedness, this initiative fosters collaboration between city officials, businesses, and residents to promote resilience.</p>
-                <p><b>Keywords: <i>AI/ML, NLP, Life-long Learning</i></b></p>
-                <a href="https://ieeexplore.ieee.org/abstract/document/9821044" class="learn-more">Learn More</a>
-                <img src="imgs/CitySpecOverview.png" alt="CitySpec system architecture for intelligent requirement specification in smart cities with formal verification">
-            </article>
-        </section>
-        
-        <section id="contact">
-            <h2>Selected Publications</h2>
-            <p>
-                [IJCAI-26 / ECAI-26] <a href="https://arxiv.org/pdf/2603.05361" target="_blank">PACE: A Personalized Adaptive Curriculum Engine for 9-1-1 Call-taker Training</a><br>
-                [AAAI-26] <span class="highlight-award">(Oral Spotlight - 17.6%)</span> <a href="https://arxiv.org/pdf/2511.11676" target="_blank">Learning with Preserving for Continual Multitask Learning</a><br>
-                [ICCPS-26] LogiEx: Integrating Formal Logic and LLMs for Explainable Transit Planning<br>
-                [IJCAI-25] <span class="highlight-award">(Oral Spotlight - 13%)</span> <a href="https://arxiv.org/pdf/2505.03985" target="_blank">LogiDebrief: A Signal-Temporal Logic based Automated Debriefing Approach with Large Language Models Integration</a><br>
-                [AAMAS-25] <a href="https://arxiv.org/pdf/2505.00610" target="_blank">Combining LLMs with a Logic-Based Framework to Explain MCTS</a><br>
-                [AAAI-25] <span class="highlight-award">(Oral Spotlight - 4.9%)</span> <a href="https://ojs.aaai.org/index.php/AAAI/article/view/35006">Sim911: Towards Effective and Equitable 9-1-1 Dispatcher Training with an LLM-Enabled Simulation</a><br>
-                [AAAI-24] <span class="highlight-award">(Oral Spotlight - 6%)</span> <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199">Auto311: A Confidence-Guided Automated System for Non-emergency Calls</a><br>
-                [Pervasive and Mobile Computing] <a href="https://www.sciencedirect.com/science/article/pii/S1574119223000603">CitySpec with shield: A secure intelligent assistant for requirement formalization</a><br>
-                [IEEE SmartComp 22] <span class="highlight-award">(Best Paper Finalist)</span> <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9821044">Cityspec: An intelligent assistant system for requirement specification in smart cities</a><br>
-                [IEEE SmartComp 22] <a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9820752">An intelligent assistant for converting city requirements to formal specification</a>
-            </p>
-        </section>
-        
-        <section id="contact-info">
-            <h2>Contact</h2>
-            <p>
-                <strong>Email:</strong> zirong.chen AT vanderbilt.edu<br>
-                <strong>Office:</strong> <a href="https://www.isis.vanderbilt.edu/" target="_blank">Institute for Software Integrated Systems</a>, Vanderbilt University<br>
-                <strong>Address:</strong> 1025 16th Ave S, Nashville, TN 37212<br>
-                <strong>Links:</strong> 
-                <a href="https://scholar.google.com/citations?user=wo6wou8AAAAJ" target="_blank">Google Scholar</a> |
-                <a href="https://orcid.org/0000-0002-6466-4549" target="_blank">ORCID</a> |
+    <div class="layout">
+        <aside class="rail">
+            <img src="imgs/me.jpeg" alt="Zirong Chen" class="rail-photo">
+            <h1>Zirong (Rex) Chen</h1>
+            <div class="rail-cn">陈子荣</div>
+            <div class="rail-title">
+                Ph.D. Candidate, Computer Science<br>
+                <span class="muted">Vanderbilt University</span>
+            </div>
+            <div class="rail-tagline">Trustworthy AI, NLP, and AI for Social Good</div>
+
+            <nav class="rail-nav">
+                <a href="#home">About</a>
+                <a href="#education">Education</a>
+                <a href="#news">News</a>
+                <a href="#about">Research</a>
+                <a href="#contact">Publications</a>
+                <a href="#contact-info">Contact</a>
+            </nav>
+
+            <div class="rail-links">
+                <a class="cv-button" href="imgs/Zirong_Chen_CV_latest.pdf" target="_blank">Download CV</a>
+                <a href="https://scholar.google.com/citations?user=wo6wou8AAAAJ" target="_blank">Google Scholar</a>
+                <a href="https://orcid.org/0000-0002-6466-4549" target="_blank">ORCID</a>
                 <a href="https://www.linkedin.com/in/zirong-chen-567070190" target="_blank">LinkedIn</a>
-            </p>
-        </section>
-        
-        <section id="revolver-map">
-            <h2>Visitor Map</h2>
-            <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=_DpzN4jsym39EjKuInOrNcu-fQx1Sh7WYuds9G9BdCw&cl=ffffff&w=a"></script>
-        </section>
-    </main>
-    
+            </div>
+        </aside>
+
+        <main>
+            <section id="home">
+                <h2>About</h2>
+                <div class="about-content">
+                    <p>Hello! My name is Zirong (Rex) Chen (陈子荣), currently pursuing a Ph.D. in Computer Science at <a href="https://www.vanderbilt.edu" target="_blank">Vanderbilt University</a> under Professor <a href="https://meiyima.github.io/" target="_blank">Meiyi Ma</a>'s supervision. My research focuses on AI Safety and Trustworthy AI, with particular emphasis on Natural Language Processing (NLP), reliable AI systems for critical applications, and trustworthy AI-driven solutions for Smart Cities and emergency response.</p>
+                    <p>I earned my bachelor's degree (B.E. in Computer Engineering) in China and my master's degree (M.S. in Computer Science) at Georgetown University. I was a basketball athlete in high school and college.</p>
+                </div>
+            </section>
+
+            <section id="education">
+                <h2>Education</h2>
+                <ul class="edu-list">
+                    <li>
+                        <span class="edu-year">2021-2026</span>
+                        <span class="edu-body"><strong>Ph.D. in Computer Science</strong><br><span class="muted">Vanderbilt University, Nashville, TN</span></span>
+                    </li>
+                    <li>
+                        <span class="edu-year">2019-2021</span>
+                        <span class="edu-body"><strong>M.S. in Computer Science</strong><br><span class="muted">Georgetown University, Washington, DC</span></span>
+                    </li>
+                    <li>
+                        <span class="edu-year">2015-2019</span>
+                        <span class="edu-body"><strong>B.E. in Computer Engineering</strong><br><span class="muted">Jinling Institute of Technology, Nanjing, China</span></span>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="news">
+                <h2>News</h2>
+                <p class="section-note">Last updated April 2026.</p>
+
+                <div class="news-group">
+                    <div class="news-year">2026</div>
+                    <ul class="news-list">
+                        <li><span class="news-date">Apr.</span><span class="news-text">Our paper <a href="https://arxiv.org/pdf/2603.05361" target="_blank">PACE: A Personalized Adaptive Curriculum Engine for 9-1-1 Call-taker Training</a> is accepted by IJCAI-26 and ECAI-26 (23.96% acceptance rate). See you in Bremen, Germany!</span></li>
+                        <li><span class="news-date">Mar.</span><span class="news-text">Invited talk "Empowering 9-1-1 Training with Trustworthy AI" at Trustworthy AI Community, <a href="https://www.ericsson.com/en" target="_blank">Ericsson AB</a>, Sweden by <a href="https://sites.google.com/view/rafiainam/home" target="_blank">Dr. Rafia Inam</a>. See you (virtually) in Sweden!</span></li>
+                        <li><span class="news-date">Feb.</span><span class="news-text">Our LogiEx (Integrating Formal Logic and LLMs for Explainable Transit Planning) is accepted by ICCPS-2026! Shoutout to first author <a href="https://ziyanan.github.io/" target="_blank">Ziyan An</a>.</span></li>
+                        <li><span class="news-date">Jan.</span><span class="news-text">We demoed the first version of our dispatching simulator under the Angie platform at MNDEC with domain experts.</span></li>
+                    </ul>
+                </div>
+
+                <div class="news-group">
+                    <div class="news-year">2025</div>
+                    <ul class="news-list">
+                        <li><span class="news-date">Nov.</span><span class="news-text">Invited talk "Neurosymbolic AI for Safety-Critical Systems" at <a href="https://dtai.cs.kuleuven.be/" target="_blank">DTAI Lab</a>, <a href="https://www.kuleuven.be/english/kuleuven" target="_blank">KU Leuven</a> by <a href="https://scholar.google.com/citations?user=dgobB6AAAAAJ&hl=en" target="_blank">Dr. Luc De Raedt</a> and <a href="https://jessa.github.io/" target="_blank">Dr. Jessa Bekker</a>. See you (virtually) in Belgium!</span></li>
+                        <li><span class="news-date">Nov.</span><span class="news-text">Our LwP (Learning with Preserving) is accepted by AAAI-2026 as Oral Spotlight! See you in Singapore! Shoutout to first authors <a href="https://hcwdavid.github.io/" target="_blank">David Wang</a> and <a href="https://www.linkedin.com/in/siwoo-bae-78a52332b/" target="_blank">Siwoo Bae</a>.</span></li>
+                        <li><span class="news-date">Oct.</span><span class="news-text">Invited guest talk on our Angie work at <a href="https://hoques.com/" target="_blank">Dr. Ehsan Hoque</a>'s <a href="https://roc-hci.com/" target="_blank">ROC-HCI Lab</a> at University of Rochester.</span></li>
+                        <li><span class="news-date">Aug.</span><span class="news-text">We presented LogiDebrief (oral and poster at IJCAI) in Montreal, returned to Vandy, Anchor Down!</span></li>
+                        <li><span class="news-date">Jul.</span><span class="news-text">I won the IJCAI volunteer scholarship!</span></li>
+                        <li><span class="news-date">Jun.</span><span class="news-text">Our project won the <a href="https://cttc.co/article/20250605/vanderbilt-announces-innovation-catalyst-fund-awardees-february-2025-cycle" target="_blank">Vanderbilt Catalyst Funds</a>!</span></li>
+                        <li><span class="news-date">May</span><span class="news-text">I joined <a href="https://ailabs.epiqglobal.com/" target="_blank">Epiq AI Labs</a> as an AI Research Fellow (intern), researching legal AI topics, see you in NYC!</span></li>
+                        <li><span class="news-date">Apr.</span><span class="news-text">Our work LogiDebrief is accepted by IJCAI-2025! See you in Montreal, CA!</span></li>
+                        <li><span class="news-date">Apr.</span><span class="news-text">Our project is awarded by Google again (Gemma3 Academic Program)!</span></li>
+                        <li><span class="news-date">Mar.</span><span class="news-text">Angie now has two solutions: desktop and web!</span></li>
+                        <li><span class="news-date">Feb.</span><span class="news-text">Sim911 and our newly developed debriefing function are now also available online!</span></li>
+                        <li><span class="news-date">Jan.</span><span class="news-text">Our work Sim911 is selected as Oral Spotlight (4.9%) at AAAI-25!</span></li>
+                    </ul>
+                </div>
+
+                <div class="news-group">
+                    <div class="news-year">2024</div>
+                    <ul class="news-list">
+                        <li><span class="news-date">Dec.</span><span class="news-text">Our paper Sim911 is accepted by AAAI-25! See you in Philadelphia.</span></li>
+                        <li><span class="news-date">Oct.</span><span class="news-text">Our project is awarded by the <a href="https://research.google/programs-and-events/google-academic-research-awards/google-academic-research-award-program-recipients/" target="_blank">Google Academic Research Award</a>!</span></li>
+                        <li><span class="news-date">Sep.</span><span class="news-text">We were invited (permanently) to present our work at the <a href="https://lab.vanderbilt.edu/live/2024/06/21/a-gen-ai-enabled-system-for-9-1-1-call-takers-training-in-emergency-response-simer/" target="_blank">LIVE session</a>.</span></li>
+                        <li><span class="news-date">Sep.</span><span class="news-text">We were invited to the Innovation Panel organized by Davidson County and the Sheriff's Office.</span></li>
+                        <li><span class="news-date">Aug.</span><span class="news-text">Our project SimER/Angie got funded by NSF (pre-announcement).</span></li>
+                        <li><span class="news-date">Aug.</span><span class="news-text">We were awarded by the <a href="https://openai.com/form/researcher-access-program/" target="_blank">OpenAI Research Access Program</a>.</span></li>
+                        <li><span class="news-date">Jul.</span><span class="news-text">We launched and deployed SimER/Angie V2 at DEC!</span></li>
+                        <li><span class="news-date">Jun.</span><span class="news-text">We hosted a Workshop on Future Technologies for Emergency Response and Public Safety!</span></li>
+                        <li><span class="news-date">May</span><span class="news-text">We were invited to the TN State Government of Education's K-12 Event at Peabody!</span></li>
+                        <li><span class="news-date">Apr.</span><span class="news-text">SimER/Angie prototype first participates in real-world training!</span></li>
+                        <li><span class="news-date">Mar.</span><span class="news-text">We won the Vanderbilt Generative AI Seed Grant!</span></li>
+                        <li><span class="news-date">Feb.</span><span class="news-text">We were at AAAI 2024 in Vancouver, CA.</span></li>
+                        <li><span class="news-date">Feb.</span><span class="news-text">Our work Auto311 is selected as Spotlight Oral Presentation (6%) at AAAI 2024!</span></li>
+                        <li><span class="news-date">Jan.</span><span class="news-text">Serve as TA for Automated Verification.</span></li>
+                        <li><span class="news-date">Jan.</span><span class="news-text">I won the AAAI Scholarship and Volunteer Award!</span></li>
+                    </ul>
+                </div>
+
+                <div class="news-group">
+                    <div class="news-year">2023</div>
+                    <ul class="news-list">
+                        <li><span class="news-date">Dec.</span><span class="news-text">I won the Vanderbilt Graduate Student Travel Grant!</span></li>
+                        <li><span class="news-date">Dec.</span><span class="news-text">Our paper Auto311 is accepted by AAAI-24! See you in Vancouver!</span></li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="about">
+                <h2>Research Projects</h2>
+                <article>
+                    <h3>Personalized Adaptive Curriculum for 9-1-1 Training</h3>
+                    <p>PACE is a personalized adaptive curriculum engine that tailors 9-1-1 call-taker training to individual trainees. By modeling trainee proficiency and dynamically adjusting scenario difficulty, PACE delivers targeted practice that improves learning efficiency in safety-critical emergency response training.</p>
+                    <p class="keywords">Keywords: <em>Adaptive Learning, Trustworthy AI, Safety-Critical Training</em></p>
+                    <a href="https://arxiv.org/pdf/2603.05361" class="learn-more" target="_blank">Learn more &rarr;</a>
+                    <img src="imgs/PACE.png" alt="PACE system architecture showing personalized adaptive curriculum engine for 9-1-1 call-taker training">
+                </article>
+
+                <article>
+                    <h3>Logic-informed Call-taking Performance Debriefing</h3>
+                    <p>We develop trustworthy AI systems that decompose LLM runtime into modularized function calls enhanced with Signal Temporal Logic, ensuring reliable and interpretable performance evaluation for safety-critical call-taking scenarios.</p>
+                    <p class="keywords">Keywords: <em>Trustworthy AI, AI Safety, Reliable LLMs</em></p>
+                    <a href="https://arxiv.org/pdf/2505.03985" class="learn-more" target="_blank">Learn more &rarr;</a>
+                    <img src="imgs/logidebrief.png" alt="LogiDebrief system architecture showing LLM integration with Signal Temporal Logic for automated debriefing">
+                </article>
+
+                <article>
+                    <h3>Customized Emergency Response Training</h3>
+                    <p>Collaborating with Metro Nashville Department of Emergency Communications, we develop Angie/SimER, a safety-critical AI system that provides reliable, trustworthy simulation environments for call-taker training in high-stakes emergency response scenarios.</p>
+                    <p class="keywords">Keywords: <em>Safety-Critical AI, Trustworthy LLMs, Reliable Systems</em></p>
+                    <a href="https://ojs.aaai.org/index.php/AAAI/article/view/35006" class="learn-more">Learn more &rarr;</a>
+                    <img src="imgs/simer_overview.png" alt="SimER system overview showing AI-driven simulation environment for call-taker training with Metro Nashville DEC">
+                </article>
+
+                <article>
+                    <h3>Trustworthy Emergency Response Systems</h3>
+                    <p>We develop reliable AI systems with built-in safety guarantees that enhance emergency response decision-making. Our trustworthy machine learning approaches ensure robust performance in critical situations while maintaining transparency and accountability.</p>
+                    <p class="keywords">Keywords: <em>AI Safety, Trustworthy ML, Reliable Decision Systems</em></p>
+                    <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199" class="learn-more">Learn more &rarr;</a>
+                    <img src="imgs/auto311.png" alt="Auto311 system diagram showing confidence-guided automated processing for non-emergency calls">
+                </article>
+
+                <article>
+                    <h3>Adaptable City Knowledge</h3>
+                    <p>The Adaptable City Knowledge project aims to create a dynamic, data-driven platform that helps cities respond to evolving challenges. From traffic management to disaster preparedness, this initiative fosters collaboration between city officials, businesses, and residents to promote resilience.</p>
+                    <p class="keywords">Keywords: <em>AI/ML, NLP, Life-long Learning</em></p>
+                    <a href="https://ieeexplore.ieee.org/abstract/document/9821044" class="learn-more">Learn more &rarr;</a>
+                    <img src="imgs/CitySpecOverview.png" alt="CitySpec system architecture for intelligent requirement specification in smart cities with formal verification">
+                </article>
+            </section>
+
+            <section id="contact">
+                <h2>Selected Publications</h2>
+                <ul class="pub-list">
+                    <li><span class="pub-venue">IJCAI-26 / ECAI-26</span><a href="https://arxiv.org/pdf/2603.05361" target="_blank">PACE: A Personalized Adaptive Curriculum Engine for 9-1-1 Call-taker Training</a></li>
+                    <li><span class="pub-venue">AAAI-26</span><span class="pub-award">Oral Spotlight, 17.6%</span><a href="https://arxiv.org/pdf/2511.11676" target="_blank">Learning with Preserving for Continual Multitask Learning</a></li>
+                    <li><span class="pub-venue">ICCPS-26</span>LogiEx: Integrating Formal Logic and LLMs for Explainable Transit Planning</li>
+                    <li><span class="pub-venue">IJCAI-25</span><span class="pub-award">Oral Spotlight, 13%</span><a href="https://arxiv.org/pdf/2505.03985" target="_blank">LogiDebrief: A Signal-Temporal Logic based Automated Debriefing Approach with Large Language Models Integration</a></li>
+                    <li><span class="pub-venue">AAMAS-25</span><a href="https://arxiv.org/pdf/2505.00610" target="_blank">Combining LLMs with a Logic-Based Framework to Explain MCTS</a></li>
+                    <li><span class="pub-venue">AAAI-25</span><span class="pub-award">Oral Spotlight, 4.9%</span><a href="https://ojs.aaai.org/index.php/AAAI/article/view/35006">Sim911: Towards Effective and Equitable 9-1-1 Dispatcher Training with an LLM-Enabled Simulation</a></li>
+                    <li><span class="pub-venue">AAAI-24</span><span class="pub-award">Oral Spotlight, 6%</span><a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199">Auto311: A Confidence-Guided Automated System for Non-emergency Calls</a></li>
+                    <li><span class="pub-venue">Pervasive and Mobile Computing</span><a href="https://www.sciencedirect.com/science/article/pii/S1574119223000603">CitySpec with shield: A secure intelligent assistant for requirement formalization</a></li>
+                    <li><span class="pub-venue">IEEE SmartComp 22</span><span class="pub-award">Best Paper Finalist</span><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9821044">CitySpec: An intelligent assistant system for requirement specification in smart cities</a></li>
+                    <li><span class="pub-venue">IEEE SmartComp 22</span><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9820752">An intelligent assistant for converting city requirements to formal specification</a></li>
+                </ul>
+            </section>
+
+            <section id="contact-info">
+                <h2>Contact</h2>
+                <p>
+                    <strong>Email:</strong> zirong.chen AT vanderbilt.edu<br>
+                    <strong>Office:</strong> <a href="https://www.isis.vanderbilt.edu/" target="_blank">Institute for Software Integrated Systems</a>, Vanderbilt University<br>
+                    <strong>Address:</strong> 1025 16th Ave S, Nashville, TN 37212<br>
+                    <strong>Links:</strong>
+                    <a href="https://scholar.google.com/citations?user=wo6wou8AAAAJ" target="_blank">Google Scholar</a> &middot;
+                    <a href="https://orcid.org/0000-0002-6466-4549" target="_blank">ORCID</a> &middot;
+                    <a href="https://www.linkedin.com/in/zirong-chen-567070190" target="_blank">LinkedIn</a>
+                </p>
+            </section>
+
+            <section id="revolver-map">
+                <h2>Visitor Map</h2>
+                <div class="map-wrap">
+                    <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=_DpzN4jsym39EjKuInOrNcu-fQx1Sh7WYuds9G9BdCw&cl=ffffff&w=a"></script>
+                </div>
+            </section>
+        </main>
+    </div>
+
     <footer>
         <p>&copy; 2025 Zirong Chen. All rights reserved.</p>
-        <a href="thoughts.html" style="display:inline-block;margin-top:0.8rem;font-family:'Courier New',monospace;font-size:0.75rem;color:var(--text-light);opacity:0.2;text-decoration:none;transition:opacity 0.5s ease,color 0.5s ease;letter-spacing:1px;" onmouseover="this.style.opacity='0.8';this.style.color='#00ff00';this.style.textShadow='0 0 5px rgba(0,255,0,0.5)'" onmouseout="this.style.opacity='0.2';this.style.color='var(--text-light)';this.style.textShadow='none'">$ cd ~/thoughts _</a>
+        <a class="egg" href="thoughts.html">$ cd ~/thoughts _</a>
     </footer>
 
-    <!-- Back to top button -->
-    <button class="back-to-top" id="backToTop" aria-label="Back to top">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M7 14l5-5 5 5"/>
-        </svg>
-    </button>
-
     <script>
-        // Theme toggle functionality
+        // ---- Theme toggle (persisted, shared with thoughts.html via localStorage) ----
         const themeToggle = document.getElementById('theme-toggle');
         const sunIcon = document.getElementById('sun-icon');
         const moonIcon = document.getElementById('moon-icon');
-        const html = document.documentElement;
+        const root = document.documentElement;
 
-        // Check for saved theme preference or default to 'light' mode
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        html.setAttribute('data-theme', currentTheme);
-        updateThemeIcon(currentTheme);
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        root.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
 
-        // Toggle theme on button click
         themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateThemeIcon(newTheme);
+            const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            root.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateThemeIcon(next);
         });
 
-        // Update icon based on theme
         function updateThemeIcon(theme) {
-            if (theme === 'dark') {
-                sunIcon.style.display = 'block';
-                moonIcon.style.display = 'none';
-            } else {
-                sunIcon.style.display = 'none';
-                moonIcon.style.display = 'block';
-            }
+            const dark = theme === 'dark';
+            sunIcon.style.display = dark ? 'block' : 'none';
+            moonIcon.style.display = dark ? 'none' : 'block';
         }
 
-        // Enhanced typing effect with better timing
-        const typedTextSpan = document.getElementById('typed-text');
-        const textArray = ['Zirong (Rex) Chen', '陈子荣', 'AI & LLM Researcher', 'Trustworthy & Safety-Critical AI'];
-        const typingDelay = 80;
-        const erasingDelay = 40;
-        const newTextDelay = 2500;
-        let textArrayIndex = 0;
-        let charIndex = 0;
-
-        function type() {
-            if (charIndex < textArray[textArrayIndex].length) {
-                typedTextSpan.textContent += textArray[textArrayIndex].charAt(charIndex);
-                charIndex++;
-                setTimeout(type, typingDelay);
-            } else {
-                setTimeout(erase, newTextDelay);
+        // ---- Scroll-spy: highlight the rail nav link for the section in view ----
+        const navLinks = Array.from(document.querySelectorAll('.rail-nav a[href^="#"]'));
+        const linkById = {};
+        const sections = [];
+        navLinks.forEach(link => {
+            const id = link.getAttribute('href').slice(1);
+            const section = document.getElementById(id);
+            if (section) {
+                linkById[id] = link;
+                sections.push(section);
             }
+        });
+
+        let activeId = null;
+        function setActive(id) {
+            if (id === activeId) return;
+            activeId = id;
+            navLinks.forEach(l => l.classList.remove('active'));
+            if (linkById[id]) linkById[id].classList.add('active');
         }
 
-        function erase() {
-            if (charIndex > 0) {
-                typedTextSpan.textContent = textArray[textArrayIndex].substring(0, charIndex-1);
-                charIndex--;
-                setTimeout(erase, erasingDelay);
-            } else {
-                textArrayIndex++;
-                if(textArrayIndex >= textArray.length) textArrayIndex = 0;
-                setTimeout(type, typingDelay + 1100);
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            setTimeout(type, newTextDelay + 250);
-        });
-
-        // Hide loader after page load
-        window.addEventListener('load', () => {
-            const loader = document.getElementById('loader');
-            setTimeout(() => {
-                loader.classList.add('hide');
-            }, 500);
-        });
-
-        // Back to top button functionality
-        const backToTopButton = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.add('show');
-            } else {
-                backToTopButton.classList.remove('show');
-            }
-        });
-        
-        backToTopButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Enhanced smooth scrolling for navigation links
-        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const offsetTop = target.offsetTop - 80; // Account for fixed nav
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
+        if ('IntersectionObserver' in window && sections.length) {
+            const spy = new IntersectionObserver((entries) => {
+                // Pick the entry nearest the top of the viewport that is intersecting.
+                const visible = entries
+                    .filter(e => e.isIntersecting)
+                    .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+                if (visible.length) {
+                    setActive(visible[0].target.id);
                 }
-            });
-        });
-
-        // Add intersection observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeIn 0.6s ease-out forwards';
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        // Observe all sections
-        document.querySelectorAll('section').forEach(section => {
-            section.style.opacity = '0';
-            observer.observe(section);
-        });
-
-        // Mobile menu functionality
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const navUl = document.querySelector('nav ul');
-
-        mobileMenuToggle.addEventListener('click', () => {
-            mobileMenuToggle.classList.toggle('active');
-            navUl.classList.toggle('mobile-open');
-        });
-
-        // Close mobile menu when clicking on a nav link
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenuToggle.classList.remove('active');
-                navUl.classList.remove('mobile-open');
-            });
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!mobileMenuToggle.contains(e.target) && !navUl.contains(e.target)) {
-                mobileMenuToggle.classList.remove('active');
-                navUl.classList.remove('mobile-open');
-            }
-        });
+            }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+            sections.forEach(s => spy.observe(s));
+        }
     </script>
 </body>
 </html>
