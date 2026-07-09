@@ -10,17 +10,17 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Zirong (Rex) Chen - Computer Science Researcher">
     <meta property="og:description" content="Ph.D. candidate at Vanderbilt University working on AI Safety, Trustworthy AI, and reliable AI for emergency response and smart cities.">
-    <meta property="og:image" content="imgs/me.jpeg">
+    <meta property="og:image" content="imgs/brown-icon.jpg">
     <meta name="twitter:card" content="summary">
     <meta name="theme-color" content="#f6f2ea">
 
     <!-- Favicon: terminal prompt mark (a small nod) -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23161b22'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='15' font-weight='700' fill='%232f9e54' text-anchor='middle'%3E%3E_%3C/text%3E%3C/svg%3E">
 
-    <!-- Typefaces: Geist (everything) + JetBrains Mono (small labels only) -->
+    <!-- Typefaces: Geist (body) + JetBrains Mono (small labels) + Caveat (hand-drawn accents) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -31,6 +31,7 @@
         :root {
             --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
             --sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            --hand: 'Caveat', 'Segoe Print', 'Comic Sans MS', cursive;
 
             --primary-color: #211d18;   /* ink: headings + strong text */
             --secondary-color: #8f5230; /* clay: link / accent text (AA on paper) */
@@ -527,128 +528,110 @@
             footer { padding: 2.2rem 1.25rem 2.6rem; }
         }
 
-        /* ===== Warm aurora glass =====
-           A web glassmorphism approximation (NOT official Apple Liquid Glass, which is native
-           to Apple platforms only): backdrop-filter + layered borders + a soft highlight.
-           A faint warm aurora sits behind the page so the frosted panels have real color to
-           refract; the rail, project cards and publications float as glass over it. */
-        :root {
-            --glass-blur: blur(20px) saturate(180%);
-            --glass-bg: linear-gradient(135deg, rgba(255,250,242,0.58), rgba(255,246,236,0.26));
-            --glass-border: rgba(255,255,255,0.5);
-            --glass-shadow: inset 0 1px 0 rgba(255,255,255,0.55), 0 16px 44px rgba(80,55,35,0.12);
-        }
+        /* ===== Flat paper + hand-drawn doodle accents =====
+           The page sits on flat warm paper (no frosted glass). Personality comes from a few
+           restrained hand-drawn marks: a sketch frame on the photo, a squiggle under the name,
+           handwritten section kickers, a doodle "learn more" arrow, award sparkles. Each doodle
+           is an inline-SVG mask tinted with a theme variable, so the marks follow light / dark. */
 
-        [data-theme="dark"] {
-            --glass-bg: linear-gradient(135deg, rgba(78,62,50,0.5), rgba(38,31,25,0.44));
-            --glass-border: rgba(236,229,218,0.15);
-            --glass-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 16px 44px rgba(0,0,0,0.5);
+        /* Sketch frame around the avatar (slightly wobbly, hand-drawn box) */
+        .rail-photo-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1.5rem;
         }
-
-        /* Warm aurora field, fixed behind all content (z-index keeps it under the text) */
-        body::before {
+        .rail-photo { margin-bottom: 0; }
+        .rail-photo-wrap::after {
             content: "";
-            position: fixed;
-            inset: -20%;
-            z-index: -1;
+            position: absolute;
+            inset: -7px;
+            background: var(--accent-color);
+            opacity: 0.5;
+            transform: rotate(-2.2deg);
             pointer-events: none;
-            background:
-                radial-gradient(38% 48% at 18% 22%, rgba(208,138,94,0.20), transparent 60%),
-                radial-gradient(34% 44% at 82% 16%, rgba(168,100,60,0.16), transparent 62%),
-                radial-gradient(44% 52% at 74% 82%, rgba(143,82,48,0.15), transparent 64%),
-                radial-gradient(38% 44% at 24% 88%, rgba(230,200,150,0.17), transparent 62%);
-            filter: blur(16px);
-            animation: auroraDrift 42s ease-in-out infinite alternate;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 7 C 42 4 80 5 110 9 C 112 41 113 80 110 111 C 78 114 40 113 8 110 C 5 78 6 40 11 7 Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 7 C 42 4 80 5 110 9 C 112 41 113 80 110 111 C 78 114 40 113 8 110 C 5 78 6 40 11 7 Z'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
         }
 
-        [data-theme="dark"] body::before {
-            background:
-                radial-gradient(38% 48% at 18% 22%, rgba(208,138,94,0.16), transparent 60%),
-                radial-gradient(34% 44% at 82% 16%, rgba(120,72,44,0.20), transparent 62%),
-                radial-gradient(44% 52% at 74% 82%, rgba(96,60,40,0.24), transparent 64%),
-                radial-gradient(38% 44% at 24% 88%, rgba(150,110,70,0.14), transparent 62%);
+        /* Signature squiggle under the name */
+        .rail h1 { position: relative; }
+        .rail h1::after {
+            content: "";
+            position: absolute;
+            left: 1px;
+            bottom: -0.4rem;
+            width: 84px;
+            height: 9px;
+            background: var(--accent-color);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12'%3E%3Cpath d='M2 8 Q 11 2 20 8 T 38 8 T 56 8 T 74 8 T 92 8 T 110 8 T 118 7' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat left center / 100% 100%;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12'%3E%3Cpath d='M2 8 Q 11 2 20 8 T 38 8 T 56 8 T 74 8 T 92 8 T 110 8 T 118 7' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat left center / 100% 100%;
+        }
+        .rail-cn { margin-top: 0.95rem; }
+
+        /* Handwritten tagline */
+        .rail-tagline {
+            font-family: var(--hand);
+            font-size: 1.14rem;
+            line-height: 1.35;
+            color: var(--secondary-color);
+            margin-top: 1.1rem;
         }
 
-        @keyframes auroraDrift {
-            0%   { transform: translate3d(-1.5%, -1%, 0) scale(1.03); }
-            100% { transform: translate3d(1.5%, 2%, 0) scale(1.07); }
+        /* Handwritten section kickers, sitting just above each h2 */
+        .kicker {
+            display: block;
+            font-family: var(--hand);
+            font-size: 1.22rem;
+            font-weight: 600;
+            line-height: 1;
+            color: var(--secondary-color);
+            margin-bottom: 0.3rem;
+            transform: rotate(-1.5deg);
+            transform-origin: left center;
         }
 
-        /* Theme toggle as glass */
-        .theme-toggle {
-            background: var(--glass-bg);
-            -webkit-backdrop-filter: var(--glass-blur);
-            backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
+        /* Hand-drawn arrow after "Learn more" (uses currentColor so it matches the link) */
+        .learn-more::after {
+            content: "";
+            display: inline-block;
+            width: 22px;
+            height: 12px;
+            margin-left: 0.4rem;
+            vertical-align: -1px;
+            background: currentColor;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 14'%3E%3Cpath d='M2 8 Q 8 5 14 8 M9 3 Q 13 6 16 8 Q 13 10 10 13' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 14'%3E%3Cpath d='M2 8 Q 8 5 14 8 M9 3 Q 13 6 16 8 Q 13 10 10 13' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain;
+            transition: transform 0.2s ease;
+        }
+        .learn-more:hover::after { transform: translateX(4px); }
+
+        /* Little sparkle before an award badge */
+        .pub-award::before {
+            content: "";
+            display: inline-block;
+            width: 13px;
+            height: 13px;
+            margin-right: 0.28rem;
+            vertical-align: -1px;
+            background: var(--accent-color);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0 Q 11.5 8.5 20 10 Q 11.5 11.5 10 20 Q 8.5 11.5 0 10 Q 8.5 8.5 10 0 Z' fill='%23000'/%3E%3C/svg%3E") no-repeat center / contain;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0 Q 11.5 8.5 20 10 Q 11.5 11.5 10 20 Q 8.5 11.5 0 10 Q 8.5 8.5 10 0 Z' fill='%23000'/%3E%3C/svg%3E") no-repeat center / contain;
         }
 
-        /* Rail as a frosted glass card */
-        .rail {
-            padding: 1.9rem 1.5rem;
-            border-radius: 18px;
-            background: var(--glass-bg);
-            -webkit-backdrop-filter: var(--glass-blur);
-            backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
+        /* Handwritten "new!" margin note */
+        .doodle-new {
+            font-family: var(--hand);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-left: 0.4rem;
+            transform: rotate(-6deg);
+            display: inline-block;
+            white-space: nowrap;
         }
 
-        /* Each research project floats as its own glass card */
-        article {
-            padding: 1.6rem 1.6rem 1.8rem;
-            margin-top: 1.4rem;
-            border-radius: 18px;
-            background: var(--glass-bg);
-            -webkit-backdrop-filter: var(--glass-blur);
-            backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
-        }
-        article:first-of-type { padding-top: 1.6rem; margin-top: 0.4rem; }
-        article + article { border-top: none; }
-
-        /* Publications grouped onto one glass card */
-        .pub-list {
-            padding: 0.4rem 1.6rem;
-            border-radius: 18px;
-            background: var(--glass-bg);
-            -webkit-backdrop-filter: var(--glass-blur);
-            backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
-        }
-
-        @media (max-width: 860px) {
-            /* Keep the rail flat on mobile (full-width glass cards get heavy); frost the nav */
-            .rail {
-                background: none;
-                -webkit-backdrop-filter: none;
-                backdrop-filter: none;
-                border: none;
-                box-shadow: none;
-                padding: 2.25rem 0 0;
-            }
-            .rail-nav {
-                background: var(--glass-bg);
-                -webkit-backdrop-filter: var(--glass-blur);
-                backdrop-filter: var(--glass-blur);
-                border-bottom: 1px solid var(--glass-border);
-            }
-        }
-
-        /* Fallbacks: drop the aurora and serve solid panels */
-        @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-            .theme-toggle, .rail, article, .pub-list { background: var(--bg-white); }
-        }
-        @media (prefers-reduced-transparency: reduce) {
-            body::before { display: none; }
-            .theme-toggle, .rail, article, .pub-list, .rail-nav {
-                background: var(--bg-white);
-                -webkit-backdrop-filter: none;
-                backdrop-filter: none;
-            }
-        }
+        /* Doodles are decorative: hide them from reduced-transparency users too? No — they are
+           low-contrast marks, but drop the animated arrow shift for reduced motion (handled below). */
 
         /* ---------- Reduced motion ---------- */
         @media (prefers-reduced-motion: reduce) {
@@ -680,7 +663,9 @@
 
     <div class="layout">
         <aside class="rail">
-            <img src="imgs/me.jpeg" alt="Zirong Chen" class="rail-photo">
+            <div class="rail-photo-wrap">
+                <img src="imgs/brown-icon.jpg" alt="Zirong Chen" class="rail-photo">
+            </div>
             <h1>Zirong (Rex) Chen</h1>
             <div class="rail-cn">陈子荣</div>
             <div class="rail-title">
@@ -708,6 +693,7 @@
 
         <main>
             <section id="home">
+                <span class="kicker">hi there</span>
                 <h2>About</h2>
                 <div class="about-content">
                     <p>Hello! My name is Zirong (Rex) Chen (陈子荣), currently pursuing a Ph.D. in Computer Science at <a href="https://www.vanderbilt.edu" target="_blank">Vanderbilt University</a> under Professor <a href="https://meiyima.github.io/" target="_blank">Meiyi Ma</a>'s supervision. My research focuses on AI Safety and Trustworthy AI, with particular emphasis on Natural Language Processing (NLP), reliable AI systems for critical applications, and trustworthy AI-driven solutions for Smart Cities and emergency response.</p>
@@ -716,11 +702,13 @@
             </section>
 
             <section id="education">
+                <span class="kicker">the paper trail</span>
                 <h2>Education</h2>
                 <ul class="edu-list">
                     <li>
                         <span class="edu-year">2021-2026</span>
                         <span class="edu-body"><strong>Ph.D. in Computer Science</strong><br><span class="muted">Vanderbilt University, Nashville, TN</span></span>
+
                     </li>
                     <li>
                         <span class="edu-year">2019-2021</span>
@@ -734,14 +722,17 @@
             </section>
 
             <section id="news">
+                <span class="kicker">what's new</span>
                 <h2>News</h2>
-                <p class="section-note">Last updated April 2026.</p>
+                <p class="section-note">Last updated July 2026.</p>
 
                 <div class="news-group">
                     <div class="news-year">2026</div>
                     <ul class="news-list">
-                        <li><span class="news-date">Jun.</span><span class="news-text">I successfully defended my PhD! Dr. me, finally.</span></li>
-                        <li><span class="news-date">Apr.</span><span class="news-text">Our paper <a href="https://arxiv.org/pdf/2603.05361" target="_blank">PACE: A Personalized Adaptive Curriculum Engine for 9-1-1 Call-taker Training</a> is accepted by IJCAI-26 and ECAI-26 (23.96% acceptance rate). See you in Bremen, Germany!</span></li>
+                        <li><span class="news-date">Jun.</span><span class="news-text">I successfully defended my PhD! Dr. me, finally.<span class="doodle-new">new!</span></span></li>
+                        <li><span class="news-date">May</span><span class="news-text">Our paper <a href="https://arxiv.org/pdf/2602.13241" target="_blank">Empowering 9-1-1 Calltaking Training with Generative AI: Experiences and Lessons Learned</a> is accepted by IEEE-SmartComp 26!</span></li>
+                        <li><span class="news-date">Apr.</span><span class="news-text">Our paper <a href="https://arxiv.org/pdf/2603.05361" target="_blank">PACE: A Personalized Adaptive Curriculum Engine for 9-1-1 Call-taker Training</a> is accepted by IJCAI-26 and ECAI-26 (23.96% acceptance rate). See you in Bremen, Germany!
+                        </span></li>
                         <li><span class="news-date">Mar.</span><span class="news-text">Invited talk "Empowering 9-1-1 Training with Trustworthy AI" at Trustworthy AI Community, <a href="https://www.ericsson.com/en" target="_blank">Ericsson AB</a>, Sweden by <a href="https://sites.google.com/view/rafiainam/home" target="_blank">Dr. Rafia Inam</a>. See you (virtually) in Sweden!</span></li>
                         <li><span class="news-date">Feb.</span><span class="news-text">Our LogiEx (Integrating Formal Logic and LLMs for Explainable Transit Planning) is accepted by ICCPS-2026! Shoutout to first author <a href="https://ziyanan.github.io/" target="_blank">Ziyan An</a>.</span></li>
                         <li><span class="news-date">Jan.</span><span class="news-text">We demoed the first version of our dispatching simulator under the Angie platform at MNDEC with domain experts.</span></li>
@@ -797,12 +788,13 @@
             </section>
 
             <section id="about">
+                <span class="kicker">things I build</span>
                 <h2>Research Projects</h2>
                 <article>
                     <h3>Personalized Adaptive Curriculum for 9-1-1 Training</h3>
                     <p>PACE is a personalized adaptive curriculum engine that tailors 9-1-1 call-taker training to individual trainees. By modeling trainee proficiency and dynamically adjusting scenario difficulty, PACE delivers targeted practice that improves learning efficiency in safety-critical emergency response training.</p>
                     <p class="keywords">Keywords: <em>Adaptive Learning, Trustworthy AI, Safety-Critical Training</em></p>
-                    <a href="https://arxiv.org/pdf/2603.05361" class="learn-more" target="_blank">Learn more &rarr;</a>
+                    <a href="https://arxiv.org/pdf/2603.05361" class="learn-more" target="_blank">Learn more</a>
                     <img src="imgs/PACE.png" alt="PACE system architecture showing personalized adaptive curriculum engine for 9-1-1 call-taker training">
                 </article>
 
@@ -810,7 +802,7 @@
                     <h3>Logic-informed Call-taking Performance Debriefing</h3>
                     <p>We develop trustworthy AI systems that decompose LLM runtime into modularized function calls enhanced with Signal Temporal Logic, ensuring reliable and interpretable performance evaluation for safety-critical call-taking scenarios.</p>
                     <p class="keywords">Keywords: <em>Trustworthy AI, AI Safety, Reliable LLMs</em></p>
-                    <a href="https://arxiv.org/pdf/2505.03985" class="learn-more" target="_blank">Learn more &rarr;</a>
+                    <a href="https://arxiv.org/pdf/2505.03985" class="learn-more" target="_blank">Learn more</a>
                     <img src="imgs/logidebrief.png" alt="LogiDebrief system architecture showing LLM integration with Signal Temporal Logic for automated debriefing">
                 </article>
 
@@ -818,7 +810,7 @@
                     <h3>Customized Emergency Response Training</h3>
                     <p>Collaborating with Metro Nashville Department of Emergency Communications, we develop Angie/SimER, a safety-critical AI system that provides reliable, trustworthy simulation environments for call-taker training in high-stakes emergency response scenarios.</p>
                     <p class="keywords">Keywords: <em>Safety-Critical AI, Trustworthy LLMs, Reliable Systems</em></p>
-                    <a href="https://ojs.aaai.org/index.php/AAAI/article/view/35006" class="learn-more">Learn more &rarr;</a>
+                    <a href="https://ojs.aaai.org/index.php/AAAI/article/view/35006" class="learn-more">Learn more</a>
                     <img src="imgs/simer_overview.png" alt="SimER system overview showing AI-driven simulation environment for call-taker training with Metro Nashville DEC">
                 </article>
 
@@ -826,7 +818,7 @@
                     <h3>Trustworthy Emergency Response Systems</h3>
                     <p>We develop reliable AI systems with built-in safety guarantees that enhance emergency response decision-making. Our trustworthy machine learning approaches ensure robust performance in critical situations while maintaining transparency and accountability.</p>
                     <p class="keywords">Keywords: <em>AI Safety, Trustworthy ML, Reliable Decision Systems</em></p>
-                    <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199" class="learn-more">Learn more &rarr;</a>
+                    <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199" class="learn-more">Learn more</a>
                     <img src="imgs/auto311.png" alt="Auto311 system diagram showing confidence-guided automated processing for non-emergency calls">
                 </article>
 
@@ -834,12 +826,13 @@
                     <h3>Adaptable City Knowledge</h3>
                     <p>The Adaptable City Knowledge project aims to create a dynamic, data-driven platform that helps cities respond to evolving challenges. From traffic management to disaster preparedness, this initiative fosters collaboration between city officials, businesses, and residents to promote resilience.</p>
                     <p class="keywords">Keywords: <em>AI/ML, NLP, Life-long Learning</em></p>
-                    <a href="https://ieeexplore.ieee.org/abstract/document/9821044" class="learn-more">Learn more &rarr;</a>
+                    <a href="https://ieeexplore.ieee.org/abstract/document/9821044" class="learn-more">Learn more</a>
                     <img src="imgs/CitySpecOverview.png" alt="CitySpec system architecture for intelligent requirement specification in smart cities with formal verification">
                 </article>
             </section>
 
             <section id="contact">
+                <span class="kicker">for the record</span>
                 <h2>Selected Publications</h2>
                 <ul class="pub-list">
                     <li><span class="pub-venue">IJCAI-26 / ECAI-26</span><a href="https://arxiv.org/pdf/2603.05361" target="_blank">PACE: A Personalized Adaptive Curriculum Engine for 9-1-1 Call-taker Training</a></li>
@@ -856,6 +849,7 @@
             </section>
 
             <section id="contact-info">
+                <span class="kicker">say hello</span>
                 <h2>Contact</h2>
                 <p>
                     <strong>Email:</strong> zirong.chen AT vanderbilt.edu<br>
@@ -869,6 +863,7 @@
             </section>
 
             <section id="revolver-map">
+                <span class="kicker">who's around?</span>
                 <h2>Visitor Map</h2>
                 <div class="map-wrap">
                     <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=_DpzN4jsym39EjKuInOrNcu-fQx1Sh7WYuds9G9BdCw&cl=ffffff&w=a"></script>
