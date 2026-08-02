@@ -5,366 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex">
     <title>~/thoughts - Zirong Chen</title>
-    <meta name="theme-color" content="#f6f2ea">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23161b22'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='15' font-weight='700' fill='%232f9e54' text-anchor='middle'%3E%3E_%3C/text%3E%3C/svg%3E">
+    <meta name="theme-color" content="#f4f4f1" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#121519" media="(prefers-color-scheme: dark)">
+
+    <!-- Favicon: an off-centre Nordic cross in the site's own blue and ochre -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='3' fill='%2323486b'/%3E%3Crect y='14' width='32' height='4' fill='%23b5822c'/%3E%3Crect x='10' width='4' height='32' fill='%23b5822c'/%3E%3C/svg%3E">
+
+    <!-- Set the theme before first paint so dark-mode users never see a light flash.
+         Falls back to the OS preference, which keeps the two theme-color metas honest. -->
+    <script>(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';d.setAttribute('data-theme',t);}catch(e){d.setAttribute('data-theme','light');}})();</script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-        :root {
-            --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
-            --sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            --hand: 'Caveat', 'Segoe Print', 'Comic Sans MS', cursive;
-
-            --primary-color: #211d18;
-            --secondary-color: #8f5230;
-            --secondary-hover: #743f22;
-            --accent-color: #a8643c;
-            --text-dark: #211d18;
-            --text-light: #635b51;
-            --bg-light: #f6f2ea;
-            --bg-white: #faf7f0;
-            --border-color: #e6ded0;
-            --shadow: 0 1px 2px rgba(33,29,24,0.06);
-        }
-
-        [data-theme="dark"] {
-            --primary-color: #ece5da;
-            --secondary-color: #d08a5e;
-            --secondary-hover: #e0a079;
-            --accent-color: #d08a5e;
-            --text-dark: #ece5da;
-            --text-light: #a59a8c;
-            --bg-light: #1a1714;
-            --bg-white: #221d18;
-            --border-color: rgba(236,229,218,0.10);
-            --shadow: 0 1px 2px rgba(0,0,0,0.3);
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: var(--sans);
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--text-dark);
-            background-color: var(--bg-light);
-            -webkit-font-smoothing: antialiased;
-            text-rendering: optimizeLegibility;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        ::selection {
-            background: color-mix(in srgb, var(--accent-color) 22%, transparent);
-        }
-
-        /* Header */
-        header {
-            max-width: 760px;
-            margin: 0 auto;
-            padding: 3.5rem 2rem 1.6rem;
-        }
-
-        header h1 {
-            font-family: var(--mono);
-            font-size: 1.3rem;
-            font-weight: 500;
-            letter-spacing: -0.01em;
-            color: var(--primary-color);
-        }
-
-        .header-sub {
-            margin-top: 0.8rem;
-            color: var(--text-light);
-            font-size: 0.92rem;
-            max-width: 58ch;
-            text-wrap: pretty;
-        }
-
-        .header-nav {
-            margin-top: 1.2rem;
-            font-family: var(--mono);
-            font-size: 0.85rem;
-        }
-
-        .header-nav .prompt { color: var(--text-light); }
-
-        .header-nav a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            transition: color 0.18s ease;
-        }
-
-        .header-nav a:hover {
-            color: var(--secondary-hover);
-            text-decoration: underline;
-            text-underline-offset: 3px;
-        }
-
-        /* Theme toggle */
-        .theme-toggle {
-            position: fixed;
-            top: 18px;
-            right: 18px;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--bg-light);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            cursor: pointer;
-            z-index: 1001;
-            transition: border-color 0.18s ease;
-        }
-
-        .theme-toggle:hover { border-color: var(--secondary-color); }
-
-        .theme-toggle svg {
-            width: 20px;
-            height: 20px;
-            fill: var(--primary-color);
-            stroke: var(--primary-color);
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .theme-toggle svg circle,
-        .theme-toggle svg line { fill: none; }
-
-        /* Main */
-        main {
-            max-width: 760px;
-            margin: 1rem auto 0;
-            padding: 0 2rem 4rem;
-        }
-
-        /* Tag filters */
-        .filters {
-            display: flex;
-            gap: 1.3rem;
-            margin-bottom: 1.6rem;
-            padding-bottom: 1rem;
-            flex-wrap: wrap;
-            border-bottom: 1px solid var(--border-color);
-            font-family: var(--mono);
-        }
-
-        .filter-btn {
-            background: none;
-            border: none;
-            border-bottom: 2px solid transparent;
-            padding: 0.2rem 0;
-            color: var(--text-light);
-            cursor: pointer;
-            font-family: var(--mono);
-            font-size: 0.82rem;
-            transition: color 0.18s ease, border-color 0.18s ease;
-        }
-
-        .filter-btn:hover { color: var(--text-dark); }
-
-        .filter-btn.active {
-            color: var(--secondary-color);
-            border-bottom-color: var(--secondary-color);
-        }
-
-        /* Post entries */
-        .post { border-bottom: 1px solid var(--border-color); }
-
-        .post-header {
-            display: flex;
-            align-items: baseline;
-            gap: 0.9rem;
-            padding: 1.1rem 0;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .post-toggle {
-            font-family: var(--mono);
-            color: var(--text-light);
-            font-size: 0.85rem;
-            flex-shrink: 0;
-            transition: transform 0.25s ease;
-        }
-
-        .post.open .post-toggle { transform: rotate(90deg); }
-
-        .post-meta { flex: 1; min-width: 0; }
-
-        .post-title {
-            font-size: 1.02rem;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        .post-date {
-            font-family: var(--mono);
-            font-size: 0.76rem;
-            color: var(--text-light);
-            margin-top: 0.2rem;
-        }
-
-        .post-tag {
-            font-family: var(--mono);
-            font-size: 0.72rem;
-            color: var(--text-light);
-            flex-shrink: 0;
-        }
-
-        .post-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-        }
-
-        .post.open .post-body { max-height: 4000px; }
-
-        .post-content {
-            padding: 0 0 1.5rem 1.7rem;
-            font-size: 0.95rem;
-            line-height: 1.8;
-            color: var(--text-light);
-            max-width: 64ch;
-            text-wrap: pretty;
-        }
-
-        .post-content p { margin-bottom: 1rem; }
-        .post-content p:last-child { margin-bottom: 0; }
-
-        .post-content a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            text-underline-offset: 3px;
-        }
-
-        .post-content a:hover { text-decoration: underline; }
-
-        .post-content img {
-            max-width: 100%;
-            border-radius: 8px;
-            margin: 1rem 0;
-            border: 1px solid var(--border-color);
-        }
-
-        .post-content pre {
-            background: var(--bg-white);
-            padding: 1rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 1rem 0;
-            font-family: var(--mono);
-            font-size: 0.85rem;
-            border: 1px solid var(--border-color);
-        }
-
-        .post-content h2,
-        .post-content h3,
-        .post-content h4 { color: var(--text-dark); }
-
-        /* Empty state */
-        .empty-state {
-            text-align: center;
-            padding: 3rem 0;
-            font-family: var(--mono);
-            color: var(--text-light);
-        }
-
-        .empty-state .prompt {
-            font-size: 1.05rem;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Footer */
-        footer {
-            max-width: 760px;
-            margin: 0 auto;
-            padding: 1.8rem 2rem 2.4rem;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-light);
-            font-family: var(--mono);
-            font-size: 0.78rem;
-            opacity: 0.6;
-        }
-
-        @media (max-width: 768px) {
-            header { padding: 2.5rem 1.25rem 1.4rem; }
-            main { padding: 0 1.25rem 3rem; }
-            footer { padding: 1.6rem 1.25rem 2rem; }
-            .theme-toggle { top: 15px; right: 15px; }
-        }
-
-        /* ===== Flat paper + hand-drawn doodle accents =====
-           Matches index.html: flat warm paper (no frosted glass), with a few restrained
-           hand-drawn marks. This page has no avatar / awards, so the personality lives in
-           the header — a handwritten kicker and a squiggle under the terminal title — while
-           the thoughts stay a clean hairline list. Doodles are inline-SVG masks tinted with
-           a theme variable, so they follow light / dark. */
-
-        /* Handwritten kicker above the terminal title */
-        .kicker {
-            display: block;
-            font-family: var(--hand);
-            font-size: 1.3rem;
-            font-weight: 600;
-            line-height: 1;
-            color: var(--secondary-color);
-            margin-bottom: 0.35rem;
-            transform: rotate(-1.5deg);
-            transform-origin: left center;
-        }
-
-        /* Signature squiggle under the title */
-        header h1 { position: relative; display: inline-block; }
-        header h1::after {
-            content: "";
-            position: absolute;
-            left: 2px;
-            bottom: -0.45rem;
-            width: 122px;
-            height: 9px;
-            background: var(--accent-color);
-            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12'%3E%3Cpath d='M2 8 Q 11 2 20 8 T 38 8 T 56 8 T 74 8 T 92 8 T 110 8 T 118 7' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat left center / 100% 100%;
-            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12'%3E%3Cpath d='M2 8 Q 11 2 20 8 T 38 8 T 56 8 T 74 8 T 92 8 T 110 8 T 118 7' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat left center / 100% 100%;
-        }
-        .header-sub { margin-top: 1.15rem; }
-
-        /* A little sparkle before each thought's tag (echoes the award sparkle on index) */
-        .post-tag::before {
-            content: "";
-            display: inline-block;
-            width: 11px;
-            height: 11px;
-            margin-right: 0.3rem;
-            vertical-align: -1px;
-            background: var(--accent-color);
-            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0 Q 11.5 8.5 20 10 Q 11.5 11.5 10 20 Q 8.5 11.5 0 10 Q 8.5 8.5 10 0 Z' fill='%23000'/%3E%3C/svg%3E") no-repeat center / contain;
-            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0 Q 11.5 8.5 20 10 Q 11.5 11.5 10 20 Q 8.5 11.5 0 10 Q 8.5 8.5 10 0 Z' fill='%23000'/%3E%3C/svg%3E") no-repeat center / contain;
-        }
-
-        /* The collapsible caret ">" stays terminal (rotates on open) — the terminal nod. */
-
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                transition: none !important;
-                animation: none !important;
-                scroll-behavior: auto !important;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle color theme">
-        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display: none;">
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle color theme">
+        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
             <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -375,53 +34,54 @@
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
         </svg>
-        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
     </button>
 
-    <header>
-        <span class="kicker">thinking out loud</span>
-        <h1>~/random_thoughts</h1>
+    <header class="page-head">
+        <p class="eyebrow">~/random_thoughts</p>
+        <h1>Random Thoughts</h1>
         <p class="header-sub">notes on research, life, and everything in between. if you found this page, congrats, you're either very curious or very bored. either way, welcome.</p>
         <p class="header-nav"><span class="prompt">$</span> <a href="index.html">cd ~/home</a></p>
     </header>
 
-    <main>
+    <main class="thoughts-main">
         <div class="filters" id="filters"></div>
         <div id="posts"></div>
     </main>
 
-    <footer>
+    <footer class="thoughts-footer">
         <p>EOF</p>
     </footer>
 
     <script>
-        // Lightweight markdown renderer (handles paragraphs, bold, italic, links, images, code blocks, headings, lists, hr)
+        // Lightweight markdown renderer (handles paragraphs, bold, italic, links, images, code blocks, headings, lists, hr).
+        // Emits classes only — styling lives in assets/site.css so it follows the design tokens.
         function renderMarkdown(md) {
             let html = md
                 // code blocks
                 .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
                 // inline code
-                .replace(/`([^`]+)`/g, '<code style="background:var(--border-color);padding:2px 6px;border-radius:4px;font-size:0.9em;">$1</code>')
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
                 // images
-                .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width:100%;border-radius:8px;margin:1rem 0;border:1px solid var(--border-color);">')
+                .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="md-img" loading="lazy">')
                 // links
-                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
                 // headings
-                .replace(/^### (.+)$/gm, '<h4 style="margin:1rem 0 0.5rem;color:var(--text-dark);">$1</h4>')
-                .replace(/^## (.+)$/gm, '<h3 style="margin:1.2rem 0 0.5rem;color:var(--text-dark);">$1</h3>')
-                .replace(/^# (.+)$/gm, '<h2 style="margin:1.5rem 0 0.5rem;color:var(--text-dark);">$1</h2>')
+                .replace(/^### (.+)$/gm, '<h4>$1</h4>')
+                .replace(/^## (.+)$/gm, '<h3>$1</h3>')
+                .replace(/^# (.+)$/gm, '<h2>$1</h2>')
                 // bold & italic
                 .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
                 .replace(/\*(.+?)\*/g, '<em>$1</em>')
                 // horizontal rule
-                .replace(/^---$/gm, '<hr style="border:none;border-top:1px solid var(--border-color);margin:1.5rem 0;">')
+                .replace(/^---$/gm, '<hr>')
                 // unordered lists
                 .replace(/^- (.+)$/gm, '<li>$1</li>');
 
             // wrap consecutive <li> in <ul>
-            html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul style="list-style:disc;padding-left:1.5rem;margin:0.5rem 0;">$1</ul>');
+            html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>');
 
             // paragraphs: split by double newlines, wrap non-tag blocks in <p>
             html = html.split(/\n\n+/).map(block => {
@@ -487,26 +147,34 @@
                 return;
             }
 
-            postsEl.innerHTML = filtered.map((post) => `
+            // A real <button> rather than a div+onclick, so the rows are keyboard-operable.
+            // The extra wrapper div inside .post-body is what clips during the 0fr->1fr collapse.
+            postsEl.innerHTML = filtered.map((post, i) => `
                 <div class="post" data-tag="${post.tag}" data-file="${post.file}">
-                    <div class="post-header" onclick="togglePost(this.parentElement)">
-                        <span class="post-toggle">></span>
-                        <div class="post-meta">
-                            <div class="post-title">${post.title}</div>
-                            <div class="post-date">${post.date}</div>
-                        </div>
-                        <span class="post-tag ${post.tag}">${post.tag}</span>
-                    </div>
-                    <div class="post-body">
-                        <div class="post-content"><span style="color:var(--text-light);opacity:0.6;font-family:var(--mono);font-size:0.85rem;">loading...</span></div>
+                    <button class="post-header" type="button" aria-expanded="false" aria-controls="post-body-${i}">
+                        <span class="post-toggle" aria-hidden="true">></span>
+                        <span class="post-meta">
+                            <span class="post-title">${post.title}</span>
+                            <span class="post-date">${post.date}</span>
+                        </span>
+                        <span class="post-tag">${post.tag}</span>
+                    </button>
+                    <div class="post-body" id="post-body-${i}">
+                        <div><div class="post-content"><span class="md-loading">loading...</span></div></div>
                     </div>
                 </div>
             `).join('');
         }
 
-        function togglePost(postEl) {
+        postsEl.addEventListener('click', (e) => {
+            const btn = e.target.closest('.post-header');
+            if (btn) togglePost(btn.parentElement, btn);
+        });
+
+        function togglePost(postEl, btn) {
             const isOpening = !postEl.classList.contains('open');
             postEl.classList.toggle('open');
+            if (btn) btn.setAttribute('aria-expanded', String(isOpening));
 
             if (isOpening) {
                 const file = postEl.dataset.file;
@@ -528,33 +196,29 @@
                         contentEl.innerHTML = html;
                     })
                     .catch(() => {
-                        contentEl.innerHTML = '<span style="color:var(--accent-color);font-family:var(--mono);font-size:0.85rem;">error: could not load post.</span>';
+                        contentEl.innerHTML = '<span class="md-error">error: could not load post.</span>';
                     });
             }
         }
 
-        // Theme toggle (synced with main site via localStorage)
-        const themeToggle = document.getElementById('theme-toggle');
-        const sunIcon = document.getElementById('sun-icon');
-        const moonIcon = document.getElementById('moon-icon');
+        // Theme toggle. data-theme is already set pre-paint by the head script, icon
+        // visibility is CSS-driven, and the choice is shared with index.html via localStorage.
         const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeMetas = document.querySelectorAll('meta[name="theme-color"]');
+        const PAPER = { light: '#f4f4f1', dark: '#121519' };
 
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        root.setAttribute('data-theme', savedTheme);
-        updateThemeIcon(savedTheme);
+        function syncThemeColor(theme) {
+            themeMetas.forEach(m => m.setAttribute('content', PAPER[theme]));
+        }
+        syncThemeColor(root.getAttribute('data-theme') || 'light');
 
         themeToggle.addEventListener('click', () => {
-            const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
             root.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
-            updateThemeIcon(next);
+            try { localStorage.setItem('theme', next); } catch (e) {}
+            syncThemeColor(next);
         });
-
-        function updateThemeIcon(theme) {
-            const dark = theme === 'dark';
-            sunIcon.style.display = dark ? 'block' : 'none';
-            moonIcon.style.display = dark ? 'none' : 'block';
-        }
     </script>
 </body>
 </html>
