@@ -328,7 +328,10 @@
                     <h2>Visitor Map</h2>
                 </div>
                 <div class="map-wrap">
-                    <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=_DpzN4jsym39EjKuInOrNcu-fQx1Sh7WYuds9G9BdCw&cl=666c73&w=a"></script>
+                    <!-- Third-party widget. The onerror must be an attribute, not a listener
+                         added later, or the failure has already happened by the time any
+                         end-of-body script runs. See the backstop check below too. -->
+                    <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=_DpzN4jsym39EjKuInOrNcu-fQx1Sh7WYuds9G9BdCw&cl=666c73&w=a" onerror="var s=document.getElementById('revolver-map'); if (s) s.remove();"></script>
                 </div>
             </section>
         </main>
@@ -396,6 +399,21 @@
             }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
             sections.forEach(s => spy.observe(s));
         }
+
+        // ---- Visitor map: don't leave an empty section if the widget never renders ----
+        // The inline onerror on the script tag covers an outright load failure (its ID
+        // currently 500s). This covers the other case: the script loads but injects
+        // nothing, which would otherwise leave a bare "Visitor Map" heading.
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const section = document.getElementById('revolver-map');
+                if (!section) return;
+                const wrap = section.querySelector('.map-wrap');
+                if (!wrap || !wrap.querySelector('img, canvas, iframe, a, div, svg')) {
+                    section.remove();
+                }
+            }, 1500);
+        });
 
         // ---- Reveal on entry: a quiet fade + 8px rise, once per section ----
         const revealEls = Array.from(document.querySelectorAll('.reveal'));
