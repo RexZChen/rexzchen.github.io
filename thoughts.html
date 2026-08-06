@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex">
     <title>~/thoughts - Zirong Chen</title>
-    <meta name="theme-color" content="#f4f4f1" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#121519" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f3f3f0" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0f1319" media="(prefers-color-scheme: dark)">
 
     <!-- Favicon: an off-centre Nordic cross in the site's own blue and ochre -->
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='3' fill='%2323486b'/%3E%3Crect y='14' width='32' height='4' fill='%23b5822c'/%3E%3Crect x='10' width='4' height='32' fill='%23b5822c'/%3E%3C/svg%3E">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='3' fill='%231c4a75'/%3E%3Crect y='14' width='32' height='4' fill='%23b0812c'/%3E%3Crect x='10' width='4' height='32' fill='%23b0812c'/%3E%3C/svg%3E">
 
     <!-- Set the theme before first paint so dark-mode users never see a light flash.
          Falls back to the OS preference, which keeps the two theme-color metas honest. -->
@@ -17,11 +17,14 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="assets/site.css">
+    <link rel="stylesheet" href="assets/site.css?v=18">
 </head>
 <body>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="progress" aria-hidden="true"><span></span></div>
+
     <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle color theme">
         <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="12" cy="12" r="5"></circle>
@@ -41,7 +44,7 @@
 
     <header class="page-head">
         <p class="eyebrow">~/random_thoughts</p>
-        <h1>Random Thoughts</h1>
+        <h1>Random <em>Thoughts</em></h1>
         <p class="header-sub">notes on research, life, and everything in between. if you found this page, congrats, you're either very curious or very bored. either way, welcome.</p>
         <p class="header-nav"><span class="prompt">$</span> <a href="index.html">cd ~/home</a></p>
     </header>
@@ -201,12 +204,28 @@
             }
         }
 
+        // Scroll rule: --read is 0 at the top, 1 at the bottom.
+        const progress = document.querySelector('.progress span');
+        if (progress) {
+            let queued = false;
+            const paint = () => {
+                queued = false;
+                const max = document.documentElement.scrollHeight - innerHeight;
+                progress.style.setProperty('--read', max > 0 ? Math.min(1, scrollY / max) : 0);
+            };
+            addEventListener('scroll', () => {
+                if (!queued) { queued = true; requestAnimationFrame(paint); }
+            }, { passive: true });
+            addEventListener('resize', paint, { passive: true });
+            paint();
+        }
+
         // Theme toggle. data-theme is already set pre-paint by the head script, icon
         // visibility is CSS-driven, and the choice is shared with index.html via localStorage.
         const root = document.documentElement;
         const themeToggle = document.getElementById('theme-toggle');
         const themeMetas = document.querySelectorAll('meta[name="theme-color"]');
-        const PAPER = { light: '#f4f4f1', dark: '#121519' };
+        const PAPER = { light: '#f3f3f0', dark: '#0f1319' };
 
         function syncThemeColor(theme) {
             themeMetas.forEach(m => m.setAttribute('content', PAPER[theme]));

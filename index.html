@@ -13,25 +13,66 @@
     <meta property="og:image" content="https://rexzchen.github.io/imgs/brown-icon.jpg">
     <meta property="og:url" content="https://rexzchen.github.io/">
     <meta name="twitter:card" content="summary">
-    <meta name="theme-color" content="#f4f4f1" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#121519" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f3f3f0" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0f1319" media="(prefers-color-scheme: dark)">
 
     <!-- Favicon: an off-centre Nordic cross in the site's own blue and ochre -->
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='3' fill='%2323486b'/%3E%3Crect y='14' width='32' height='4' fill='%23b5822c'/%3E%3Crect x='10' width='4' height='32' fill='%23b5822c'/%3E%3C/svg%3E">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='3' fill='%231c4a75'/%3E%3Crect y='14' width='32' height='4' fill='%23b0812c'/%3E%3Crect x='10' width='4' height='32' fill='%23b0812c'/%3E%3C/svg%3E">
 
     <!-- Set the theme before first paint so dark-mode users never see a light flash.
          Falls back to the OS preference, which keeps the two theme-color metas honest. -->
-    <script>(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';d.setAttribute('data-theme',t);}catch(e){d.setAttribute('data-theme','light');}})();</script>
+    <script>(function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';d.setAttribute('data-theme',t);}catch(e){d.setAttribute('data-theme','light');}try{var l=localStorage.getItem('lang');if(!l&&/^sv\b/i.test(navigator.language||''))l='sv';if(l==='sv')d.setAttribute('lang','sv');}catch(e){}})();</script>
 
-    <!-- Typefaces: Instrument Serif (display) + Inter (body) + JetBrains Mono (labels) -->
+    <!-- Typefaces: Instrument Serif (display) + Instrument Sans (body) + IBM Plex Mono (indices) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="assets/site.css">
+    <link rel="stylesheet" href="assets/site.css?v=18">
 </head>
 <body>
-    <a class="skip-link" href="#home">Skip to content</a>
+    <a class="skip-link" href="#home"><span data-lang="en">Skip to content</span><span data-lang="sv" lang="sv">Hoppa till innehåll</span></a>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="progress" aria-hidden="true"><span></span></div>
+
+    <!-- Flags are drawn inline rather than set as emoji: Windows ships no
+         regional-indicator glyphs, so 🇸🇪 renders there as the bare letters "SE". -->
+    <div class="chrome js-only">
+        <div class="lang">
+            <button class="lang-btn" id="lang-btn" type="button" aria-haspopup="true" aria-expanded="false"
+                    aria-label="Choose language / Välj språk">
+                <svg viewBox="0 0 24 24" aria-hidden="true" class="lang-globe">
+                    <circle cx="12" cy="12" r="9"></circle>
+                    <path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"></path>
+                </svg>
+                <span class="lang-now" id="lang-now">EN</span><span class="lang-beta" data-lang="sv">beta</span>
+            </button>
+
+            <div class="lang-menu" id="lang-menu" role="menu" hidden>
+                <button type="button" role="menuitem" data-set-lang="en">
+                    <svg viewBox="0 0 19 10" aria-hidden="true" class="flag">
+                        <rect width="19" height="10" fill="#f4f4f2"/>
+                        <g fill="#b22234">
+                            <rect y="0" width="19" height=".77"/><rect y="1.54" width="19" height=".77"/>
+                            <rect y="3.08" width="19" height=".77"/><rect y="4.62" width="19" height=".77"/>
+                            <rect y="6.15" width="19" height=".77"/><rect y="7.69" width="19" height=".77"/>
+                            <rect y="9.23" width="19" height=".77"/>
+                        </g>
+                        <rect width="7.6" height="5.38" fill="#3c3b6e"/>
+                    </svg>
+                    <span>English</span>
+                </button>
+                <button type="button" role="menuitem" data-set-lang="sv">
+                    <svg viewBox="0 0 16 10" aria-hidden="true" class="flag">
+                        <rect width="16" height="10" fill="#006aa7"/>
+                        <rect x="5" width="2" height="10" fill="#fecc00"/>
+                        <rect y="4" width="16" height="2" fill="#fecc00"/>
+                    </svg>
+                    <span lang="sv">Svenska</span><span class="lang-beta">beta</span>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle color theme">
         <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
@@ -51,39 +92,129 @@
     </button>
 
     <header class="masthead">
-        <div class="masthead-id">
-            <h1 class="display-name">Zirong (Rex) Chen</h1>
-            <p class="name-cn" lang="zh-Hans">陈子荣</p>
-            <p class="masthead-tagline">Trustworthy AI, NLP, and AI for Social Good</p>
+        <!-- Static now that the live clock lives in the band, so it reads with
+             JavaScript disabled. -->
+        <p class="instrument">
+            <span>59.3293&deg; N</span>
+            <span>18.0686&deg; E</span>
+            <span>Stockholm</span>
+        </p>
+
+        <div class="masthead-inner">
+            <div class="namelock">
+                <img src="imgs/portrait-crop.jpg" alt="Hand-drawn portrait of Zirong Chen"
+                     class="name-mark" width="640" height="640" decoding="async" fetchpriority="high">
+                <div>
+                    <h1 class="display-name">Zirong <em>(Rex)</em> Chen</h1>
+                    <p class="name-cn" lang="zh-Hans">陈子荣</p>
+                </div>
+            </div>
+
+            <div class="masthead-foot">
+                <div>
+                    <p class="masthead-tagline"><span data-lang="en">Trustworthy AI, NLP, and AI for social good</span><span data-lang="sv" lang="sv">Tillförlitlig AI, språkteknologi och AI för samhällsnytta</span></p>
+                    <p class="transit">
+                        <span>Nashville, TN</span>
+                        <span class="transit-rule" aria-hidden="true"></span>
+                        <span class="to">Stockholm, SE</span>
+                    </p>
+                </div>
+                <dl class="spec">
+                    <dt><span data-lang="en">Role</span><span data-lang="sv" lang="sv">Roll</span></dt>
+                    <dd>Incoming Postdoctoral Fellow</dd>
+                    <dt><span data-lang="en">Centre</span><span data-lang="sv" lang="sv">Centrum</span></dt>
+                    <dd><a href="https://www.tecosa.center.kth.se/" target="_blank">TECoSA</a></dd>
+                    <dt><span data-lang="en">Inst</span><span data-lang="sv" lang="sv">Lärosäte</span></dt>
+                    <dd><a href="https://www.kth.se/en" target="_blank">KTH Royal Institute of Technology</a></dd>
+                    <dt><span data-lang="en">Based</span><span data-lang="sv" lang="sv">Baserad i</span></dt>
+                    <dd>Stockholm, SE</dd>
+                </dl>
+            </div>
         </div>
-        <dl class="spec">
-            <dt>Role</dt>
-            <dd>Incoming Postdoctoral Fellow</dd>
-            <dt>Centre</dt>
-            <dd><a href="https://www.tecosa.center.kth.se/" target="_blank">TECoSA</a></dd>
-            <dt>Inst</dt>
-            <dd><a href="https://www.kth.se/en" target="_blank">KTH Royal Institute of Technology</a></dd>
-            <dt>Based</dt>
-            <dd>Stockholm, SE</dd>
-        </dl>
     </header>
+
+    <!-- Local time in Stockholm, and an invitation that knows what day it is. -->
+    <section class="band" aria-label="Local time in Stockholm">
+        <div class="band-inner">
+            <div class="band-lockup">
+                <!-- js-only: without scripts there is no clock to show, and an
+                     empty frame reading --:-- would be worse than no frame. -->
+                <div class="clock js-only">
+                    <p class="clock-caption">
+                        <span data-lang="en">Stockholm local time</span><span
+                            data-lang="sv" lang="sv">Lokal tid i Stockholm</span>
+                        <!-- CET or CEST, straight from Intl. The label is the
+                             visible proof that the clock follows the DST switch. -->
+                        <span class="clock-zone" id="clock-zone"></span>
+                    </p>
+                    <p class="clock-time"><time id="clock-hm">--:--</time><span
+                        class="clock-sec" id="clock-sec">:--</span></p>
+                    <p class="clock-meta">
+                        <span id="clock-date"></span><span id="clock-mood"></span>
+                    </p>
+                </div>
+
+                <!-- A plain anchor, so it still works with scripts off. The pops
+                     are injected by JS and simply do not exist without it.
+                     .fika-sheen is the light sweep; the label and arrow sit above
+                     it and separate on hover. -->
+                <a class="fika" href="#contact-info" id="fika">
+                    <span class="fika-pop" id="fika-pop" aria-hidden="true"></span>
+                    <span class="fika-clip" aria-hidden="true"><span class="fika-sheen"></span></span>
+                    <span class="fika-label" data-lang="en">Fika with me?</span><span class="fika-label" data-lang="sv" lang="sv">Fika med mig?</span>
+                    <svg class="fika-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 12h13M12 5l7 7-7 7"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Runs the full width of the band rather than the shell, so the
+             fade at each end has room to read as a fade.
+             Decorative: every keyword named here already appears under one of
+             the research projects, so screen readers lose nothing by skipping
+             it. The list appears twice so the -50% loop lands seamlessly. -->
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee-track">
+                <span>Trustworthy AI</span><span class="sep">&#9632;</span>
+                <span>AI Safety</span><span class="sep">&#9632;</span>
+                <span>Natural Language Processing</span><span class="sep">&#9632;</span>
+                <span>Reliable LLMs</span><span class="sep">&#9632;</span>
+                <span>Safety-Critical Systems</span><span class="sep">&#9632;</span>
+                <span>Neurosymbolic Reasoning</span><span class="sep">&#9632;</span>
+                <span>Signal Temporal Logic</span><span class="sep">&#9632;</span>
+                <span>Adaptive Learning</span><span class="sep">&#9632;</span>
+                <span>Life-long Learning</span><span class="sep">&#9632;</span>
+                <span>Emergency Response</span><span class="sep">&#9632;</span>
+                <span>Smart Cities</span><span class="sep">&#9632;</span>
+                <span>Trustworthy AI</span><span class="sep">&#9632;</span>
+                <span>AI Safety</span><span class="sep">&#9632;</span>
+                <span>Natural Language Processing</span><span class="sep">&#9632;</span>
+                <span>Reliable LLMs</span><span class="sep">&#9632;</span>
+                <span>Safety-Critical Systems</span><span class="sep">&#9632;</span>
+                <span>Neurosymbolic Reasoning</span><span class="sep">&#9632;</span>
+                <span>Signal Temporal Logic</span><span class="sep">&#9632;</span>
+                <span>Adaptive Learning</span><span class="sep">&#9632;</span>
+                <span>Life-long Learning</span><span class="sep">&#9632;</span>
+                <span>Emergency Response</span><span class="sep">&#9632;</span>
+                <span>Smart Cities</span><span class="sep">&#9632;</span>
+            </div>
+        </div>
+    </section>
 
     <div class="layout">
         <aside class="rail">
-            <!-- Above the fold, so deliberately NOT lazy — it is the LCP element. -->
-            <img src="imgs/brown-icon.jpg" alt="Zirong Chen" class="rail-photo" width="1254" height="1254" decoding="async" fetchpriority="high">
-
             <nav class="rail-nav">
-                <a href="#home">About</a>
-                <a href="#education">Education</a>
-                <a href="#news">News</a>
-                <a href="#about">Research</a>
-                <a href="#contact">Publications</a>
-                <a href="#contact-info">Contact</a>
+                <a href="#home"><span data-lang="en">About</span><span data-lang="sv" lang="sv">Om mig</span></a>
+                <a href="#education"><span data-lang="en">Education</span><span data-lang="sv" lang="sv">Utbildning</span></a>
+                <a href="#news"><span data-lang="en">News</span><span data-lang="sv" lang="sv">Nyheter</span></a>
+                <a href="#about"><span data-lang="en">Research</span><span data-lang="sv" lang="sv">Forskning</span></a>
+                <a href="#contact"><span data-lang="en">Publications</span><span data-lang="sv" lang="sv">Publikationer</span></a>
+                <a href="#contact-info"><span data-lang="en">Contact</span><span data-lang="sv" lang="sv">Kontakt</span></a>
             </nav>
 
             <div class="rail-links">
-                <a class="cv-button" href="imgs/Zirong_Chen_CV_latest.pdf" target="_blank">Download CV</a>
+                <a class="cv-button" href="imgs/Zirong_Chen_CV_latest.pdf" target="_blank"><span data-lang="en">Download CV</span><span data-lang="sv" lang="sv">Ladda ner CV</span></a>
                 <a href="https://scholar.google.com/citations?user=wo6wou8AAAAJ" target="_blank">Google Scholar</a>
                 <a href="https://orcid.org/0000-0002-6466-4549" target="_blank">ORCID</a>
                 <a href="https://www.linkedin.com/in/zirong-chen-567070190" target="_blank">LinkedIn</a>
@@ -93,101 +224,105 @@
         <main>
             <section id="home" class="reveal">
                 <div class="section-head">
-                    <h2>About</h2>
+                    <h2><span data-lang="en">About</span><span data-lang="sv" lang="sv">Om mig</span></h2>
                 </div>
                 <div class="about-content">
-                    <p>Hello! My name is Zirong (Rex) Chen (陈子荣). I am an incoming Postdoctoral Fellow at <a href="https://www.tecosa.center.kth.se/" target="_blank">TECoSA</a>, <a href="https://www.kth.se/en" target="_blank">KTH Royal Institute of Technology</a>, where I will work with <a href="https://people.kth.se/~dbro/" target="_blank">Dr. David Broman</a> and <a href="https://www.kth.se/profile/raina" target="_blank">Dr. Rafia Inam</a>. I defended my Ph.D. in Computer Science at <a href="https://www.vanderbilt.edu" target="_blank">Vanderbilt University</a>, advised by <a href="https://meiyima.github.io/" target="_blank">Dr. Meiyi Ma</a>. My research focuses on AI Safety and Trustworthy AI, with particular emphasis on Natural Language Processing (NLP), reliable AI systems for critical applications, and trustworthy AI-driven solutions for Smart Cities and emergency response.</p>
-                    <p>I earned my bachelor's degree (B.E. in Computer Engineering) in China and my master's degree (M.S. in Computer Science) at Georgetown University. I was a basketball athlete in high school and college.</p>
+                    <p class="lede" data-lang="en">Hello! My name is Zirong (Rex) Chen (陈子荣).</p>
+                    <p class="lede" data-lang="sv" lang="sv">Hej! Jag heter Zirong (Rex) Chen (陈子荣).</p>
+                    <p data-lang="en">I am an incoming Postdoctoral Fellow at <a href="https://www.tecosa.center.kth.se/" target="_blank">TECoSA</a>, <a href="https://www.kth.se/en" target="_blank">KTH Royal Institute of Technology</a>, where I will work with <a href="https://people.kth.se/~dbro/" target="_blank">Dr. David Broman</a> and <a href="https://www.kth.se/profile/raina" target="_blank">Dr. Rafia Inam</a>. I defended my Ph.D. in Computer Science at <a href="https://www.vanderbilt.edu" target="_blank">Vanderbilt University</a>, advised by <a href="https://meiyima.github.io/" target="_blank">Dr. Meiyi Ma</a>. My research focuses on AI Safety and Trustworthy AI, with particular emphasis on Natural Language Processing (NLP), reliable AI systems for critical applications, and trustworthy AI-driven solutions for Smart Cities and emergency response.</p>
+                    <p data-lang="sv" lang="sv">Jag är tillträdande postdoktor vid <a href="https://www.tecosa.center.kth.se/" target="_blank">TECoSA</a>, <a href="https://www.kth.se/en" target="_blank">KTH</a>, där jag kommer att arbeta med <a href="https://people.kth.se/~dbro/" target="_blank">Dr. David Broman</a> och <a href="https://www.kth.se/profile/raina" target="_blank">Dr. Rafia Inam</a>. Jag disputerade i datavetenskap vid <a href="https://www.vanderbilt.edu" target="_blank">Vanderbilt University</a> med <a href="https://meiyima.github.io/" target="_blank">Dr. Meiyi Ma</a> som handledare. Min forskning handlar om AI-säkerhet och tillförlitlig AI, med särskilt fokus på språkteknologi (NLP), tillförlitliga AI-system för kritiska tillämpningar och AI-lösningar att lita på för smarta städer och räddningstjänst.</p>
+                    <p data-lang="en">I earned my bachelor's degree (B.E. in Computer Engineering) in China and my master's degree (M.S. in Computer Science) at Georgetown University. I was a basketball athlete in high school and college.</p>
+                    <p data-lang="sv" lang="sv">Jag tog min kandidatexamen (B.E. i datateknik) i Kina och min masterexamen (M.S. i datavetenskap) vid Georgetown University. Jag spelade basket både på gymnasiet och universitetet.</p>
                 </div>
             </section>
 
             <section id="education" class="reveal">
                 <div class="section-head">
-                    <h2>Education</h2>
+                    <h2><span data-lang="en">Education</span><span data-lang="sv" lang="sv">Utbildning</span></h2>
                 </div>
                 <ul class="edu-list">
                     <li>
                         <span class="edu-year">2021&ndash;2026</span>
-                        <span class="edu-body"><strong>Ph.D. in Computer Science</strong><br><span class="muted">Vanderbilt University, Nashville, TN</span></span>
+                        <span class="edu-body"><strong><span data-lang="en">Ph.D. in Computer Science</span><span data-lang="sv" lang="sv">Doktorsexamen i datavetenskap</span></strong><br><span class="muted">Vanderbilt University, Nashville, TN</span></span>
                     </li>
                     <li>
                         <span class="edu-year">2019&ndash;2021</span>
-                        <span class="edu-body"><strong>M.S. in Computer Science</strong><br><span class="muted">Georgetown University, Washington, DC</span></span>
+                        <span class="edu-body"><strong><span data-lang="en">M.S. in Computer Science</span><span data-lang="sv" lang="sv">Masterexamen i datavetenskap</span></strong><br><span class="muted">Georgetown University, Washington, DC</span></span>
                     </li>
                     <li>
                         <span class="edu-year">2015&ndash;2019</span>
-                        <span class="edu-body"><strong>B.E. in Computer Engineering</strong><br><span class="muted">Jinling Institute of Technology, Nanjing, China</span></span>
+                        <span class="edu-body"><strong><span data-lang="en">B.E. in Computer Engineering</span><span data-lang="sv" lang="sv">Kandidatexamen i datateknik</span></strong><br><span class="muted">Jinling Institute of Technology, Nanjing, China</span></span>
                     </li>
                 </ul>
             </section>
 
             <section id="news" class="reveal">
                 <div class="section-head">
-                    <h2>News</h2>
-                    <p class="section-note">Last updated July 2026.</p>
+                    <h2><span data-lang="en">News</span><span data-lang="sv" lang="sv">Nyheter</span></h2>
+                    <p class="section-note"><span data-lang="en">Last updated July 2026.</span><span data-lang="sv" lang="sv">Uppdaterad juli 2026.</span></p>
                 </div>
 
                 <div class="news-group">
                     <div class="news-year">2026</div>
                     <ul class="news-list">
-                        <li><span class="news-date">Jul.</span><span class="news-text">I will join <a href="https://www.tecosa.center.kth.se/" target="_blank">TECoSA</a> at <a href="https://www.kth.se/en" target="_blank">KTH</a> as a Postdoctoral Fellow, working with <a href="https://people.kth.se/~dbro/" target="_blank">Dr. David Broman</a> and <a href="https://www.kth.se/profile/raina" target="_blank">Dr. Rafia Inam</a>. See you in Stockholm!<span class="mark-new">new</span></span></li>
-                        <li><span class="news-date">Jul.</span><span class="news-text">Our paper <a href="https://arxiv.org/pdf/2607.23019" target="_blank">Reason Popper-ly: Patching In-Context Reasoning with Inductive Logic Programming</a> is accepted at the 20th Conference on Neurosymbolic Learning and Reasoning (NeSy). See you in Lisbon, Portugal!</span></li>
-                        <li><span class="news-date">Jun.</span><span class="news-text">I successfully defended my PhD! Dr. me, finally.</span></li>
-                        <li><span class="news-date">May</span><span class="news-text">Our paper <a href="https://arxiv.org/pdf/2602.13241" target="_blank">Empowering 9-1-1 Calltaking Training with Generative AI: Experiences and Lessons Learned</a> is accepted by IEEE-SmartComp 26!</span></li>
-                        <li><span class="news-date">Apr.</span><span class="news-text">Our paper <a href="https://arxiv.org/pdf/2603.05361" target="_blank">PACE: A Personalized Adaptive Curriculum Engine for 9-1-1 Call-taker Training</a> is accepted by IJCAI-26 and ECAI-26 (23.96% acceptance rate). See you in Bremen, Germany!</span></li>
-                        <li><span class="news-date">Mar.</span><span class="news-text">Invited talk "Empowering 9-1-1 Training with Trustworthy AI" at Trustworthy AI Community, <a href="https://www.ericsson.com/en" target="_blank">Ericsson AB</a>, Sweden by <a href="https://www.kth.se/profile/raina" target="_blank">Dr. Rafia Inam</a>. See you (virtually) in Sweden!</span></li>
-                        <li><span class="news-date">Feb.</span><span class="news-text">Our LogiEx (Integrating Formal Logic and LLMs for Explainable Transit Planning) is accepted by ICCPS-2026! Shoutout to first author <a href="https://ziyanan.github.io/" target="_blank">Ziyan An</a>.</span></li>
-                        <li><span class="news-date">Jan.</span><span class="news-text">We demoed the first version of our dispatching simulator under the Angie platform at MNDEC with domain experts.</span></li>
+                        <li><span class="news-date">Jul.</span><span class="news-text" data-lang="en">I will join <a href="https://www.tecosa.center.kth.se/" target="_blank">TECoSA</a> at <a href="https://www.kth.se/en" target="_blank">KTH</a> as a Postdoctoral Fellow, working with <a href="https://people.kth.se/~dbro/" target="_blank">Dr. David Broman</a> and <a href="https://www.kth.se/profile/raina" target="_blank">Dr. Rafia Inam</a>. See you in Stockholm!<span class="mark-new">new</span></span><span class="news-text" data-lang="sv" lang="sv">Jag börjar som postdoktor på <a href="https://www.tecosa.center.kth.se/" target="_blank">TECoSA</a> vid <a href="https://www.kth.se/en" target="_blank">KTH</a>, tillsammans med <a href="https://people.kth.se/~dbro/" target="_blank">Dr. David Broman</a> och <a href="https://www.kth.se/profile/raina" target="_blank">Dr. Rafia Inam</a>. Vi ses i Stockholm!<span class="mark-new">ny</span></span></li>
+                        <li><span class="news-date">Jul.</span><span class="news-text" data-lang="en">Our paper <a href="https://arxiv.org/pdf/2607.23019" target="_blank">Reason Popper-ly: Patching In-Context Reasoning with Inductive Logic Programming</a> is accepted at the 20th Conference on Neurosymbolic Learning and Reasoning (NeSy). See you in Lisbon, Portugal!</span><span class="news-text" data-lang="sv" lang="sv">Vår artikel <a href="https://arxiv.org/pdf/2607.23019" target="_blank">Reason Popper-ly: Patching In-Context Reasoning with Inductive Logic Programming</a> har antagits till 20th Conference on Neurosymbolic Learning and Reasoning (NeSy). Vi ses i Lissabon, Portugal!</span></li>
+                        <li><span class="news-date">Jun.</span><span class="news-text" data-lang="en">I successfully defended my PhD! Dr. me, finally.</span><span class="news-text" data-lang="sv" lang="sv">Jag har disputerat! Äntligen doktor.</span></li>
+                        <li><span class="news-date" data-lang="en">May</span><span class="news-date" data-lang="sv" lang="sv">Maj</span><span class="news-text" data-lang="en">Our paper <a href="https://arxiv.org/pdf/2602.13241" target="_blank">Empowering 9-1-1 Calltaking Training with Generative AI: Experiences and Lessons Learned</a> is accepted by IEEE-SmartComp 26!</span><span class="news-text" data-lang="sv" lang="sv">Vår artikel <a href="https://arxiv.org/pdf/2602.13241" target="_blank">Empowering 9-1-1 Calltaking Training with Generative AI: Experiences and Lessons Learned</a> har antagits till IEEE-SmartComp 26!</span></li>
+                        <li><span class="news-date">Apr.</span><span class="news-text" data-lang="en">Our paper <a href="https://arxiv.org/pdf/2603.05361" target="_blank">PACE: A Personalized Adaptive Curriculum Engine for 9-1-1 Call-taker Training</a> is accepted by IJCAI-26 and ECAI-26 (23.96% acceptance rate). See you in Bremen, Germany!</span><span class="news-text" data-lang="sv" lang="sv">Vår artikel <a href="https://arxiv.org/pdf/2603.05361" target="_blank">PACE: A Personalized Adaptive Curriculum Engine for 9-1-1 Call-taker Training</a> har antagits till IJCAI-26 och ECAI-26 (23,96 % antagningsgrad). Vi ses i Bremen, Tyskland!</span></li>
+                        <li><span class="news-date">Mar.</span><span class="news-text" data-lang="en">Invited talk "Empowering 9-1-1 Training with Trustworthy AI" at Trustworthy AI Community, <a href="https://www.ericsson.com/en" target="_blank">Ericsson AB</a>, Sweden by <a href="https://www.kth.se/profile/raina" target="_blank">Dr. Rafia Inam</a>. See you (virtually) in Sweden!</span><span class="news-text" data-lang="sv" lang="sv">Inbjuden föreläsning ”Empowering 9-1-1 Training with Trustworthy AI” hos Trustworthy AI Community, <a href="https://www.ericsson.com/en" target="_blank">Ericsson AB</a>, Sverige, på inbjudan av <a href="https://www.kth.se/profile/raina" target="_blank">Dr. Rafia Inam</a>. Vi ses (digitalt) i Sverige!</span></li>
+                        <li><span class="news-date">Feb.</span><span class="news-text" data-lang="en">Our LogiEx (Integrating Formal Logic and LLMs for Explainable Transit Planning) is accepted by ICCPS-2026! Shoutout to first author <a href="https://ziyanan.github.io/" target="_blank">Ziyan An</a>.</span><span class="news-text" data-lang="sv" lang="sv">Vår LogiEx (Integrating Formal Logic and LLMs for Explainable Transit Planning) har antagits till ICCPS-2026! Stort grattis till förstaförfattaren <a href="https://ziyanan.github.io/" target="_blank">Ziyan An</a>.</span></li>
+                        <li><span class="news-date">Jan.</span><span class="news-text" data-lang="en">We demoed the first version of our dispatching simulator under the Angie platform at MNDEC with domain experts.</span><span class="news-text" data-lang="sv" lang="sv">Vi demonstrerade den första versionen av vår utlarmningssimulator i Angie-plattformen på MNDEC tillsammans med experter från verksamheten.</span></li>
                     </ul>
                 </div>
 
                 <div class="news-group">
                     <div class="news-year">2025</div>
                     <ul class="news-list">
-                        <li><span class="news-date">Nov.</span><span class="news-text">Invited talk "Neurosymbolic AI for Safety-Critical Systems" at <a href="https://dtai.cs.kuleuven.be/" target="_blank">DTAI Lab</a>, <a href="https://www.kuleuven.be/english/kuleuven" target="_blank">KU Leuven</a> by <a href="https://scholar.google.com/citations?user=dgobB6AAAAAJ&hl=en" target="_blank">Dr. Luc De Raedt</a> and <a href="https://jessa.github.io/" target="_blank">Dr. Jessa Bekker</a>. See you (virtually) in Belgium!</span></li>
-                        <li><span class="news-date">Nov.</span><span class="news-text">Our LwP (Learning with Preserving) is accepted by AAAI-2026 as Oral Spotlight! See you in Singapore! Shoutout to first authors <a href="https://hcwdavid.github.io/" target="_blank">David Wang</a> and <a href="https://www.linkedin.com/in/siwoo-bae-78a52332b/" target="_blank">Siwoo Bae</a>.</span></li>
-                        <li><span class="news-date">Oct.</span><span class="news-text">Invited guest talk on our Angie work at <a href="https://hoques.com/" target="_blank">Dr. Ehsan Hoque</a>'s <a href="https://roc-hci.com/" target="_blank">ROC-HCI Lab</a> at University of Rochester.</span></li>
-                        <li><span class="news-date">Aug.</span><span class="news-text">We presented LogiDebrief (oral and poster at IJCAI) in Montreal, returned to Vandy, Anchor Down!</span></li>
-                        <li><span class="news-date">Jul.</span><span class="news-text">I won the IJCAI volunteer scholarship!</span></li>
-                        <li><span class="news-date">Jun.</span><span class="news-text">Our project won the <a href="https://cttc.co/article/20250605/vanderbilt-announces-innovation-catalyst-fund-awardees-february-2025-cycle" target="_blank">Vanderbilt Catalyst Funds</a>!</span></li>
-                        <li><span class="news-date">May</span><span class="news-text">I joined <a href="https://ailabs.epiqglobal.com/" target="_blank">Epiq AI Labs</a> as an AI Research Fellow (intern), researching legal AI topics, see you in NYC!</span></li>
-                        <li><span class="news-date">Apr.</span><span class="news-text">Our work LogiDebrief is accepted by IJCAI-2025! See you in Montreal, CA!</span></li>
-                        <li><span class="news-date">Apr.</span><span class="news-text">Our project is awarded by Google again (Gemma3 Academic Program)!</span></li>
-                        <li><span class="news-date">Mar.</span><span class="news-text">Angie now has two solutions: desktop and web!</span></li>
-                        <li><span class="news-date">Feb.</span><span class="news-text">Sim911 and our newly developed debriefing function are now also available online!</span></li>
-                        <li><span class="news-date">Jan.</span><span class="news-text">Our work Sim911 is selected as Oral Spotlight (4.9%) at AAAI-25!</span></li>
+                        <li><span class="news-date">Nov.</span><span class="news-text" data-lang="en">Invited talk "Neurosymbolic AI for Safety-Critical Systems" at <a href="https://dtai.cs.kuleuven.be/" target="_blank">DTAI Lab</a>, <a href="https://www.kuleuven.be/english/kuleuven" target="_blank">KU Leuven</a> by <a href="https://scholar.google.com/citations?user=dgobB6AAAAAJ&hl=en" target="_blank">Dr. Luc De Raedt</a> and <a href="https://jessa.github.io/" target="_blank">Dr. Jessa Bekker</a>. See you (virtually) in Belgium!</span><span class="news-text" data-lang="sv" lang="sv">Inbjuden föreläsning ”Neurosymbolic AI for Safety-Critical Systems” vid <a href="https://dtai.cs.kuleuven.be/" target="_blank">DTAI Lab</a>, <a href="https://www.kuleuven.be/english/kuleuven" target="_blank">KU Leuven</a>, på inbjudan av <a href="https://scholar.google.com/citations?user=dgobB6AAAAAJ&hl=en" target="_blank">Dr. Luc De Raedt</a> och <a href="https://jessa.github.io/" target="_blank">Dr. Jessa Bekker</a>. Vi ses (digitalt) i Belgien!</span></li>
+                        <li><span class="news-date">Nov.</span><span class="news-text" data-lang="en">Our LwP (Learning with Preserving) is accepted by AAAI-2026 as Oral Spotlight! See you in Singapore! Shoutout to first authors <a href="https://hcwdavid.github.io/" target="_blank">David Wang</a> and <a href="https://www.linkedin.com/in/siwoo-bae-78a52332b/" target="_blank">Siwoo Bae</a>.</span><span class="news-text" data-lang="sv" lang="sv">Vår LwP (Learning with Preserving) har antagits till AAAI-2026 som Oral Spotlight! Vi ses i Singapore! Stort grattis till förstaförfattarna <a href="https://hcwdavid.github.io/" target="_blank">David Wang</a> och <a href="https://www.linkedin.com/in/siwoo-bae-78a52332b/" target="_blank">Siwoo Bae</a>.</span></li>
+                        <li><span class="news-date" data-lang="en">Oct.</span><span class="news-date" data-lang="sv" lang="sv">Okt.</span><span class="news-text" data-lang="en">Invited guest talk on our Angie work at <a href="https://hoques.com/" target="_blank">Dr. Ehsan Hoque</a>'s <a href="https://roc-hci.com/" target="_blank">ROC-HCI Lab</a> at University of Rochester.</span><span class="news-text" data-lang="sv" lang="sv">Inbjuden gästföreläsning om vårt Angie-arbete vid <a href="https://hoques.com/" target="_blank">Dr. Ehsan Hoque</a>s <a href="https://roc-hci.com/" target="_blank">ROC-HCI Lab</a> på University of Rochester.</span></li>
+                        <li><span class="news-date">Aug.</span><span class="news-text" data-lang="en">We presented LogiDebrief (oral and poster at IJCAI) in Montreal, returned to Vandy, Anchor Down!</span><span class="news-text" data-lang="sv" lang="sv">Vi presenterade LogiDebrief (både muntligt och som poster på IJCAI) i Montreal och är tillbaka på Vandy. Anchor Down!</span></li>
+                        <li><span class="news-date">Jul.</span><span class="news-text" data-lang="en">I won the IJCAI volunteer scholarship!</span><span class="news-text" data-lang="sv" lang="sv">Jag fick IJCAI:s volontärstipendium!</span></li>
+                        <li><span class="news-date">Jun.</span><span class="news-text" data-lang="en">Our project won the <a href="https://cttc.co/article/20250605/vanderbilt-announces-innovation-catalyst-fund-awardees-february-2025-cycle" target="_blank">Vanderbilt Catalyst Funds</a>!</span><span class="news-text" data-lang="sv" lang="sv">Vårt projekt tilldelades <a href="https://cttc.co/article/20250605/vanderbilt-announces-innovation-catalyst-fund-awardees-february-2025-cycle" target="_blank">Vanderbilt Catalyst Funds</a>!</span></li>
+                        <li><span class="news-date" data-lang="en">May</span><span class="news-date" data-lang="sv" lang="sv">Maj</span><span class="news-text" data-lang="en">I joined <a href="https://ailabs.epiqglobal.com/" target="_blank">Epiq AI Labs</a> as an AI Research Fellow (intern), researching legal AI topics, see you in NYC!</span><span class="news-text" data-lang="sv" lang="sv">Jag började på <a href="https://ailabs.epiqglobal.com/" target="_blank">Epiq AI Labs</a> som AI Research Fellow (praktikant) och forskar om juridisk AI. Vi ses i New York!</span></li>
+                        <li><span class="news-date">Apr.</span><span class="news-text" data-lang="en">Our work LogiDebrief is accepted by IJCAI-2025! See you in Montreal, CA!</span><span class="news-text" data-lang="sv" lang="sv">Vårt arbete LogiDebrief har antagits till IJCAI-2025! Vi ses i Montreal, Kanada!</span></li>
+                        <li><span class="news-date">Apr.</span><span class="news-text" data-lang="en">Our project is awarded by Google again (Gemma3 Academic Program)!</span><span class="news-text" data-lang="sv" lang="sv">Vårt projekt har fått anslag från Google igen (Gemma3 Academic Program)!</span></li>
+                        <li><span class="news-date">Mar.</span><span class="news-text" data-lang="en">Angie now has two solutions: desktop and web!</span><span class="news-text" data-lang="sv" lang="sv">Angie finns nu i två versioner: skrivbord och webb!</span></li>
+                        <li><span class="news-date">Feb.</span><span class="news-text" data-lang="en">Sim911 and our newly developed debriefing function are now also available online!</span><span class="news-text" data-lang="sv" lang="sv">Sim911 och vår nyutvecklade återkopplingsfunktion finns nu även på webben!</span></li>
+                        <li><span class="news-date">Jan.</span><span class="news-text" data-lang="en">Our work Sim911 is selected as Oral Spotlight (4.9%) at AAAI-25!</span><span class="news-text" data-lang="sv" lang="sv">Vårt arbete Sim911 valdes ut som Oral Spotlight (4,9 %) på AAAI-25!</span></li>
                     </ul>
                 </div>
 
                 <details class="news-earlier">
-                    <summary>Show earlier news &mdash; 2024, 2023</summary>
+                    <summary><span data-lang="en">Show earlier news &middot; 2024, 2023</span><span data-lang="sv" lang="sv">Visa äldre nyheter &middot; 2024, 2023</span></summary>
 
                     <div class="news-group">
                         <div class="news-year">2024</div>
                         <ul class="news-list">
-                            <li><span class="news-date">Dec.</span><span class="news-text">Our paper Sim911 is accepted by AAAI-25! See you in Philadelphia.</span></li>
-                            <li><span class="news-date">Oct.</span><span class="news-text">Our project is awarded by the <a href="https://research.google/programs-and-events/google-academic-research-awards/google-academic-research-award-program-recipients/" target="_blank">Google Academic Research Award</a>!</span></li>
-                            <li><span class="news-date">Sep.</span><span class="news-text">We were invited (permanently) to present our work at the <a href="https://lab.vanderbilt.edu/live/2024/06/21/a-gen-ai-enabled-system-for-9-1-1-call-takers-training-in-emergency-response-simer/" target="_blank">LIVE session</a>.</span></li>
-                            <li><span class="news-date">Sep.</span><span class="news-text">We were invited to the Innovation Panel organized by Davidson County and the Sheriff's Office.</span></li>
-                            <li><span class="news-date">Aug.</span><span class="news-text">Our project SimER/Angie got funded by NSF (pre-announcement).</span></li>
-                            <li><span class="news-date">Aug.</span><span class="news-text">We were awarded by the <a href="https://openai.com/form/researcher-access-program/" target="_blank">OpenAI Research Access Program</a>.</span></li>
-                            <li><span class="news-date">Jul.</span><span class="news-text">We launched and deployed SimER/Angie V2 at DEC!</span></li>
-                            <li><span class="news-date">Jun.</span><span class="news-text">We hosted a Workshop on Future Technologies for Emergency Response and Public Safety!</span></li>
-                            <li><span class="news-date">May</span><span class="news-text">We were invited to the TN State Government of Education's K-12 Event at Peabody!</span></li>
-                            <li><span class="news-date">Apr.</span><span class="news-text">SimER/Angie prototype first participates in real-world training!</span></li>
-                            <li><span class="news-date">Mar.</span><span class="news-text">We won the Vanderbilt Generative AI Seed Grant!</span></li>
-                            <li><span class="news-date">Feb.</span><span class="news-text">We were at AAAI 2024 in Vancouver, CA.</span></li>
-                            <li><span class="news-date">Feb.</span><span class="news-text">Our work Auto311 is selected as Spotlight Oral Presentation (6%) at AAAI 2024!</span></li>
-                            <li><span class="news-date">Jan.</span><span class="news-text">Serve as TA for Automated Verification.</span></li>
-                            <li><span class="news-date">Jan.</span><span class="news-text">I won the AAAI Scholarship and Volunteer Award!</span></li>
+                            <li><span class="news-date">Dec.</span><span class="news-text" data-lang="en">Our paper Sim911 is accepted by AAAI-25! See you in Philadelphia.</span><span class="news-text" data-lang="sv" lang="sv">Vår artikel Sim911 har antagits till AAAI-25! Vi ses i Philadelphia.</span></li>
+                            <li><span class="news-date" data-lang="en">Oct.</span><span class="news-date" data-lang="sv" lang="sv">Okt.</span><span class="news-text" data-lang="en">Our project is awarded by the <a href="https://research.google/programs-and-events/google-academic-research-awards/google-academic-research-award-program-recipients/" target="_blank">Google Academic Research Award</a>!</span><span class="news-text" data-lang="sv" lang="sv">Vårt projekt tilldelades <a href="https://research.google/programs-and-events/google-academic-research-awards/google-academic-research-award-program-recipients/" target="_blank">Google Academic Research Award</a>!</span></li>
+                            <li><span class="news-date">Sep.</span><span class="news-text" data-lang="en">We were invited (permanently) to present our work at the <a href="https://lab.vanderbilt.edu/live/2024/06/21/a-gen-ai-enabled-system-for-9-1-1-call-takers-training-in-emergency-response-simer/" target="_blank">LIVE session</a>.</span><span class="news-text" data-lang="sv" lang="sv">Vi blev inbjudna (permanent) att presentera vårt arbete på <a href="https://lab.vanderbilt.edu/live/2024/06/21/a-gen-ai-enabled-system-for-9-1-1-call-takers-training-in-emergency-response-simer/" target="_blank">LIVE-sessionen</a>.</span></li>
+                            <li><span class="news-date">Sep.</span><span class="news-text" data-lang="en">We were invited to the Innovation Panel organized by Davidson County and the Sheriff's Office.</span><span class="news-text" data-lang="sv" lang="sv">Vi blev inbjudna till innovationspanelen som anordnades av Davidson County och Sheriff&rsquo;s Office.</span></li>
+                            <li><span class="news-date">Aug.</span><span class="news-text" data-lang="en">Our project SimER/Angie got funded by NSF (pre-announcement).</span><span class="news-text" data-lang="sv" lang="sv">Vårt projekt SimER/Angie har beviljats anslag från NSF (förhandsbesked).</span></li>
+                            <li><span class="news-date">Aug.</span><span class="news-text" data-lang="en">We were awarded by the <a href="https://openai.com/form/researcher-access-program/" target="_blank">OpenAI Research Access Program</a>.</span><span class="news-text" data-lang="sv" lang="sv">Vi tilldelades stöd genom <a href="https://openai.com/form/researcher-access-program/" target="_blank">OpenAI Research Access Program</a>.</span></li>
+                            <li><span class="news-date">Jul.</span><span class="news-text" data-lang="en">We launched and deployed SimER/Angie V2 at DEC!</span><span class="news-text" data-lang="sv" lang="sv">Vi lanserade och driftsatte SimER/Angie V2 på DEC!</span></li>
+                            <li><span class="news-date">Jun.</span><span class="news-text" data-lang="en">We hosted a Workshop on Future Technologies for Emergency Response and Public Safety!</span><span class="news-text" data-lang="sv" lang="sv">Vi arrangerade en workshop om framtidens teknik för räddningstjänst och samhällsskydd!</span></li>
+                            <li><span class="news-date" data-lang="en">May</span><span class="news-date" data-lang="sv" lang="sv">Maj</span><span class="news-text" data-lang="en">We were invited to the TN State Government of Education's K-12 Event at Peabody!</span><span class="news-text" data-lang="sv" lang="sv">Vi blev inbjudna till delstaten Tennessees utbildningsmyndighets K-12-evenemang på Peabody!</span></li>
+                            <li><span class="news-date">Apr.</span><span class="news-text" data-lang="en">SimER/Angie prototype first participates in real-world training!</span><span class="news-text" data-lang="sv" lang="sv">Prototypen av SimER/Angie användes för första gången i skarp utbildning!</span></li>
+                            <li><span class="news-date">Mar.</span><span class="news-text" data-lang="en">We won the Vanderbilt Generative AI Seed Grant!</span><span class="news-text" data-lang="sv" lang="sv">Vi tilldelades Vanderbilt Generative AI Seed Grant!</span></li>
+                            <li><span class="news-date">Feb.</span><span class="news-text" data-lang="en">We were at AAAI 2024 in Vancouver, CA.</span><span class="news-text" data-lang="sv" lang="sv">Vi var på AAAI 2024 i Vancouver, Kanada.</span></li>
+                            <li><span class="news-date">Feb.</span><span class="news-text" data-lang="en">Our work Auto311 is selected as Spotlight Oral Presentation (6%) at AAAI 2024!</span><span class="news-text" data-lang="sv" lang="sv">Vårt arbete Auto311 valdes ut till Spotlight Oral Presentation (6 %) på AAAI 2024!</span></li>
+                            <li><span class="news-date">Jan.</span><span class="news-text" data-lang="en">Serve as TA for Automated Verification.</span><span class="news-text" data-lang="sv" lang="sv">Undervisningsassistent i kursen Automated Verification.</span></li>
+                            <li><span class="news-date">Jan.</span><span class="news-text" data-lang="en">I won the AAAI Scholarship and Volunteer Award!</span><span class="news-text" data-lang="sv" lang="sv">Jag fick AAAI:s stipendium och volontärutmärkelse!</span></li>
                         </ul>
                     </div>
 
                     <div class="news-group">
                         <div class="news-year">2023</div>
                         <ul class="news-list">
-                            <li><span class="news-date">Dec.</span><span class="news-text">I won the Vanderbilt Graduate Student Travel Grant!</span></li>
-                            <li><span class="news-date">Dec.</span><span class="news-text">Our paper Auto311 is accepted by AAAI-24! See you in Vancouver!</span></li>
+                            <li><span class="news-date">Dec.</span><span class="news-text" data-lang="en">I won the Vanderbilt Graduate Student Travel Grant!</span><span class="news-text" data-lang="sv" lang="sv">Jag fick Vanderbilt Graduate Student Travel Grant!</span></li>
+                            <li><span class="news-date">Dec.</span><span class="news-text" data-lang="en">Our paper Auto311 is accepted by AAAI-24! See you in Vancouver!</span><span class="news-text" data-lang="sv" lang="sv">Vår artikel Auto311 har antagits till AAAI-24! Vi ses i Vancouver!</span></li>
                         </ul>
                     </div>
                 </details>
@@ -195,63 +330,73 @@
 
             <section id="about" class="reveal projects">
                 <div class="section-head">
-                    <h2>Research Projects</h2>
+                    <h2><span data-lang="en">Research projects</span><span data-lang="sv" lang="sv">Forskningsprojekt</span></h2>
                 </div>
 
                 <article class="project">
-                    <h3>Personalized Adaptive Curriculum for 9-1-1 Training</h3>
-                    <p>PACE is a personalized adaptive curriculum engine that tailors 9-1-1 call-taker training to individual trainees. By modeling trainee proficiency and dynamically adjusting scenario difficulty, PACE delivers targeted practice that improves learning efficiency in safety-critical emergency response training.</p>
+                    <h3><span data-lang="en">Personalized Adaptive Curriculum for 9-1-1 Training</span><span data-lang="sv" lang="sv">Personanpassad adaptiv utbildning för 9-1-1</span></h3>
+                    <p data-lang="en">PACE is a personalized adaptive curriculum engine that tailors 9-1-1 call-taker training to individual trainees. By modeling trainee proficiency and dynamically adjusting scenario difficulty, PACE delivers targeted practice that improves learning efficiency in safety-critical emergency response training.</p>
+                    <p data-lang="sv" lang="sv">PACE är en motor för personanpassade, adaptiva utbildningsplaner som skräddarsyr träningen för 9-1-1-operatörer efter varje enskild deltagare. Genom att modellera deltagarens färdighetsnivå och löpande justera scenariernas svårighetsgrad ger PACE riktad träning som effektiviserar lärandet i säkerhetskritisk räddningstjänstutbildning.</p>
                     <p class="keywords"><em>Adaptive Learning, Trustworthy AI, Safety-Critical Training</em></p>
-                    <a href="https://arxiv.org/pdf/2603.05361" class="learn-more" target="_blank">Learn more</a>
-                    <div class="fig">
+                    <a href="https://arxiv.org/pdf/2603.05361" class="learn-more" target="_blank"><span data-lang="en">Learn more</span><span data-lang="sv" lang="sv">Läs mer</span></a>
+                    <figure class="fig">
                         <img src="imgs/PACE.png" alt="PACE system architecture showing personalized adaptive curriculum engine for 9-1-1 call-taker training" loading="lazy" width="4445" height="1572">
-                    </div>
+                        <figcaption><span data-lang="en">Trainee proficiency modelling drives adaptive scenario difficulty across the curriculum.</span><span data-lang="sv" lang="sv">Modellering av deltagarens färdighetsnivå styr scenariernas svårighetsgrad genom hela utbildningen.</span></figcaption>
+                    </figure>
                 </article>
 
                 <article class="project">
-                    <h3>Logic-informed Call-taking Performance Debriefing</h3>
-                    <p>We develop trustworthy AI systems that decompose LLM runtime into modularized function calls enhanced with Signal Temporal Logic, ensuring reliable and interpretable performance evaluation for safety-critical call-taking scenarios.</p>
+                    <h3><span data-lang="en">Logic-informed Call-taking Performance Debriefing</span><span data-lang="sv" lang="sv">Logikstödd återkoppling på samtalshantering</span></h3>
+                    <p data-lang="en">We develop trustworthy AI systems that decompose LLM runtime into modularized function calls enhanced with Signal Temporal Logic, ensuring reliable and interpretable performance evaluation for safety-critical call-taking scenarios.</p>
+                    <p data-lang="sv" lang="sv">Vi utvecklar tillförlitliga AI-system som bryter ner språkmodellens exekvering i modulära funktionsanrop förstärkta med signaltemporal logik. Det ger en tillförlitlig och tolkbar utvärdering av prestation i säkerhetskritiska samtalsscenarier.</p>
                     <p class="keywords"><em>Trustworthy AI, AI Safety, Reliable LLMs</em></p>
-                    <a href="https://arxiv.org/pdf/2505.03985" class="learn-more" target="_blank">Learn more</a>
-                    <div class="fig">
+                    <a href="https://arxiv.org/pdf/2505.03985" class="learn-more" target="_blank"><span data-lang="en">Learn more</span><span data-lang="sv" lang="sv">Läs mer</span></a>
+                    <figure class="fig">
                         <img src="imgs/logidebrief.png" alt="LogiDebrief system architecture showing LLM integration with Signal Temporal Logic for automated debriefing" loading="lazy" width="3840" height="1787">
-                    </div>
+                        <figcaption><span data-lang="en">LLM runtime decomposed into modular function calls, each checked against Signal Temporal Logic.</span><span data-lang="sv" lang="sv">Språkmodellens exekvering uppdelad i modulära funktionsanrop, vart och ett kontrollerat mot signaltemporal logik.</span></figcaption>
+                    </figure>
                 </article>
 
                 <article class="project">
-                    <h3>Customized Emergency Response Training</h3>
-                    <p>Collaborating with Metro Nashville Department of Emergency Communications, we develop Angie/SimER, a safety-critical AI system that provides reliable, trustworthy simulation environments for call-taker training in high-stakes emergency response scenarios.</p>
+                    <h3><span data-lang="en">Customized Emergency Response Training</span><span data-lang="sv" lang="sv">Skräddarsydd utbildning för räddningstjänst</span></h3>
+                    <p data-lang="en">Collaborating with Metro Nashville Department of Emergency Communications, we develop Angie/SimER, a safety-critical AI system that provides reliable, trustworthy simulation environments for call-taker training in high-stakes emergency response scenarios.</p>
+                    <p data-lang="sv" lang="sv">Tillsammans med Metro Nashville Department of Emergency Communications utvecklar vi Angie/SimER, ett säkerhetskritiskt AI-system som ger tillförlitliga simuleringsmiljöer för att träna operatörer i skarpa räddningsscenarier.</p>
                     <p class="keywords"><em>Safety-Critical AI, Trustworthy LLMs, Reliable Systems</em></p>
-                    <a href="https://ojs.aaai.org/index.php/AAAI/article/view/35006" class="learn-more" target="_blank">Learn more</a>
-                    <div class="fig">
+                    <a href="https://ojs.aaai.org/index.php/AAAI/article/view/35006" class="learn-more" target="_blank"><span data-lang="en">Learn more</span><span data-lang="sv" lang="sv">Läs mer</span></a>
+                    <figure class="fig">
                         <img src="imgs/simer_overview.png" alt="SimER system overview showing AI-driven simulation environment for call-taker training with Metro Nashville DEC" loading="lazy" width="2759" height="1228">
-                    </div>
+                        <figcaption><span data-lang="en">Angie / SimER, the simulation environment deployed with Metro Nashville Department of Emergency Communications.</span><span data-lang="sv" lang="sv">Angie / SimER, simuleringsmiljön som driftsatts tillsammans med Metro Nashville Department of Emergency Communications.</span></figcaption>
+                    </figure>
                 </article>
 
                 <article class="project">
-                    <h3>Trustworthy Emergency Response Systems</h3>
-                    <p>We develop reliable AI systems with built-in safety guarantees that enhance emergency response decision-making. Our trustworthy machine learning approaches ensure robust performance in critical situations while maintaining transparency and accountability.</p>
+                    <h3><span data-lang="en">Trustworthy Emergency Response Systems</span><span data-lang="sv" lang="sv">Tillförlitliga system för räddningstjänst</span></h3>
+                    <p data-lang="en">We develop reliable AI systems with built-in safety guarantees that enhance emergency response decision-making. Our trustworthy machine learning approaches ensure robust performance in critical situations while maintaining transparency and accountability.</p>
+                    <p data-lang="sv" lang="sv">Vi utvecklar tillförlitliga AI-system med inbyggda säkerhetsgarantier som stärker beslutsfattandet inom räddningstjänsten. Våra metoder för tillförlitlig maskininlärning ger robust prestanda i kritiska lägen samtidigt som transparens och ansvarsutkrävande bevaras.</p>
                     <p class="keywords"><em>AI Safety, Trustworthy ML, Reliable Decision Systems</em></p>
-                    <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199" class="learn-more" target="_blank">Learn more</a>
-                    <div class="fig">
+                    <a href="https://ojs.aaai.org/index.php/AAAI/article/view/30199" class="learn-more" target="_blank"><span data-lang="en">Learn more</span><span data-lang="sv" lang="sv">Läs mer</span></a>
+                    <figure class="fig">
                         <img src="imgs/auto311.png" alt="Auto311 system diagram showing confidence-guided automated processing for non-emergency calls" loading="lazy" width="4534" height="2205">
-                    </div>
+                        <figcaption><span data-lang="en">Confidence-guided routing and handling of non-emergency 311 calls.</span><span data-lang="sv" lang="sv">Konfidensstyrd dirigering och hantering av icke-akuta 311-samtal.</span></figcaption>
+                    </figure>
                 </article>
 
                 <article class="project">
                     <h3>Adaptable City Knowledge</h3>
-                    <p>The Adaptable City Knowledge project aims to create a dynamic, data-driven platform that helps cities respond to evolving challenges. From traffic management to disaster preparedness, this initiative fosters collaboration between city officials, businesses, and residents to promote resilience.</p>
+                    <p data-lang="en">The Adaptable City Knowledge project aims to create a dynamic, data-driven platform that helps cities respond to evolving challenges. From traffic management to disaster preparedness, this initiative fosters collaboration between city officials, businesses, and residents to promote resilience.</p>
+                    <p data-lang="sv" lang="sv">Projektet Adaptable City Knowledge bygger en dynamisk, datadriven plattform som hjälper städer att möta förändrade utmaningar. Från trafikstyrning till krisberedskap främjar initiativet samarbete mellan kommun, näringsliv och invånare för ökad motståndskraft.</p>
                     <p class="keywords"><em>AI/ML, NLP, Life-long Learning</em></p>
-                    <a href="https://ieeexplore.ieee.org/abstract/document/9821044" class="learn-more" target="_blank">Learn more</a>
-                    <div class="fig">
+                    <a href="https://ieeexplore.ieee.org/abstract/document/9821044" class="learn-more" target="_blank"><span data-lang="en">Learn more</span><span data-lang="sv" lang="sv">Läs mer</span></a>
+                    <figure class="fig">
                         <img src="imgs/CitySpecOverview.png" alt="CitySpec system architecture for intelligent requirement specification in smart cities with formal verification" loading="lazy" width="1758" height="624">
-                    </div>
+                        <figcaption><span data-lang="en">City requirements captured in natural language and formalised into verifiable specifications.</span><span data-lang="sv" lang="sv">Kommunala krav fångade i naturligt språk och formaliserade till verifierbara specifikationer.</span></figcaption>
+                    </figure>
                 </article>
             </section>
 
             <section id="contact" class="reveal">
                 <div class="section-head">
-                    <h2>Selected Publications</h2>
+                    <h2><span data-lang="en">Selected publications</span><span data-lang="sv" lang="sv">Utvalda publikationer</span></h2>
                 </div>
                 <ul class="pub-list">
                     <li>
@@ -309,23 +454,29 @@
 
             <section id="contact-info" class="reveal">
                 <div class="section-head">
-                    <h2>Contact</h2>
+                    <h2><span data-lang="en">Contact</span><span data-lang="sv" lang="sv">Kontakt</span></h2>
                 </div>
                 <dl class="spec">
-                    <dt>Email</dt>
-                    <dd>zirong.chen AT vanderbilt.edu</dd>
-                    <dt>Office</dt>
+                    <dt><span data-lang="en">Email</span><span data-lang="sv" lang="sv">E-post</span></dt>
+                    <!-- The address is split across data attributes and only assembled by JS,
+                         so it stays copyable for people and unreadable to naive scrapers. -->
+                    <dd class="copy-row">
+                        <code id="email-text">zirong.chen [at] vanderbilt.edu</code>
+                        <button class="copy-btn js-only" type="button" id="copy-email"
+                                data-user="zirong.chen" data-host="vanderbilt.edu">Copy</button>
+                    </dd>
+                    <dt><span data-lang="en">Office</span><span data-lang="sv" lang="sv">Kontor</span></dt>
                     <dd>Lindstedtsvägen 30, <a href="https://www.tecosa.center.kth.se/" target="_blank">TECoSA</a>, <a href="https://www.kth.se/en" target="_blank">KTH Royal Institute of Technology</a></dd>
-                    <dt>Address</dt>
+                    <dt><span data-lang="en">Address</span><span data-lang="sv" lang="sv">Adress</span></dt>
                     <dd>Södermalm, Stockholm, SE</dd>
-                    <dt>Links</dt>
+                    <dt><span data-lang="en">Links</span><span data-lang="sv" lang="sv">Länkar</span></dt>
                     <dd><a href="https://scholar.google.com/citations?user=wo6wou8AAAAJ" target="_blank">Google Scholar</a> &middot; <a href="https://orcid.org/0000-0002-6466-4549" target="_blank">ORCID</a> &middot; <a href="https://www.linkedin.com/in/zirong-chen-567070190" target="_blank">LinkedIn</a></dd>
                 </dl>
             </section>
 
             <section id="revolver-map" class="reveal">
                 <div class="section-head">
-                    <h2>Visitor Map</h2>
+                    <h2><span data-lang="en">Visitor map</span><span data-lang="sv" lang="sv">Besökskarta</span></h2>
                 </div>
                 <div class="map-wrap">
                     <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=_DpzN4jsym39EjKuInOrNcu-fQx1Sh7WYuds9G9BdCw&cl=666c73&w=a"></script>
@@ -335,7 +486,10 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 Zirong Chen. All rights reserved.</p>
+        <p><span data-lang="en">&copy; 2026 Zirong Chen. All rights reserved.</span><span data-lang="sv" lang="sv">&copy; 2026 Zirong Chen. Alla rättigheter förbehållna.</span></p>
+        <p class="notice" data-lang="en">The visitor map above is rendered by MapMyVisitors, which records approximate
+        visitor locations. Nothing else on this site tracks you, and there are no cookies of my own.</p>
+        <p class="notice" data-lang="sv" lang="sv">Besökskartan ovan visas av MapMyVisitors, som registrerar ungefärliga besökarpositioner. Inget annat på den här sidan spårar dig, och jag använder inga egna kakor.</p>
         <a class="egg" href="thoughts.html">$ cd ~/thoughts _</a>
     </footer>
 
@@ -345,7 +499,7 @@
         const root = document.documentElement;
         const themeToggle = document.getElementById('theme-toggle');
         const themeMetas = document.querySelectorAll('meta[name="theme-color"]');
-        const PAPER = { light: '#f4f4f1', dark: '#121519' };
+        const PAPER = { light: '#f3f3f0', dark: '#0f1319' };
 
         // A manual override desyncs the prefers-color-scheme metas, so rewrite both.
         function syncThemeColor(theme) {
@@ -359,6 +513,364 @@
             try { localStorage.setItem('theme', next); } catch (e) {}
             syncThemeColor(next);
         });
+
+        // ---- Language ----
+        // The swap is pure CSS off <html lang>; this only flips the attribute and
+        // remembers the choice. Content that exists in both languages is present
+        // twice in the markup as [data-lang] pairs, so nothing has to be fetched
+        // and there is no flash: the head script sets lang before first paint.
+        const langBtn = document.getElementById('lang-btn');
+        const langMenu = document.getElementById('lang-menu');
+        const langNow = document.getElementById('lang-now');
+
+        function setLang(next) {
+            root.setAttribute('lang', next);
+            langNow.textContent = next.toUpperCase();
+            langMenu.querySelectorAll('[data-set-lang]').forEach(b => {
+                b.setAttribute('aria-current', String(b.dataset.setLang === next));
+            });
+            try { localStorage.setItem('lang', next); } catch (e) {}
+            // Anything rendered by JS rather than markup (the clock, the copy
+            // button) listens for this and repaints in the new language.
+            dispatchEvent(new CustomEvent('langchange', { detail: next }));
+        }
+
+        const t = (en, sv) => (document.documentElement.lang === 'sv' ? sv : en);
+
+        if (langBtn && langMenu && langNow) {
+            const closeMenu = () => {
+                langMenu.hidden = true;
+                langBtn.setAttribute('aria-expanded', 'false');
+            };
+
+            setLang(root.getAttribute('lang') === 'sv' ? 'sv' : 'en');
+
+            langBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const open = langMenu.hidden;
+                langMenu.hidden = !open;
+                langBtn.setAttribute('aria-expanded', String(open));
+            });
+
+            langMenu.addEventListener('click', (e) => {
+                const choice = e.target.closest('[data-set-lang]');
+                if (!choice) return;
+                setLang(choice.dataset.setLang);
+                closeMenu();
+                langBtn.focus();
+            });
+
+            addEventListener('click', (e) => {
+                if (!langMenu.hidden && !e.target.closest('.lang')) closeMenu();
+            });
+
+            addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !langMenu.hidden) { closeMenu(); langBtn.focus(); }
+            });
+        }
+
+        // ---- Scroll rule: --read is 0 at the top, 1 at the bottom ----
+        const progress = document.querySelector('.progress span');
+        if (progress) {
+            let queued = false;
+            const paint = () => {
+                queued = false;
+                const max = document.documentElement.scrollHeight - innerHeight;
+                progress.style.setProperty('--read', max > 0 ? Math.min(1, scrollY / max) : 0);
+            };
+            addEventListener('scroll', () => {
+                if (!queued) { queued = true; requestAnimationFrame(paint); }
+            }, { passive: true });
+            addEventListener('resize', paint, { passive: true });
+            paint();
+        }
+
+        // ======== Stockholm clock, and a button that knows what day it is ========
+        //
+        // Every date decision below is made in Europe/Stockholm, never in the
+        // reader's own zone. Someone opening this from Nashville at 23:00 their
+        // time has to see Stockholm's tomorrow, or Lucia lights up on the wrong
+        // day for everyone outside Europe.
+
+        const TZ = 'Europe/Stockholm';
+
+        // On localhost only, ?now=2026-12-24T15:00 pins the clock so every branch
+        // can be checked without waiting for the calendar. Never active in
+        // production, so a shared URL can't show a fake Christmas.
+        const clockOffset = (() => {
+            const local = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+            if (!local) return 0;
+            const raw = new URLSearchParams(location.search).get('now');
+            if (!raw) return 0;
+            const pinned = Date.parse(raw);
+            return isNaN(pinned) ? 0 : pinned - Date.now();
+        })();
+
+        const rightNow = () => new Date(Date.now() + clockOffset);
+
+        // hourCycle 'h23' rather than hour12:false — the h23/h24 distinction has
+        // varied across engines, and 24:07 for seven past midnight looks broken.
+        // calendar and numberingSystem are pinned because a browser honouring OS
+        // regional preferences can hand back Buddhist years or Arabic-Indic
+        // digits, and Number('٢٠٢٦') is NaN.
+        const partsFmt = new Intl.DateTimeFormat('en-GB', {
+            timeZone: TZ, hourCycle: 'h23', weekday: 'short',
+            calendar: 'gregory', numberingSystem: 'latn',
+            year: 'numeric', month: '2-digit', day: '2-digit',
+            hour: '2-digit', minute: '2-digit', second: '2-digit'
+        });
+
+        const DOW = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+
+        function stockholmNow() {
+            const p = {};
+            partsFmt.formatToParts(rightNow()).forEach(x => { p[x.type] = x.value; });
+            return {
+                y: +p.year, m: +p.month, d: +p.day,
+                hh: +p.hour % 24, mm: +p.minute, ss: +p.second,
+                dow: DOW[p.weekday]
+            };
+        }
+
+        // The date in each language. Swedish returns lowercase ("torsdag 6
+        // augusti"), which is correct orthography; the uppercase look comes from
+        // CSS text-transform, so the string a screen reader gets stays right.
+        const dateFmt = {
+            sv: new Intl.DateTimeFormat('sv-SE', { timeZone: TZ, weekday: 'long', day: 'numeric', month: 'long' }),
+            en: new Intl.DateTimeFormat('en-GB', { timeZone: TZ, weekday: 'long', day: 'numeric', month: 'long' })
+        };
+
+        // CET in winter, CEST in summer. en-GB is required here — en-US renders
+        // this zone as "GMT+1"/"GMT+2", which says nothing about the season.
+        // This is also the visible proof that the clock is DST-aware.
+        const zoneFmt = new Intl.DateTimeFormat('en-GB', { timeZone: TZ, timeZoneName: 'short' });
+        const zoneName = (d) => {
+            const p = zoneFmt.formatToParts(d).find(x => x.type === 'timeZoneName');
+            return p ? p.value : '';
+        };
+
+        // ---- The Swedish calendar ----
+
+        // Gregorian (Western) Easter, Meeus–Jones–Butcher. Verified against
+        // 2025-04-20, 2026-04-05, 2027-03-28.
+        function easter(y) {
+            const a = y % 19, b = Math.floor(y / 100), c = y % 100;
+            const d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
+            const g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+            const i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7;
+            const m = Math.floor((a + 11 * h + 22 * l) / 451);
+            const month = Math.floor((h + l - 7 * m + 114) / 31);
+            const day = ((h + l - 7 * m + 114) % 31) + 1;
+            return Date.UTC(y, month - 1, day);
+        }
+
+        const DAY = 864e5;
+        const stamp = (n) => { const t = new Date(n); return (t.getUTCMonth() + 1) * 100 + t.getUTCDate(); };
+        const offset = (base, n) => stamp(base + n * DAY);
+
+        // The Saturday falling in the seven days from mon/day inclusive.
+        function saturdayFrom(y, mon, day) {
+            const start = Date.UTC(y, mon - 1, day);
+            return start + ((6 - new Date(start).getUTCDay() + 7) % 7) * DAY;
+        }
+
+        // Keyed on MMDD so a whole holiday is one comparison. First match wins,
+        // so array order IS precedence and adding a day is one line.
+        //
+        // The order is not arbitrary: Easter can fall as early as 22 March, which
+        // puts Långfredagen on the 25th — Våffeldagen. Påsk is listed first so it
+        // wins that collision. Nothing else in this set can overlap (påsk ends by
+        // 26 Apr, before Valborg; semmel runs 3 Feb – 9 Mar, clear of everything).
+        function holidays(y) {
+            const e = easter(y);
+            const midsommar = saturdayFrom(y, 6, 20);   // the Saturday in 20–26 Jun
+            return [
+                { key: 'jul',      en: 'Merry Christmas',   sv: 'God jul',            days: [1224, 1225, 1226] },
+                { key: 'nyar',     en: 'Happy New Year',    sv: 'Gott nytt år',       days: [1231, 101] },
+                { key: 'pask',     en: 'Happy Easter',      sv: 'Glad påsk',          days: [offset(e, -2), stamp(e), offset(e, 1)] },
+                { key: 'midsommar', en: 'Midsummer',        sv: 'Midsommar',          days: [stamp(midsommar - DAY), stamp(midsommar)] },
+                { key: 'lucia',    en: "Saint Lucy's Day",  sv: 'Luciadagen',         days: [1213] },
+                { key: 'nationaldagen', en: 'National Day of Sweden', sv: 'Sveriges nationaldag', days: [606] },
+                { key: 'valborg',  en: 'Walpurgis Night',   sv: 'Valborg',            days: [430] },
+                { key: 'kanelbulle', en: 'Cinnamon Bun Day', sv: 'Kanelbullens dag',  days: [1004] },
+                { key: 'semmel',   en: 'Semla Day',         sv: 'Semmeldagen',        days: [offset(e, -47)] },
+                { key: 'vaffel',   en: 'Waffle Day',        sv: 'Våffeldagen',        days: [325] }
+            ];
+        }
+
+        // Rebuilt only when the Stockholm year rolls over, rather than on every
+        // one of the 86 400 ticks a day.
+        let holidayYear = null, holidayTable = null;
+        function holidaysFor(y) {
+            if (y !== holidayYear) { holidayYear = y; holidayTable = holidays(y); }
+            return holidayTable;
+        }
+
+        // Glyphs live in one table so they can be swapped for drawn SVG later
+        // without touching the resolver. Unicode has no candy cane, cinnamon bun
+        // or lussekatt, so a few of these are the nearest honest stand-in.
+        const GLYPHS = {
+            jul:            ['⭐', '🎄', '🍬', '🕯️', '❄️'],
+            lucia:          ['🕯️', '👑', '🥐', '✨'],
+            nyar:           ['🎆', '✨', '🥂', '🎇'],
+            kanelbulle:     ['🥐', '☕', '🍥', '😋'],
+            nationaldagen:  ['🇸🇪', '💛', '💙', '🌾'],
+            midsommar:      ['🌼', '🌿', '🍓', '🎣', '☀️'],
+            valborg:        ['🔥', '✨', '🎶'],
+            vaffel:         ['🧇', '🍓', '🍦'],
+            semmel:         ['🧁', '☕', '🍽️'],
+            pask:           ['🐣', '🥚', '🪶', '🌷'],
+            kontorstid:     ['☕', '🍪', '💻'],
+            morgon:         ['☕', '🌅', '🥱'],
+            kvall:          ['🌇', '🍵', '📚'],
+            natt:           ['🌙', '⭐', '💤', '🦉'],
+            helg:           ['🏀', '🌲', '☕', '🚲']
+        };
+
+        const HOURS_LABEL = {
+            natt:       { en: 'Night',        sv: 'Natt' },
+            helg:       { en: 'Weekend',      sv: 'Helg' },
+            morgon:     { en: 'Morning',      sv: 'Morgon' },
+            kontorstid: { en: 'Office hours', sv: 'Kontorstid' },
+            kvall:      { en: 'After hours',  sv: 'Efter jobbet' }
+        };
+
+        // Holiday beats hour of day; otherwise the hour decides.
+        function moodFor(now) {
+            const today = now.m * 100 + now.d;
+            const hit = holidaysFor(now.y).find(h => h.days.indexOf(today) !== -1);
+            if (hit) return { key: hit.key, en: hit.en, sv: hit.sv, glyphs: GLYPHS[hit.key] };
+
+            // Night is tested before the weekend on purpose: 03:00 on a Saturday
+            // is the small hours, not "the weekend". After that the bounds ascend,
+            // so no hour can fall through a gap. Office hours run 09–18.
+            const weekend = now.dow === 0 || now.dow === 6;
+            const key = now.hh < 6 || now.hh >= 22 ? 'natt'
+                : weekend ? 'helg'
+                : now.hh < 9 ? 'morgon'
+                : now.hh < 18 ? 'kontorstid'
+                : 'kvall';
+            return { key, en: HOURS_LABEL[key].en, sv: HOURS_LABEL[key].sv, glyphs: GLYPHS[key] };
+        }
+
+        // ---- Wire it up ----
+        const hmEl = document.getElementById('clock-hm');
+        const secEl = document.getElementById('clock-sec');
+        const dateEl = document.getElementById('clock-date');
+        const moodEl = document.getElementById('clock-mood');
+        const zoneEl = document.getElementById('clock-zone');
+        const fikaEl = document.getElementById('fika');
+        const popEl = document.getElementById('fika-pop');
+
+        if (hmEl && secEl && dateEl && moodEl && zoneEl && fikaEl && popEl) {
+            let lastHm = '', lastStamp = '', timer = null;
+
+            const pad = (n) => (n < 10 ? '0' : '') + n;
+
+            function render() {
+                const now = stockholmNow();
+                const lang = document.documentElement.lang === 'sv' ? 'sv' : 'en';
+
+                const hm = pad(now.hh) + ':' + pad(now.mm);
+                if (hm !== lastHm) {
+                    lastHm = hm;
+                    hmEl.textContent = hm;
+                    hmEl.setAttribute('datetime', now.y + '-' + pad(now.m) + '-' + pad(now.d) + 'T' + hm);
+                }
+                secEl.textContent = ':' + pad(now.ss);
+
+                // Everything below changes at most once a minute, and the language
+                // is part of the key so a toggle repaints immediately.
+                const mood = moodFor(now);
+                const key = lang + '|' + now.y + now.m + now.d + '|' + mood.key;
+                if (key === lastStamp) return;
+                lastStamp = key;
+
+                dateEl.textContent = dateFmt[lang].format(rightNow());
+                zoneEl.textContent = zoneName(rightNow());
+                moodEl.textContent = mood[lang];
+                fikaEl.dataset.mood = mood.key;
+
+                // Rebuilt only when the mood or the language actually turns over,
+                // so crossing 18:00 or midnight re-dresses the button without a
+                // reload and without rewriting it 86 400 times a day.
+                popEl.textContent = '';
+                const n = mood.glyphs.length;
+                mood.glyphs.forEach((g, i) => {
+                    // A symmetric fan rather than a row: each mark gets its own
+                    // horizontal spread, apex height and spin, so the group reads
+                    // as a scatter thrown out of the button.
+                    const mid = (n - 1) / 2;
+                    const shell = document.createElement('span');
+                    shell.style.setProperty('--i', i);
+                    shell.style.setProperty('--x', ((i - mid) * 34).toFixed(1) + 'px');
+                    shell.style.setProperty('--y', (-46 - 20 * Math.sin((i + 1) / (n + 1) * Math.PI)).toFixed(1) + 'px');
+                    shell.style.setProperty('--r', ((i - mid) * 18).toFixed(1) + 'deg');
+                    const mark = document.createElement('span');
+                    mark.textContent = g;
+                    shell.appendChild(mark);
+                    popEl.appendChild(shell);
+                });
+            }
+
+            // Always paint, then decide whether to keep ticking. Painting first
+            // matters: a page opened in a background tab is hidden from the very
+            // first frame, and gating the paint on visibility would leave it
+            // showing --:-- until someone happened to look at it.
+            //
+            // The next tick is aimed at the coming second boundary rather than
+            // setInterval(1000), which drifts and eventually skips a visible
+            // second. The 12ms margin keeps a timer that fires a hair early from
+            // rendering the same second twice.
+            function tick() {
+                render();
+                clearTimeout(timer);
+                if (document.hidden) return;
+                timer = setTimeout(tick, 1000 - (Date.now() % 1000) + 12);
+            }
+
+            // A tab left open overnight resyncs the moment it is looked at again.
+            // pageshow covers bfcache restores, where visibilitychange may not fire.
+            document.addEventListener('visibilitychange', tick);
+            addEventListener('pageshow', tick);
+            addEventListener('langchange', render);
+            tick();
+        }
+
+        // ---- Copy the address. Assembled here so it never sits in the markup. ----
+        const copyBtn = document.getElementById('copy-email');
+        const emailEl = document.getElementById('email-text');
+        if (copyBtn && emailEl) {
+            const address = copyBtn.dataset.user + '@' + copyBtn.dataset.host;
+            emailEl.textContent = address;
+
+            const idle = () => { copyBtn.textContent = t('Copy', 'Kopiera'); };
+            idle();
+            addEventListener('langchange', () => { if (!copyBtn.dataset.state) idle(); });
+
+            let resetTimer;
+            copyBtn.addEventListener('click', async () => {
+                clearTimeout(resetTimer);
+                try {
+                    await navigator.clipboard.writeText(address);
+                    copyBtn.textContent = t('Copied', 'Kopierad');
+                    copyBtn.dataset.state = 'done';
+                } catch (e) {
+                    // Clipboard is blocked on insecure origins and in some embedded views.
+                    copyBtn.textContent = t('Select it', 'Markera den');
+                    copyBtn.dataset.state = 'fail';
+                    const range = document.createRange();
+                    range.selectNodeContents(emailEl);
+                    const sel = getSelection();
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                }
+                resetTimer = setTimeout(() => {
+                    delete copyBtn.dataset.state;
+                    idle();
+                }, 2000);
+            });
+        }
 
         // ---- Scroll-spy: highlight the rail nav entry for the section in view ----
         const navLinks = Array.from(document.querySelectorAll('.rail-nav a[href^="#"]'));
@@ -411,6 +923,24 @@
             revealEls.forEach(el => revealer.observe(el));
         } else {
             revealEls.forEach(el => el.classList.add('in'));
+        }
+
+        // ---- Hash landing ----
+        // Two things fight a deep link here. Webfonts swap in after the browser
+        // has already resolved #foo, moving every heading; and Chrome restores
+        // the previous scroll offset *after* load, landing on top of its own
+        // hash jump. So: take over restoration, and re-land on both signals.
+        // 'instant' rather than the inherited smooth scroll, which a second
+        // land() would otherwise interrupt mid-flight.
+        if (location.hash) {
+            const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+            if (target) {
+                try { history.scrollRestoration = 'manual'; } catch (e) {}
+                const land = () => target.scrollIntoView({ behavior: 'instant' });
+                land();
+                if (document.fonts && document.fonts.ready) document.fonts.ready.then(land);
+                addEventListener('load', () => requestAnimationFrame(land), { once: true });
+            }
         }
     </script>
 </body>
