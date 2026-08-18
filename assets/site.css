@@ -568,15 +568,12 @@ html[lang="sv"] [data-lang="en"] {
     text-wrap: balance;
 }
 
-/* Nashville to Stockholm, drawn rather than described. The gold square sits at
-   the arrival end. */
+/* Arrived. The gold square is the pin, the line under the name is the city. */
 .transit {
     margin-top: var(--sp-6);
-    display: grid;
-    grid-template-columns: auto minmax(2rem, 1fr) auto;
+    display: flex;
     align-items: center;
     gap: var(--sp-3);
-    max-width: 24rem;
     font-family: var(--mono);
     font-size: var(--t-micro);
     letter-spacing: .14em;
@@ -584,17 +581,8 @@ html[lang="sv"] [data-lang="en"] {
     color: var(--muted);
 }
 
-.transit-rule {
-    position: relative;
-    height: 1px;
-    background: var(--rule);
-}
-
-.transit-rule::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: -2px;
+.transit-mark {
+    flex: none;
     width: 5px;
     height: 5px;
     background: var(--spark);
