@@ -1,5 +1,12 @@
 [
     {
+        "title": "Hey, You Have Seen That, Haven't You?",
+        "date": "2026-09-03",
+        "tag": "research",
+        "file": "you-have-seen-that-havent-you.md",
+        "layout": "lab"
+    },
+    {
         "title": "PhD Survival Under Autoresearch",
         "date": "2026-04-16",
         "tag": "research",

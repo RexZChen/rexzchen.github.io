@@ -19,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="assets/site.css?v=20">
+    <link rel="stylesheet" href="assets/site.css?v=21">
 </head>
 <body>
     <div class="grain" aria-hidden="true"></div>
@@ -59,10 +59,137 @@
     </footer>
 
     <script>
+        // Bespoke teaching figures used by the longer research notes. The source
+        // markdown keeps small, readable tokens while the interactive structure
+        // stays here with its behavior.
+        function renderArticleBlock(name) {
+            const blocks = {
+                'seen-it-triad': `
+                    <figure class="concept-path" aria-labelledby="seen-it-path-title">
+                        <figcaption id="seen-it-path-title">The three claims hidden inside “seen”</figcaption>
+                        <ol>
+                            <li>
+                                <span class="concept-step">Training history</span>
+                                <strong>Exposure</strong>
+                                <span>Was this text, or a close relative, in the data?</span>
+                            </li>
+                            <li>
+                                <span class="concept-step">Learned state</span>
+                                <strong>Memorization</strong>
+                                <span>Did training retain something unusually specific?</span>
+                            </li>
+                            <li>
+                                <span class="concept-step">Current computation</span>
+                                <strong>Causal use</strong>
+                                <span>Did that stored information affect this answer?</span>
+                            </li>
+                        </ol>
+                        <p class="figure-note">Each arrow needs its own evidence. Observing the final answer does not reveal the whole path.</p>
+                    </figure>`,
+                'min-k-lab': `
+                    <section class="article-lab min-k-lab" data-min-k-lab aria-labelledby="min-k-title">
+                        <div class="lab-head">
+                            <div>
+                                <p class="lab-label">Interactive likelihood probe</p>
+                                <h3 id="min-k-title">Which tokens carry the suspicion?</h3>
+                            </div>
+                            <p>Toy token probabilities for explanation only. They are not outputs from a real model.</p>
+                        </div>
+                        <div class="lab-control">
+                            <label for="min-k-range">Inspect the lowest-probability tokens</label>
+                            <input id="min-k-range" type="range" min="10" max="60" step="10" value="30" data-min-k-range>
+                            <output for="min-k-range" data-min-k-value>30%</output>
+                        </div>
+                        <div class="token-stream" role="list" aria-label="Illustrative tokens and conditional probabilities">
+                            <span role="listitem" data-prob="0.78"><b>the</b><small>p=.780</small></span>
+                            <span role="listitem" data-prob="0.42"><b>reviewer</b><small>p=.420</small></span>
+                            <span role="listitem" data-prob="0.63"><b>said</b><small>p=.630</small></span>
+                            <span role="listitem" data-prob="0.03"><b>Zylberberg</b><small>p=.030</small></span>
+                            <span role="listitem" data-prob="0.69"><b>used</b><small>p=.690</small></span>
+                            <span role="listitem" data-prob="0.51"><b>dataset</b><small>p=.510</small></span>
+                            <span role="listitem" data-prob="0.015"><b>QF-17</b><small>p=.015</small></span>
+                            <span role="listitem" data-prob="0.74"><b>before</b><small>p=.740</small></span>
+                            <span role="listitem" data-prob="0.58"><b>publication</b><small>p=.580</small></span>
+                        </div>
+                        <div class="lab-readout" aria-live="polite">
+                            <span><b data-min-k-count>3</b> tokens selected</span>
+                            <span>mean log probability <code data-min-k-score>-2.858</code></span>
+                        </div>
+                        <p class="lab-caveat">A real detector needs token-level model probabilities, matched member and non-member data, a calibrated threshold, and uncertainty estimates.</p>
+                    </section>`,
+                'evidence-plane': `
+                    <section class="article-lab evidence-lab" data-evidence-lab aria-labelledby="evidence-title">
+                        <div class="lab-head">
+                            <div>
+                                <p class="lab-label">Interactive evidence map</p>
+                                <h3 id="evidence-title">Seen and able to generalize can both be true</h3>
+                            </div>
+                            <p>Move the two evidence sliders. The interpretation changes, but never becomes a proof.</p>
+                        </div>
+                        <div class="evidence-controls">
+                            <label for="exposure-range">
+                                <span>Evidence of exposure</span>
+                                <output for="exposure-range" data-exposure-value>70</output>
+                            </label>
+                            <input id="exposure-range" type="range" min="0" max="100" step="10" value="70" data-exposure-range>
+                            <label for="generalization-range">
+                                <span>Generalization under transformations</span>
+                                <output for="generalization-range" data-generalization-value>80</output>
+                            </label>
+                            <input id="generalization-range" type="range" min="0" max="100" step="10" value="80" data-generalization-range>
+                        </div>
+                        <div class="evidence-plane" data-evidence-plane>
+                            <span class="axis-label axis-label-y">more exposure evidence</span>
+                            <span class="axis-label axis-label-x">stronger generalization</span>
+                            <div class="quadrant q-memory"><b>memory-heavy signal</b><span>high exposure, low transfer</span></div>
+                            <div class="quadrant q-both"><b>seen + learned structure</b><span>high exposure, high transfer</span></div>
+                            <div class="quadrant q-neither"><b>shortcut or failure</b><span>low exposure, low transfer</span></div>
+                            <div class="quadrant q-general"><b>generalization case</b><span>low exposure, high transfer</span></div>
+                            <span class="evidence-marker" aria-hidden="true"></span>
+                        </div>
+                        <div class="evidence-result" aria-live="polite">
+                            <strong data-evidence-title>seen + learned structure</strong>
+                            <span data-evidence-copy>Prior exposure looks plausible, while controlled changes suggest reusable computation.</span>
+                        </div>
+                    </section>`,
+                'access-lab': `
+                    <section class="article-lab access-lab" data-access-lab aria-labelledby="access-title">
+                        <div class="lab-head">
+                            <div>
+                                <p class="lab-label">Method selector</p>
+                                <h3 id="access-title">Your claim ceiling depends on your access</h3>
+                            </div>
+                            <p>Choose the strongest access you actually have, not the access you wish you had.</p>
+                        </div>
+                        <div class="access-options" role="group" aria-label="Available model access">
+                            <button type="button" data-access="api" aria-pressed="true">Outputs only</button>
+                            <button type="button" data-access="logprobs" aria-pressed="false">Token probabilities</button>
+                            <button type="button" data-access="weights" aria-pressed="false">Weights + activations</button>
+                            <button type="button" data-access="training" aria-pressed="false">Corpus + checkpoints</button>
+                        </div>
+                        <div class="access-result" aria-live="polite">
+                            <div>
+                                <span>Defensible ceiling</span>
+                                <strong data-access-title>Behavioral suspicion</strong>
+                                <p data-access-copy>You can test exact continuation and controlled transformations, then aggregate results. You cannot prove corpus membership from a response alone.</p>
+                            </div>
+                            <ul data-access-methods>
+                                <li>Exact continuation probes</li>
+                                <li>Structure-preserving perturbations</li>
+                                <li>Benchmark-level aggregation</li>
+                            </ul>
+                        </div>
+                    </section>`
+            };
+            return blocks[name] || '';
+        }
+
         // Lightweight markdown renderer (handles paragraphs, bold, italic, links, images, code blocks, headings, lists, hr).
         // Emits classes only — styling lives in assets/site.css so it follows the design tokens.
         function renderMarkdown(md) {
             let html = md
+                // article teaching figures
+                .replace(/^\[\[([a-z-]+)\]\]$/gm, (_, name) => renderArticleBlock(name))
                 // code blocks
                 .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
                 // inline code
@@ -153,7 +280,7 @@
             // A real <button> rather than a div+onclick, so the rows are keyboard-operable.
             // The extra wrapper div inside .post-body is what clips during the 0fr->1fr collapse.
             postsEl.innerHTML = filtered.map((post, i) => `
-                <div class="post" data-tag="${post.tag}" data-file="${post.file}">
+                <div class="post ${post.layout === 'lab' ? 'post--lab' : ''}" data-tag="${post.tag}" data-file="${post.file}">
                     <button class="post-header" type="button" aria-expanded="false" aria-controls="post-body-${i}">
                         <span class="post-toggle" aria-hidden="true">></span>
                         <span class="post-meta">
@@ -185,6 +312,7 @@
 
                 if (contentCache[file]) {
                     contentEl.innerHTML = contentCache[file];
+                    initializeResearchNote(postEl);
                     return;
                 }
 
@@ -197,10 +325,117 @@
                         const html = renderMarkdown(md);
                         contentCache[file] = html;
                         contentEl.innerHTML = html;
+                        initializeResearchNote(postEl);
                     })
                     .catch(() => {
                         contentEl.innerHTML = '<span class="md-error">error: could not load post.</span>';
                     });
+            }
+        }
+
+        function initializeResearchNote(postEl) {
+            const note = postEl.querySelector('.post-content');
+            if (!note || note.dataset.interactiveReady === 'true') return;
+            note.dataset.interactiveReady = 'true';
+
+            const minK = note.querySelector('[data-min-k-lab]');
+            if (minK) {
+                const range = minK.querySelector('[data-min-k-range]');
+                const value = minK.querySelector('[data-min-k-value]');
+                const countEl = minK.querySelector('[data-min-k-count]');
+                const scoreEl = minK.querySelector('[data-min-k-score]');
+                const tokens = Array.from(minK.querySelectorAll('[data-prob]'));
+                const update = () => {
+                    const k = Number(range.value);
+                    const count = Math.max(1, Math.ceil(tokens.length * k / 100));
+                    const selected = new Set(tokens
+                        .slice()
+                        .sort((a, b) => Number(a.dataset.prob) - Number(b.dataset.prob))
+                        .slice(0, count));
+                    let total = 0;
+                    tokens.forEach(token => {
+                        const on = selected.has(token);
+                        token.classList.toggle('selected', on);
+                        if (on) total += Math.log(Number(token.dataset.prob));
+                    });
+                    value.textContent = k + '%';
+                    countEl.textContent = count;
+                    scoreEl.textContent = (total / count).toFixed(3);
+                };
+                range.addEventListener('input', update);
+                update();
+            }
+
+            const evidence = note.querySelector('[data-evidence-lab]');
+            if (evidence) {
+                const exposure = evidence.querySelector('[data-exposure-range]');
+                const generalization = evidence.querySelector('[data-generalization-range]');
+                const exposureValue = evidence.querySelector('[data-exposure-value]');
+                const generalizationValue = evidence.querySelector('[data-generalization-value]');
+                const plane = evidence.querySelector('[data-evidence-plane]');
+                const title = evidence.querySelector('[data-evidence-title]');
+                const copy = evidence.querySelector('[data-evidence-copy]');
+                const interpretations = {
+                    both: ['seen + learned structure', 'Prior exposure looks plausible, while controlled changes suggest reusable computation.'],
+                    memory: ['memory-heavy signal', 'The behavior looks tied to familiar surface form and weak under controlled changes.'],
+                    general: ['generalization case', 'Exposure evidence is low while the behavior transfers across controlled changes.'],
+                    neither: ['shortcut, guessing, or failure', 'Neither prior exposure nor robust transfer currently explains the behavior well.']
+                };
+                const update = () => {
+                    const e = Number(exposure.value);
+                    const g = Number(generalization.value);
+                    const key = e >= 50 ? (g >= 50 ? 'both' : 'memory') : (g >= 50 ? 'general' : 'neither');
+                    plane.style.setProperty('--exposure', e + '%');
+                    plane.style.setProperty('--generalization', g + '%');
+                    exposureValue.textContent = e;
+                    generalizationValue.textContent = g;
+                    title.textContent = interpretations[key][0];
+                    copy.textContent = interpretations[key][1];
+                };
+                exposure.addEventListener('input', update);
+                generalization.addEventListener('input', update);
+                update();
+            }
+
+            const access = note.querySelector('[data-access-lab]');
+            if (access) {
+                const buttons = Array.from(access.querySelectorAll('[data-access]'));
+                const title = access.querySelector('[data-access-title]');
+                const copy = access.querySelector('[data-access-copy]');
+                const methods = access.querySelector('[data-access-methods]');
+                const levels = {
+                    api: {
+                        title: 'Behavioral suspicion',
+                        copy: 'You can test exact continuation and controlled transformations, then aggregate results. You cannot prove corpus membership from a response alone.',
+                        methods: ['Exact continuation probes', 'Structure-preserving perturbations', 'Benchmark-level aggregation']
+                    },
+                    logprobs: {
+                        title: 'Calibrated membership evidence',
+                        copy: 'Token probabilities support likelihood, Min-K%, perturbation, and positional scores. Matched controls and uncertainty are still required.',
+                        methods: ['Calibrated sequence likelihood', 'Low-probability token statistics', 'Position-aware scoring']
+                    },
+                    weights: {
+                        title: 'Internal computational evidence',
+                        copy: 'Representations and causal interventions can test whether a proposed internal mechanism contributes to the answer.',
+                        methods: ['Layerwise representation comparison', 'Activation patching and ablation', 'Logit and entropy trajectories']
+                    },
+                    training: {
+                        title: 'Training-history evidence',
+                        copy: 'Known data and intermediate checkpoints enable direct corpus checks, before-and-after measurements, and controlled retraining.',
+                        methods: ['Direct corpus and duplicate search', 'Checkpoint learning dynamics', 'Counterfactual retraining and attribution']
+                    }
+                };
+                buttons.forEach(button => button.addEventListener('click', () => {
+                    const level = levels[button.dataset.access];
+                    buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+                    title.textContent = level.title;
+                    copy.textContent = level.copy;
+                    methods.replaceChildren(...level.methods.map(method => {
+                        const item = document.createElement('li');
+                        item.textContent = method;
+                        return item;
+                    }));
+                }));
             }
         }
 
