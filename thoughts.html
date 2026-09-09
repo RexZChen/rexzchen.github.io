@@ -19,7 +19,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="assets/site.css?v=21">
+    <link rel="stylesheet" href="assets/site.css?v=22">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.7/dist/katex.min.css" integrity="sha384-JctiRyLzXCrSoOOzFlSoWLdyzQl7OrrRnhyeBmzB6ZWtcjccUyc8lCQJqIbs3uQX" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.7/dist/katex.min.js" integrity="sha384-+7Keh381hSkXmXqnjC0JBM/kzsN6TFj+wMKychSLjTvJ8/0ElMde2uKl8i6p6Buj" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="grain" aria-hidden="true"></div>
@@ -179,14 +181,55 @@
                                 <li>Benchmark-level aggregation</li>
                             </ul>
                         </div>
+                    </section>`,
+                'mri-pipeline': `
+                    <figure class="inference-pipeline" aria-labelledby="mri-pipeline-title">
+                        <figcaption id="mri-pipeline-title">One turn through a decoder-only LLM</figcaption>
+                        <ol>
+                            <li><span>01</span><strong>Tokens</strong><small>text becomes IDs</small></li>
+                            <li><span>02</span><strong>Prefill</strong><small>the prompt crosses every layer</small></li>
+                            <li><span>03</span><strong>Logits</strong><small>a score for each next token</small></li>
+                            <li><span>04</span><strong>Decode</strong><small>one candidate is selected</small></li>
+                            <li><span>05</span><strong>Repeat</strong><small>the new token joins the context</small></li>
+                        </ol>
+                        <p>Weights stay fixed. Activations and retained state change at every position and generation step.</p>
+                    </figure>`,
+                'mri-widget': `
+                    <section class="mri-embed" aria-labelledby="mri-embed-title">
+                        <div class="mri-embed-head">
+                            <div>
+                                <p class="lab-label">Interactive inference observatory</p>
+                                <h3 id="mri-embed-title">Replay a compressed trace</h3>
+                            </div>
+                            <a href="thoughts/llm-state-mri.html" target="_blank" rel="noopener">open full screen ↗</a>
+                        </div>
+                        <iframe src="thoughts/llm-state-mri.html" title="Interactive LLM State MRI" loading="lazy"></iframe>
+                        <p class="mri-embed-note">The bundled examples are explicitly illustrative unless the badge says “recorded trace.” The cube groups tensor-derived statistics; it is not a physical map of a transformer.</p>
                     </section>`
             };
             return blocks[name] || '';
         }
 
         // Lightweight markdown renderer (handles paragraphs, bold, italic, links, images, code blocks, headings, lists, hr).
-        // Emits classes only — styling lives in assets/site.css so it follows the design tokens.
+        // Emits classes only; styling lives in assets/site.css so it follows the design tokens.
         function renderMarkdown(md) {
+            // Protect TeX before the small Markdown pass. This keeps characters such
+            // as < and _ out of the HTML parser until KaTeX receives the raw source.
+            const math = [];
+            const escapeMath = value => value
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+            const stashMath = (tex, display) => {
+                const source = tex.trim();
+                const index = math.push({ tex: source, display }) - 1;
+                const fallback = display ? `$$\n${escapeMath(source)}\n$$` : `$${escapeMath(source)}$`;
+                return `<span class="math-source${display ? ' math-source--display' : ''}" data-math-index="${index}">${fallback}</span>`;
+            };
+            md = md
+                .replace(/\$\$([\s\S]*?)\$\$/g, (_, tex) => stashMath(tex, true))
+                .replace(/\$([^$\n]+?)\$/g, (_, tex) => stashMath(tex, false));
+
             let html = md
                 // article teaching figures
                 .replace(/^\[\[([a-z-]+)\]\]$/gm, (_, name) => renderArticleBlock(name))
@@ -221,7 +264,20 @@
                 return '<p>' + block.replace(/\n/g, '<br>') + '</p>';
             }).join('\n');
 
-            return html;
+            return { html, math };
+        }
+
+        function renderMathInNote(note, math) {
+            if (!window.katex) return;
+            note.querySelectorAll('[data-math-index]').forEach(source => {
+                const item = math[Number(source.dataset.mathIndex)];
+                if (!item) return;
+                katex.render(item.tex, source, {
+                    displayMode: item.display,
+                    throwOnError: false,
+                    strict: 'warn'
+                });
+            });
         }
 
         // State
@@ -311,7 +367,8 @@
                 const contentEl = postEl.querySelector('.post-content');
 
                 if (contentCache[file]) {
-                    contentEl.innerHTML = contentCache[file];
+                    contentEl.innerHTML = contentCache[file].html;
+                    renderMathInNote(contentEl, contentCache[file].math);
                     initializeResearchNote(postEl);
                     return;
                 }
@@ -322,9 +379,10 @@
                         return r.text();
                     })
                     .then(md => {
-                        const html = renderMarkdown(md);
-                        contentCache[file] = html;
-                        contentEl.innerHTML = html;
+                        const rendered = renderMarkdown(md);
+                        contentCache[file] = rendered;
+                        contentEl.innerHTML = rendered.html;
+                        renderMathInNote(contentEl, rendered.math);
                         initializeResearchNote(postEl);
                     })
                     .catch(() => {

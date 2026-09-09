@@ -1,18 +1,18 @@
 /* ==========================================================================
-   rexzchen.github.io — Nordic design system, v2
+   rexzchen.github.io: Nordic design system, v2
    Shared by index.html, thoughts.html and 404.html.
 
    THE BALANCE PROBLEM
    Vanderbilt is black + gold on warm paper. KTH is navy + blue on near-white.
    Rather than alternating between them, the ink itself is a blue-black: the
    Vanderbilt near-black carrying a Stockholm cast. Blue then does all the
-   functional work (links, focus, state) and gold does none of it — gold marks
+   functional work (links, focus, state) and gold does none of it; gold marks
    honours and indices only, never a control. One accent, one mark, one ink.
 
    SYSTEM RULES
    No shadows. Hierarchy comes from space, hairlines and type weight.
    Near-square corners, except pills, which are round on purpose.
-   Mono carries every index, label and measurement — it is the instrument voice.
+   Mono carries every index, label and measurement; it is the instrument voice.
    ========================================================================== */
 
 /* ---------- Reset ---------- */
@@ -33,22 +33,22 @@
     --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
     --cjk: 'Songti SC', 'STSong', 'Noto Serif CJK SC', 'Source Han Serif SC', var(--serif);
 
-    /* Surfaces — winter light: pale, cool, a little chalky */
+    /* Surfaces: winter light: pale, cool, a little chalky */
     --paper: #f3f3f0;    /* the page */
     --surface: #fafaf7;  /* raised: figure mats, code, chips */
     --rule: #e0e0da;     /* hairlines */
 
     /* Text */
-    --ink: #131820;      /* 16.4:1 on paper — near-black with a blue cast */
-    --muted: #63696f;    /*  5.0:1 on paper — AA at small sizes */
+    --ink: #131820;      /* 16.4:1 on paper: near-black with a blue cast */
+    --muted: #63696f;    /*  5.0:1 on paper: AA at small sizes */
 
-    /* Accent — every interactive affordance */
+    /* Accent: every interactive affordance */
     --accent: #1c4a75;        /*  8.3:1 on paper */
     --accent-hover: #123253;
 
-    /* Mark — honours, indices, terminals. Never a control, never a link. */
-    --spark: #b0812c;         /*  3.0:1 — rules, squares and marks ONLY */
-    --spark-text: #7d5a1c;    /*  5.6:1 — the small-text-safe ochre */
+    /* Mark: honours, indices, terminals. Never a control, never a link. */
+    --spark: #b0812c;         /*  3.0:1: rules, squares and marks ONLY */
+    --spark-text: #7d5a1c;    /*  5.6:1: the small-text-safe ochre */
 
     /* Spacing */
     --sp-1: .25rem;
@@ -61,7 +61,7 @@
     --sp-8: 4.5rem;
     --sp-9: 7rem;
 
-    /* Radii — near-square everywhere, round only where it is the point */
+    /* Radii: near-square everywhere, round only where it is the point */
     --r-sm: 2px;
     --r-md: 4px;
     --r-pill: 999px;
@@ -76,7 +76,7 @@
     --t-figure: clamp(2.8rem, 6vw, 4.6rem);
     /* Governed by height as well as width. The hero plus the whole band has to
        clear the fold, and on a short laptop the display line is the only thing
-       big enough to be worth trimming — so it yields to svh before anything
+       big enough to be worth trimming: so it yields to svh before anything
        else in the masthead does. */
     --t-display: clamp(3.2rem, min(11vw, 14svh), 8.4rem);
 
@@ -90,7 +90,7 @@
     --shell: 1200px;
     --rail-w: 210px;
 
-    /* Motion — one easing curve for the whole site */
+    /* Motion: one easing curve for the whole site */
     --ease: cubic-bezier(.22, 1, .36, 1);
 
     /* Layer scale, so no rule ever has to guess a z-index */
@@ -110,7 +110,7 @@
     --accent: #93b7da;   /*  8.6:1 */
     --accent-hover: #b5cee9;
     --spark: #d3a55e;
-    --spark-text: #d3a55e; /* 8.4:1 — safe at small sizes on dark */
+    --spark-text: #d3a55e; /* 8.4:1: safe at small sizes on dark */
     /* Lifted rather than deepened, so the band still reads as a raised block
        against a page that is already dark. */
     --band: #17304a;
@@ -199,7 +199,7 @@ a:hover {
 
 /* Links set inline in prose must carry a persistent underline: --accent against
    --ink is only 1.99:1 (1.78:1 dark), so colour alone fails WCAG 1.4.1.
-   Standalone UI links (rail nav, CV, learn-more, egg, filters) are exempt —
+   Standalone UI links (rail nav, CV, learn-more, egg, filters) are exempt:
    they are not embedded in a run of body text. */
 .about-content a,
 .news-text a,
@@ -226,7 +226,7 @@ a:hover {
     text-decoration-color: currentColor;
 }
 
-/* Skip link — first tab stop */
+/* Skip link: first tab stop */
 .skip-link {
     position: absolute;
     left: -9999px;
@@ -253,7 +253,7 @@ a:hover {
     color: var(--muted);
 }
 
-/* Mono micro-label — the workhorse of the ornament system */
+/* Mono micro-label: the workhorse of the ornament system */
 .eyebrow {
     font-family: var(--mono);
     font-size: var(--t-micro);
@@ -443,9 +443,9 @@ html[lang="sv"] [data-lang="en"] {
 [data-theme="dark"] #moon-icon { display: none; }
 
 /* ==========================================================================
-   Masthead — an instrument panel above a very large name
+   Masthead: an instrument panel above a very large name
    ========================================================================== */
-/* The hero and the whole band — clock, button AND the ribbon under it — have to
+/* The hero and the whole band (clock, button AND the ribbon under it) have to
    clear the fold together, and the hero still needs room to breathe above the
    name. min-height is the lever for both: the content is bottom-anchored in row
    two, so raising it opens the gap between the readout and the name and nothing
@@ -592,7 +592,7 @@ html[lang="sv"] [data-lang="en"] {
     color: var(--ink);
 }
 
-/* Label/value spec list — reused verbatim by the Contact section */
+/* Label/value spec list: reused verbatim by the Contact section */
 .spec {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -622,7 +622,7 @@ html[lang="sv"] [data-lang="en"] {
 }
 
 /* ==========================================================================
-   The band — a full-bleed navy block between the hero and the document.
+   The band: a full-bleed navy block between the hero and the document.
 
    It sits OUTSIDE .layout, so it can run edge to edge without unwinding the
    rail grid, and outside <main>, so it never enters the § section count. Gold
@@ -726,7 +726,7 @@ html[lang="sv"] [data-lang="en"] {
 
 /* ---------- Fika ----------
    The one genuinely fancy control on the site, and the only place the shadow
-   ban is lifted — the band is a field of colour rather than paper, so a lit
+   ban is lifted: the band is a field of colour rather than paper, so a lit
    edge and a cast shadow read as intentional there. Built from the same parts
    as the Taste Skill CTA: a solid slab, a 1px inset highlight along the top
    edge, a light sweep on hover, and label and arrow that separate as it lifts.
@@ -769,7 +769,7 @@ html[lang="sv"] [data-lang="en"] {
     color: var(--band);
     transform: translateY(-2px);
     /* The warm halo is the ochre the marks are drawn in, thrown as light rather
-       than ink — it never touches a glyph, so the no-gold-on-controls rule holds. */
+       than ink: it never touches a glyph, so the no-gold-on-controls rule holds. */
     box-shadow:
         0 22px 44px -12px color-mix(in srgb, var(--spark) 55%, transparent),
         0 18px 38px -12px rgba(0, 0, 0, .6),
@@ -924,7 +924,7 @@ html[lang="sv"] [data-lang="en"] {
     will-change: transform;
     /* Tuned by measurement, not by feel: the keyword track is 3857px per cycle,
        so 64s puts it at ~60px/s. The old venue acronyms were a much shorter
-       track, and reusing their 46s here ran the ribbon at ~84px/s — too fast to
+       track, and reusing their 46s here ran the ribbon at ~84px/s: too fast to
        read a phrase like "Natural Language Processing" at this size. */
     animation: marquee 64s linear infinite;
 }
@@ -949,7 +949,7 @@ html[lang="sv"] [data-lang="en"] {
 }
 
 /* ==========================================================================
-   Layout shell — sticky rail + ruled content column
+   Layout shell: sticky rail + ruled content column
    ========================================================================== */
 .layout {
     max-width: var(--shell);
@@ -1063,7 +1063,7 @@ html[lang="sv"] [data-lang="en"] {
     transform: translateY(1px);
 }
 
-/* The vertical rule dividing rail from content. Scoped to the index shell —
+/* The vertical rule dividing rail from content. Scoped to the index shell:
    a bare `main` selector would draw it down thoughts.html and 404.html too. */
 .layout > main {
     min-width: 0;
@@ -1073,7 +1073,7 @@ html[lang="sv"] [data-lang="en"] {
 }
 
 /* Scoped to the document column. A bare `section` selector also matches
-   <section class="band">, which sits outside <main> — that was silently
+   <section class="band">, which sits outside <main>: that was silently
    adding 72px of dead navy under the ribbon. */
 main section {
     counter-increment: sec;
@@ -1264,7 +1264,7 @@ main section:last-child {
     line-height: 1.4;
 }
 
-/* Back catalogue behind a native <details> — works without JS */
+/* Back catalogue behind a native <details>: works without JS */
 .news-earlier {
     margin-top: var(--sp-6);
 }
@@ -1362,8 +1362,8 @@ main section:last-child {
     max-width: none;
 }
 
-/* The keyword values stay English — they are technical terms, and the ribbon in
-   the band uses the same ones — but the label itself follows the page. */
+/* The keyword values stay English: they are technical terms, and the ribbon in
+   the band uses the same ones, but the label itself follows the page. */
 html[lang="sv"] .keywords::before {
     content: 'Nyckelord';
 }
@@ -1951,6 +1951,26 @@ footer {
     margin-bottom: var(--sp-2);
 }
 
+.post-content .math-source--display {
+    display: block;
+    max-width: 64ch;
+    margin: var(--sp-4) 0;
+    padding: var(--sp-3) var(--sp-4);
+    overflow-x: auto;
+    border-left: 3px solid var(--spark);
+    background: var(--surface);
+    color: var(--ink);
+}
+
+.post-content .katex-display {
+    margin: 0;
+    text-align: left;
+}
+
+.post-content .katex {
+    font-size: 1.02em;
+}
+
 .md-loading,
 .md-error {
     font-family: var(--mono);
@@ -1999,11 +2019,118 @@ footer {
 }
 
 .concept-path,
-.article-lab {
+.article-lab,
+.inference-pipeline,
+.mri-embed {
     margin: var(--sp-7) 0;
     border: 1px solid var(--rule);
     border-radius: var(--r-sm);
     background: color-mix(in srgb, var(--surface) 72%, var(--paper));
+}
+
+.inference-pipeline {
+    padding: var(--sp-5);
+}
+
+.inference-pipeline figcaption {
+    margin-bottom: var(--sp-5);
+    font-family: var(--serif);
+    font-size: var(--t-h3);
+    line-height: 1.2;
+}
+
+.inference-pipeline ol {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    padding: 1px;
+    margin: 0;
+    list-style: none;
+    background: var(--rule);
+}
+
+.inference-pipeline li {
+    min-width: 0;
+    padding: var(--sp-4) var(--sp-3);
+    margin: 0;
+    background: var(--paper);
+}
+
+.inference-pipeline li span,
+.inference-pipeline li strong,
+.inference-pipeline li small {
+    display: block;
+}
+
+.inference-pipeline li span {
+    margin-bottom: var(--sp-4);
+    font-family: var(--mono);
+    font-size: var(--t-micro);
+    color: var(--spark-text);
+}
+
+.inference-pipeline li strong {
+    font-family: var(--serif);
+    font-size: var(--t-lg);
+    font-weight: 400;
+}
+
+.inference-pipeline li small {
+    margin-top: var(--sp-2);
+    color: var(--muted);
+    font-size: var(--t-micro);
+    line-height: 1.45;
+}
+
+.inference-pipeline > p {
+    max-width: 64ch;
+    margin: var(--sp-4) 0 0;
+    font-size: var(--t-sm);
+    color: var(--muted);
+}
+
+.mri-embed {
+    padding: var(--sp-3);
+}
+
+.mri-embed-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: var(--sp-4);
+    padding: var(--sp-3) var(--sp-3) var(--sp-4);
+}
+
+.mri-embed-head h3 {
+    margin: var(--sp-1) 0 0;
+    font-family: var(--serif);
+    font-size: var(--t-h3);
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.mri-embed-head > a {
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: var(--t-micro);
+}
+
+.mri-embed iframe {
+    display: block;
+    width: 100%;
+    min-height: 760px;
+    border: 1px solid var(--rule);
+    border-radius: var(--r-sm);
+    background: #0b1018;
+}
+
+.mri-embed .mri-embed-note {
+    max-width: 72ch;
+    margin: var(--sp-3) var(--sp-3) var(--sp-2);
+    font-family: var(--mono);
+    font-size: var(--t-micro);
+    line-height: 1.6;
+    color: var(--muted);
 }
 
 .concept-path {
@@ -2536,7 +2663,7 @@ footer {
 }
 
 /* ==========================================================================
-   Motion — gated on .js so nothing is ever hidden without JavaScript.
+   Motion: gated on .js so nothing is ever hidden without JavaScript.
    Sections fade as a block; their children cascade behind them.
    ========================================================================== */
 .js .reveal {
@@ -2815,13 +2942,41 @@ footer {
     }
 
     .concept-path,
-    .article-lab {
+    .article-lab,
+    .inference-pipeline,
+    .mri-embed {
         margin: var(--sp-6) 0;
     }
 
     .concept-path,
-    .article-lab {
+    .article-lab,
+    .inference-pipeline {
         padding: var(--sp-4);
+    }
+
+    .inference-pipeline ol {
+        grid-template-columns: 1fr;
+    }
+
+    .inference-pipeline li {
+        display: grid;
+        grid-template-columns: 2rem minmax(5rem, .6fr) 1fr;
+        align-items: baseline;
+        gap: var(--sp-3);
+    }
+
+    .inference-pipeline li span,
+    .inference-pipeline li small {
+        margin: 0;
+    }
+
+    .mri-embed-head {
+        align-items: start;
+        flex-direction: column;
+    }
+
+    .mri-embed iframe {
+        min-height: 980px;
     }
 
     .concept-path ol {
@@ -2909,7 +3064,7 @@ footer {
 
     /* The marquee is the one thing that moves on its own. Stopped, it becomes
        a manually scrollable strip rather than a frozen half-frame. The scroll
-       rule is not animation — it reports position — so it is left alone. */
+       rule is not animation: it reports position, so it is left alone. */
     .marquee {
         overflow-x: auto;
     }
@@ -2920,7 +3075,7 @@ footer {
 
     /* The global rule above kills the transition, so the glyphs would otherwise
        snap into place fully formed and hang there. Better to have no pops at all
-       and leave a clean button. The clock keeps ticking — it reports state. */
+       and leave a clean button. The clock keeps ticking: it reports state. */
     .fika-pop {
         display: none;
     }

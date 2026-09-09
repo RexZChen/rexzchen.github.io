@@ -10,7 +10,7 @@ fair. but scientifically, that sentence hides at least three different questions
 
 ## three things we keep collapsing into one
 
-let the model be M, the candidate document be D, and the current query be q.
+let the model be $M$, the candidate document be $D$, and the current query be $q$.
 
 **exposure** asks whether D, a duplicate of D, or a close variant occurred somewhere in training. this is a question about the data-generating history of M.
 
@@ -20,15 +20,19 @@ let the model be M, the candidate document be D, and the current query be q.
 
 so the clean version is:
 
-**exposure != memorization != causal use at inference**
+$$
+\text{exposure} \ne \text{memorization} \ne \text{causal use at inference}.
+$$
 
 these variables are related, but none is a synonym for another. "seen" is not one bit sitting somewhere in the weights waiting for us to read it.
 
 ## the first temptation: ask how surprised the model is
 
-for an autoregressive language model, a sequence x = (x1, ..., xn) receives likelihood
+for an autoregressive language model, a sequence $x=(x_1,\ldots,x_n)$ receives likelihood
 
-**log pM(x) = sum over i of log pM(xi | x before i).**
+$$
+\log p_M(x) = \sum_{i=1}^{n} \log p_M(x_i \mid x_{<i}).
+$$
 
 if training raised the probability of x, perhaps a member should look less surprising than a non-member. that intuition is useful, but raw likelihood is badly confounded. plain prose, repeated facts, familiar genres, short passages, and easy tokenization can all make unseen text look familiar.
 
@@ -44,9 +48,11 @@ there is another wrinkle: token position matters. in an autoregressive model, la
 
 in compact form, many detectors are variations of
 
-**score(x) = sum over i of wi times si,**
+$$
+S(x) = \sum_{i=1}^{n} w_i s_i,
+$$
 
-where si is token-level evidence and wi decides which tokens or positions matter most.
+where $s_i$ is token-level evidence and $w_i$ decides which tokens or positions matter most.
 
 ## one paragraph is a hostile little statistical problem
 
@@ -75,15 +81,21 @@ likelihood asks whether the exact string looks special. generalization tests ask
 
 start with a simple rule:
 
-**A implies B, and B implies C.**
+$$
+A \Rightarrow B, \qquad B \Rightarrow C.
+$$
 
 now rename everything:
 
-**Zorp implies Kelm, and Kelm implies Ruv.**
+$$
+\mathrm{Zorp} \Rightarrow \mathrm{Kelm}, \qquad \mathrm{Kelm} \Rightarrow \mathrm{Ruv}.
+$$
 
-if the model learned the composition rule, the answer should transform consistently. more generally, for a structure-preserving transformation T, we would like
+if the model learned the composition rule, the answer should transform consistently. more generally, for a structure-preserving transformation $T$, we would like
 
-**M(T(x)) approximately equals T(M(x)).**
+$$
+M(T(x)) \approx T(M(x)).
+$$
 
 useful transformations include entity renaming, numerical substitution, translation, paraphrase, counterfactual facts, and synthetic instances with the same underlying graph.
 
@@ -111,7 +123,11 @@ even if we know D was in the corpus, we can ask which training examples actually
 
 the ideal counterfactual is simple to state and expensive to run:
 
-**I(z, q) = loss(M trained without z, q) - loss(M, q).**
+$$
+I(z,q) = \mathcal{L}(M_{-z},q) - \mathcal{L}(M,q),
+$$
+
+where $M_{-z}$ denotes a model trained without example $z$.
 
 if removing training example z changes the prediction on q, z had causal influence under that training setup. [counterfactual memorization](https://arxiv.org/abs/2112.12938) uses this leave-one-out idea to define document-specific memorization.
 
@@ -121,7 +137,9 @@ their result contains a particularly useful warning: passages that explicitly co
 
 so:
 
-**textual provenance != causal influence.**
+$$
+\text{textual provenance} \ne \text{causal influence}.
+$$
 
 search can find where the answer was written. attribution asks what changed the model.
 
@@ -135,7 +153,9 @@ work on [token-level diagnosis of chain-of-thought](https://aclanthology.org/202
 
 that gives us a less cinematic picture:
 
-**input -> general computation -> memory-dependent modulation -> output**
+$$
+\text{input} \to \text{general computation} \to \text{memory-dependent modulation} \to \text{output}.
+$$
 
 visible reasoning is not proof that memory played no role. exact recall is not proof that no computation occurred.
 

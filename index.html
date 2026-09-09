@@ -217,6 +217,7 @@
                 <a href="https://scholar.google.com/citations?user=wo6wou8AAAAJ" target="_blank">Google Scholar</a>
                 <a href="https://orcid.org/0000-0002-6466-4549" target="_blank">ORCID</a>
                 <a href="https://www.linkedin.com/in/zirong-chen-567070190" target="_blank">LinkedIn</a>
+                <a href="https://rexzchen.github.io/PhD-Simulator/" target="_blank" rel="noopener"><span data-lang="en">PhD Simulator ↗</span><span data-lang="sv" lang="sv">PhD-simulator ↗</span></a>
             </div>
         </aside>
 
@@ -609,7 +610,7 @@
 
         const rightNow = () => new Date(Date.now() + clockOffset);
 
-        // hourCycle 'h23' rather than hour12:false — the h23/h24 distinction has
+        // hourCycle 'h23' rather than hour12:false; the h23/h24 distinction has
         // varied across engines, and 24:07 for seven past midnight looks broken.
         // calendar and numberingSystem are pinned because a browser honouring OS
         // regional preferences can hand back Buddhist years or Arabic-Indic
@@ -641,7 +642,7 @@
             en: new Intl.DateTimeFormat('en-GB', { timeZone: TZ, weekday: 'long', day: 'numeric', month: 'long' })
         };
 
-        // CET in winter, CEST in summer. en-GB is required here — en-US renders
+        // CET in winter, CEST in summer. en-GB is required here; en-US renders
         // this zone as "GMT+1"/"GMT+2", which says nothing about the season.
         // This is also the visible proof that the clock is DST-aware.
         const zoneFmt = new Intl.DateTimeFormat('en-GB', { timeZone: TZ, timeZoneName: 'short' });
@@ -679,7 +680,7 @@
         // so array order IS precedence and adding a day is one line.
         //
         // The order is not arbitrary: Easter can fall as early as 22 March, which
-        // puts Långfredagen on the 25th — Våffeldagen. Påsk is listed first so it
+        // puts Långfredagen on the 25th; Våffeldagen. Påsk is listed first so it
         // wins that collision. Nothing else in this set can overlap (påsk ends by
         // 26 Apr, before Valborg; semmel runs 3 Feb – 9 Mar, clear of everything).
         function holidays(y) {
