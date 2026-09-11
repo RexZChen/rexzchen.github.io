@@ -19,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="assets/site.css?v=22">
+    <link rel="stylesheet" href="assets/site.css?v=23">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.7/dist/katex.min.css" integrity="sha384-JctiRyLzXCrSoOOzFlSoWLdyzQl7OrrRnhyeBmzB6ZWtcjccUyc8lCQJqIbs3uQX" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.7/dist/katex.min.js" integrity="sha384-+7Keh381hSkXmXqnjC0JBM/kzsN6TFj+wMKychSLjTvJ8/0ElMde2uKl8i6p6Buj" crossorigin="anonymous"></script>
 </head>
@@ -205,6 +205,166 @@
                         </div>
                         <iframe src="thoughts/llm-state-mri.html" title="Interactive LLM State MRI" loading="lazy"></iframe>
                         <p class="mri-embed-note">The bundled examples are explicitly illustrative unless the badge says “recorded trace.” The cube groups tensor-derived statistics; it is not a physical map of a transformer.</p>
+                    </section>`,
+                'spec-round': `
+                    <figure class="inference-pipeline" aria-labelledby="spec-round-title">
+                        <figcaption id="spec-round-title">One round of speculative decoding</figcaption>
+                        <ol>
+                            <li>
+                                <span>01</span><strong>Draft</strong><small>the small model guesses γ tokens, one cheap step each</small>
+                            </li>
+                            <li>
+                                <span>02</span><strong>Verify</strong><small>the big model scores all γ + 1 positions in one pass</small>
+                            </li>
+                            <li>
+                                <span>03</span><strong>Accept</strong><small>guesses are kept left to right until the first rejection</small>
+                            </li>
+                            <li>
+                                <span>04</span><strong>Correct</strong><small>the big model writes the next token itself</small>
+                            </li>
+                            <li>
+                                <span>05</span><strong>Repeat</strong><small>each round yields between 1 and γ + 1 tokens</small>
+                            </li>
+                        </ol>
+                        <p>Every token is either approved or written by the big model. The small model only decides how many tokens one expensive pass gets through.</p>
+                    </figure>`,
+                'spec-mass': `
+                    <section class="article-lab mass-lab" data-mass-lab aria-labelledby="mass-title">
+                        <div class="lab-head">
+                            <div>
+                                <p class="lab-label">Interactive rejection sampler</p>
+                                <h3 id="mass-title">The draft sets the pace, not the destination</h3>
+                            </div>
+                            <p>Six candidates for the token after “the edge server is”. Push the draft away from the target, then sample: the kept guesses and the redrawn rejections still add up to the target. Toy probabilities.</p>
+                        </div>
+                        <div class="lab-control">
+                            <label for="mass-range">How different the draft is</label>
+                            <input id="mass-range" type="range" min="0" max="100" step="5" value="40" data-mass-range>
+                            <output for="mass-range" data-mass-value>40%</output>
+                        </div>
+                        <div class="lab-actions">
+                            <button type="button" class="lab-button" data-mass-sample>sample 10,000 tokens</button>
+                        </div>
+                        <div class="mass-bars" data-mass-bars aria-hidden="true"></div>
+                        <div class="lab-legend" aria-hidden="true">
+                            <span><i class="key-accept"></i>guessed and kept</span>
+                            <span><i class="key-resid"></i>rejected, then redrawn here</span>
+                            <span><i class="key-excess"></i>over-guessed, trimmed away</span>
+                            <span><i class="key-target"></i>target p</span>
+                            <span><i class="key-sample"></i>sampled frequency</span>
+                        </div>
+                        <div class="lab-readout mass-readout" aria-live="polite">
+                            <span>acceptance α <code data-mass-alpha>0.79</code></span>
+                            <span data-mass-result>not sampled yet</span>
+                        </div>
+                    </section>`,
+                'spec-race': `
+                    <section class="article-lab race-lab" data-race-lab aria-labelledby="race-title">
+                        <div class="lab-head">
+                            <div>
+                                <p class="lab-label">Interactive race</p>
+                                <h3 id="race-title">One phone, two ways to write the same sentence</h3>
+                            </div>
+                            <p>Both models run on the same device. A big-model step takes 70 ms and a draft step takes c times that. Each guess is right with probability α; a wrong guess shows up as a random word. Played in slow motion.</p>
+                        </div>
+                        <div class="lab-sliders">
+                            <label for="race-alpha"><span>Acceptance rate α</span><output for="race-alpha" data-race-out="alpha">0.80</output></label>
+                            <input id="race-alpha" type="range" min="0.1" max="0.95" step="0.05" value="0.8" data-race-in="alpha">
+                            <label for="race-gamma"><span>Draft length γ</span><output for="race-gamma" data-race-out="gamma">4</output></label>
+                            <input id="race-gamma" type="range" min="1" max="10" step="1" value="4" data-race-in="gamma">
+                            <label for="race-cost"><span>Draft step cost c</span><output for="race-cost" data-race-out="cost">0.10</output></label>
+                            <input id="race-cost" type="range" min="0.02" max="0.5" step="0.02" value="0.1" data-race-in="cost">
+                        </div>
+                        <div class="lab-actions">
+                            <button type="button" class="lab-button lab-button--primary" data-race-run>run</button>
+                            <button type="button" class="lab-button" data-race-reset>reset</button>
+                        </div>
+                        <div class="race-lane">
+                            <div class="race-lane-head"><strong>Big model alone</strong><span data-race-stat="plain"></span></div>
+                            <div class="race-tokens" data-race-tokens="plain"></div>
+                        </div>
+                        <div class="race-lane">
+                            <div class="race-lane-head"><strong>Speculative</strong><span data-race-stat="spec"></span></div>
+                            <div class="race-tokens" data-race-tokens="spec"></div>
+                            <div class="race-round">
+                                <span class="race-round-label">current round</span>
+                                <div class="race-tokens" data-race-tokens="round"></div>
+                            </div>
+                        </div>
+                        <div class="lab-legend race-legend" aria-hidden="true">
+                            <span><i class="race-tok is-acc">word</i>accepted guess</span>
+                            <span><i class="race-tok is-tgt">word</i>written by the big model</span>
+                            <span><i class="race-tok is-pend">word</i>waiting for verification</span>
+                            <span><i class="race-tok is-rej">word</i>rejected guess</span>
+                            <span><i class="race-tok is-drop">word</i>discarded after a rejection</span>
+                        </div>
+                        <div class="race-metrics">
+                            <div><span>measured speedup</span><strong data-race-metric="speedup">pending</strong></div>
+                            <div><span>tokens per big pass</span><strong data-race-metric="per-pass">pending</strong></div>
+                            <div><span>big passes saved</span><strong data-race-metric="saved">pending</strong></div>
+                            <div><span>predicted speedup</span><strong data-race-metric="predicted">2.40×</strong></div>
+                        </div>
+                        <p class="race-match" data-race-match aria-live="polite"></p>
+                        <div class="race-chart" aria-hidden="true">
+                            <p class="race-chart-caption" data-race-caption></p>
+                            <div class="race-bars" data-race-bars></div>
+                            <div class="race-bars-axis" data-race-axis></div>
+                        </div>
+                    </section>`,
+                'edge-lab': `
+                    <section class="article-lab edge-lab" data-edge-lab aria-labelledby="edge-title">
+                        <div class="lab-head">
+                            <div>
+                                <p class="lab-label">Interactive placement map</p>
+                                <h3 id="edge-title">Where should the big model live?</h3>
+                            </div>
+                            <p>An illustrative profile, not a benchmark. Draft on the phone: 7 ms per step. Big model on the phone: 70 ms. A bigger model on an edge server: 35 ms. Each extra checked position adds 8% to a verification pass on the phone and 3% on the server. Every speculative setup picks its own best draft length.</p>
+                        </div>
+                        <div class="lab-sliders">
+                            <label for="edge-rtt"><span>Network round trip</span><output for="edge-rtt" data-edge-out="rtt">20 ms</output></label>
+                            <input id="edge-rtt" type="range" min="5" max="150" step="5" value="20" data-edge-in="rtt">
+                            <label for="edge-alpha"><span>Draft acceptance α</span><output for="edge-alpha" data-edge-out="alpha">0.75</output></label>
+                            <input id="edge-alpha" type="range" min="0.3" max="0.95" step="0.05" value="0.75" data-edge-in="alpha">
+                            <label for="edge-lenient"><span>Leniency: rejections waved through</span><output for="edge-lenient" data-edge-out="lenient">0%</output></label>
+                            <input id="edge-lenient" type="range" min="0" max="80" step="10" value="0" data-edge-in="lenient">
+                        </div>
+                        <div class="lab-actions">
+                            <button type="button" class="lab-button" aria-pressed="false" data-edge-offline>cut the network</button>
+                        </div>
+                        <div class="edge-plot" aria-hidden="true">
+                            <div class="edge-tiers">
+                                <span>server model</span>
+                                <span>phone model</span>
+                                <span>draft only</span>
+                            </div>
+                            <div class="edge-field" data-edge-field>
+                                <span class="edge-lane"></span>
+                                <span class="edge-lane"></span>
+                                <span class="edge-lane"></span>
+                            </div>
+                            <span class="edge-axis-title">ms per token</span>
+                            <div class="edge-axis" data-edge-axis></div>
+                        </div>
+                        <div class="edge-table-wrap">
+                            <table class="edge-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">setup</th>
+                                        <th scope="col" class="num">ms per<br>token</th>
+                                        <th scope="col">whose output</th>
+                                        <th scope="col" class="num">big passes<br>per 100 tokens</th>
+                                        <th scope="col" class="num">round trips<br>per 100 tokens</th>
+                                        <th scope="col" class="num">phone<br>memory</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-edge-rows></tbody>
+                            </table>
+                        </div>
+                        <div class="lab-verdict" aria-live="polite">
+                            <strong data-edge-headline></strong>
+                            <span data-edge-copy></span>
+                        </div>
+                        <p class="lab-caveat">Acceptance is modeled as independent per token, with one α for both big models; a small draft usually agrees less with a larger, different model. Real round trips jitter, too, and the tail matters more than the mean.</p>
                     </section>`
             };
             return blocks[name] || '';
@@ -253,15 +413,23 @@
                 // unordered lists
                 .replace(/^- (.+)$/gm, '<li>$1</li>');
 
-            // wrap consecutive <li> in <ul>
-            html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>');
+            // wrap consecutive <li> in <ul>. Anchored to the line start so only
+            // markdown items match; the indented <li>s inside teaching figures
+            // already sit in their own <ol>/<ul>. The newline the match consumes
+            // is put back, so a paragraph right after a list still splits off.
+            html = html.replace(/((?:^<li>.*<\/li>\n?)+)/gm, items => '<ul>' + items.replace(/\n$/, '') + '</ul>\n');
 
-            // paragraphs: split by double newlines, wrap non-tag blocks in <p>
+            // paragraphs: split by double newlines. Only block-level HTML passes
+            // through bare; text that merely opens with a link, emphasis or inline
+            // math is still a paragraph. A paragraph that is bold from end to end
+            // is a callout.
+            const blockHtml = /^<(?:h[1-6]|ul|ol|pre|hr|figure|section|div|img)\b|^<span class="math-source math-source--display"/;
             html = html.split(/\n\n+/).map(block => {
                 block = block.trim();
                 if (!block) return '';
-                if (/^<[a-z]/.test(block)) return block;
-                return '<p>' + block.replace(/\n/g, '<br>') + '</p>';
+                if (blockHtml.test(block)) return block;
+                const callout = /^<strong>(?:(?!<strong>).)*<\/strong>$/.test(block);
+                return (callout ? '<p class="md-callout">' : '<p>') + block.replace(/\n/g, '<br>') + '</p>';
             }).join('\n');
 
             return { html, math };
@@ -495,6 +663,465 @@
                     }));
                 }));
             }
+
+            const mass = note.querySelector('[data-mass-lab]');
+            if (mass) initMassLab(mass);
+
+            const race = note.querySelector('[data-race-lab]');
+            if (race) initRaceLab(race);
+
+            const edge = note.querySelector('[data-edge-lab]');
+            if (edge) initEdgeLab(edge);
+        }
+
+        // Speculative decoding labs. They share one idealization: each guess is
+        // accepted independently with probability alpha, so a round of gamma
+        // guesses yields tau tokens on average, every round ending with one token
+        // the big model wrote itself.
+        const expectedTokens = (alpha, gamma) =>
+            alpha >= 1 ? gamma + 1 : (1 - Math.pow(alpha, gamma + 1)) / (1 - alpha);
+
+        // Draws an index with probability proportional to its weight.
+        function drawIndex(weights) {
+            const total = weights.reduce((sum, w) => sum + w, 0);
+            let u = Math.random() * total;
+            for (let i = 0; i < weights.length; i++) {
+                u -= weights[i];
+                if (u < 0) return i;
+            }
+            return weights.length - 1;
+        }
+
+        // The rejection rule that keeps the output distributed as the target:
+        // keep a guess x with probability min(1, p(x)/q(x)), otherwise redraw from
+        // max(0, p - q). The bars stack those two masses inside the target outline.
+        function initMassLab(lab) {
+            const TOKENS = ['close', 'busy', 'fast', 'down', 'far', 'free'];
+            const TARGET = [0.34, 0.24, 0.16, 0.12, 0.08, 0.06];
+            const STRANGER = [0.06, 0.08, 0.44, 0.04, 0.30, 0.08];
+            const TOP = 0.5;
+            const SAMPLES = 10000;
+
+            const range = lab.querySelector('[data-mass-range]');
+            const valueEl = lab.querySelector('[data-mass-value]');
+            const bars = lab.querySelector('[data-mass-bars]');
+            const alphaEl = lab.querySelector('[data-mass-alpha]');
+            const resultEl = lab.querySelector('[data-mass-result]');
+            const sampleBtn = lab.querySelector('[data-mass-sample]');
+
+            bars.innerHTML = TOKENS.map(token => `
+                <div class="mass-col">
+                    <div class="mass-track">
+                        <span class="mass-excess"></span>
+                        <span class="mass-accept"></span>
+                        <span class="mass-resid"></span>
+                        <span class="mass-target"></span>
+                        <span class="mass-sample"></span>
+                    </div>
+                    <b>${token}</b>
+                    <small></small>
+                </div>`).join('');
+            const cols = Array.from(bars.querySelectorAll('.mass-col'));
+            const height = v => (Math.min(v, TOP) / TOP * 100).toFixed(2) + '%';
+            let draft = TARGET.slice();
+
+            const update = () => {
+                const mix = Number(range.value) / 100;
+                draft = TARGET.map((p, i) => (1 - mix) * p + mix * STRANGER[i]);
+                let alpha = 0;
+                cols.forEach((col, i) => {
+                    const p = TARGET[i];
+                    const q = draft[i];
+                    const kept = Math.min(p, q);
+                    alpha += kept;
+                    col.style.setProperty('--target', height(p));
+                    col.style.setProperty('--accept', height(kept));
+                    col.style.setProperty('--resid', height(Math.max(0, p - q)));
+                    col.style.setProperty('--excess', height(Math.max(0, q - p)));
+                    col.querySelector('small').innerHTML = `p ${p.toFixed(2)}<br>q ${q.toFixed(2)}`;
+                });
+                valueEl.textContent = range.value + '%';
+                alphaEl.textContent = alpha.toFixed(2);
+                resultEl.textContent = 'not sampled yet';
+                lab.classList.remove('has-samples');
+            };
+
+            const sample = () => {
+                const counts = TARGET.map(() => 0);
+                const leftover = TARGET.map((p, i) => Math.max(0, p - draft[i]));
+                const hasLeftover = leftover.some(w => w > 1e-12);
+                let kept = 0;
+                for (let n = 0; n < SAMPLES; n++) {
+                    const x = drawIndex(draft);
+                    if (!hasLeftover || Math.random() < Math.min(1, TARGET[x] / draft[x])) {
+                        counts[x]++;
+                        kept++;
+                    } else {
+                        counts[drawIndex(leftover)]++;
+                    }
+                }
+                let gap = 0;
+                cols.forEach((col, i) => {
+                    const freq = counts[i] / SAMPLES;
+                    gap = Math.max(gap, Math.abs(freq - TARGET[i]));
+                    col.style.setProperty('--sample', height(freq));
+                });
+                lab.classList.add('has-samples');
+                resultEl.innerHTML = `kept <code>${(100 * kept / SAMPLES).toFixed(1)}%</code> of guesses · largest gap to target <code>${gap.toFixed(3)}</code>`;
+            };
+
+            range.addEventListener('input', update);
+            sampleBtn.addEventListener('click', sample);
+            update();
+        }
+
+        // Both models on one phone, played in slow motion. Verification costs one
+        // ordinary big-model step however long the draft is: the idealization
+        // behind the Leviathan et al. speedup formula.
+        function initRaceLab(lab) {
+            const STEP = 70;
+            const SLOW = 0.25;
+            const TEXT = 'the phone drafts a few cheap tokens , the big model checks all of them in one pass , and the reply is exactly what the big model alone would write .'.split(' ');
+            const N = TEXT.length;
+            const WRONG = ['a', 'fast', 'then', 'quickly', 'it', 'so', 'but', 'many', 'one', 'small', 'we', 'now', 'very', 'each'];
+
+            const field = name => lab.querySelector(`[data-race-in="${name}"]`);
+            const out = name => lab.querySelector(`[data-race-out="${name}"]`);
+            const tokensEl = name => lab.querySelector(`[data-race-tokens="${name}"]`);
+            const statEl = name => lab.querySelector(`[data-race-stat="${name}"]`);
+            const metricEl = name => lab.querySelector(`[data-race-metric="${name}"]`);
+            const runBtn = lab.querySelector('[data-race-run]');
+            const resetBtn = lab.querySelector('[data-race-reset]');
+            const matchEl = lab.querySelector('[data-race-match]');
+            const captionEl = lab.querySelector('[data-race-caption]');
+            const barsEl = lab.querySelector('[data-race-bars]');
+            const axisEl = lab.querySelector('[data-race-axis]');
+
+            const GAMMAS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            barsEl.innerHTML = GAMMAS.map(() => '<div class="race-bar"><b></b><i></i></div>').join('') +
+                '<span class="race-bars-ref"></span>';
+            axisEl.innerHTML = GAMMAS.map(g => `<span>${g}</span>`).join('');
+            const barEls = Array.from(barsEl.querySelectorAll('.race-bar'));
+            const refEl = barsEl.querySelector('.race-bars-ref');
+
+            let P = {};
+            let S = null;
+            let raf = null;
+            let last = 0;
+
+            const speedup = gamma => expectedTokens(P.alpha, gamma) / (gamma * P.cost + 1);
+            const chip = (word, type) => `<span class="race-tok${type ? ' is-' + type : ''}">${word}</span>`;
+
+            function readInputs() {
+                P = { alpha: Number(field('alpha').value), gamma: Number(field('gamma').value), cost: Number(field('cost').value) };
+                out('alpha').textContent = P.alpha.toFixed(2);
+                out('gamma').textContent = P.gamma;
+                out('cost').textContent = P.cost.toFixed(2);
+            }
+
+            function newRound(start) {
+                const pos = S.out.length;
+                const k = Math.min(P.gamma, N - pos);
+                if (k <= 0) {
+                    S.specDone = start;
+                    S.round = null;
+                    return;
+                }
+                const guesses = [];
+                for (let j = 0; j < k; j++) {
+                    const ok = Math.random() < P.alpha;
+                    let word = TEXT[pos + j];
+                    if (!ok) {
+                        do { word = WRONG[Math.floor(Math.random() * WRONG.length)]; } while (word === TEXT[pos + j]);
+                    }
+                    guesses.push({ word, ok, at: start + (j + 1) * P.cost * STEP });
+                }
+                S.round = { k, guesses, verifyAt: start + k * P.cost * STEP + STEP };
+            }
+
+            function advance() {
+                while (S.plain < N && S.clock >= S.plainNext) {
+                    S.plain++;
+                    if (S.plain === N) S.plainDone = S.plainNext;
+                    S.plainNext += STEP;
+                }
+                while (S.round && S.clock >= S.round.verifyAt) {
+                    const round = S.round;
+                    let accepted = 0;
+                    while (accepted < round.k && round.guesses[accepted].ok) accepted++;
+                    for (let j = 0; j < accepted; j++) S.out.push({ word: round.guesses[j].word, type: 'acc' });
+                    if (S.out.length < N) S.out.push({ word: TEXT[S.out.length], type: 'tgt' });
+                    S.lastRound = round.guesses.map((g, j) => ({
+                        word: g.word,
+                        type: j < accepted ? 'acc' : (j === accepted ? 'rej' : 'drop')
+                    }));
+                    S.passes++;
+                    S.guessed += round.k;
+                    S.accepted += accepted;
+                    if (S.out.length >= N) {
+                        S.specDone = round.verifyAt;
+                        S.round = null;
+                    } else {
+                        newRound(round.verifyAt);
+                    }
+                }
+            }
+
+            function render() {
+                tokensEl('plain').innerHTML = TEXT.slice(0, S.plain).map(w => chip(w)).join('');
+                tokensEl('spec').innerHTML = S.out.map(t => chip(t.word, t.type)).join('');
+
+                const round = S.round;
+                const drafted = round ? round.guesses.filter(g => S.clock >= g.at) : [];
+                let roundHtml = '';
+                if (drafted.length) {
+                    roundHtml = drafted.map(g => chip(g.word, 'pend')).join('');
+                    if (drafted.length === round.k) roundHtml += '<span class="race-note">big model verifying…</span>';
+                } else if (S.lastRound) {
+                    roundHtml = S.lastRound.map(g => chip(g.word, g.type)).join('');
+                }
+                tokensEl('round').innerHTML = roundHtml;
+
+                const plainMs = S.plainDone !== null ? S.plainDone : S.clock;
+                const specMs = S.specDone !== null ? S.specDone : S.clock;
+                const rate = S.guessed ? Math.round(100 * S.accepted / S.guessed) : 0;
+                const passes = n => `${n} big ${n === 1 ? 'pass' : 'passes'}`;
+                statEl('plain').textContent = `${S.plain}/${N} tokens · ${passes(S.plain)} · ${Math.round(plainMs)} ms`;
+                statEl('spec').textContent = `${S.out.length}/${N} tokens · ${passes(S.passes)} · ${S.guessed} guesses, ${rate}% kept · ${Math.round(specMs)} ms`;
+
+                const done = S.plainDone !== null && S.specDone !== null;
+                metricEl('speedup').textContent = done ? (S.plainDone / S.specDone).toFixed(2) + '×' : 'pending';
+                metricEl('per-pass').textContent = S.passes ? (S.out.length / S.passes).toFixed(2) : 'pending';
+                metricEl('saved').textContent = S.specDone !== null ? Math.round(100 * (1 - S.passes / N)) + '%' : 'pending';
+
+                if (S.specDone === null) {
+                    matchEl.textContent = '';
+                } else {
+                    const same = S.out.map(t => t.word).join(' ') === TEXT.join(' ');
+                    matchEl.textContent = same
+                        ? `Identical to the big model's own ${N} tokens, in ${S.passes} big passes instead of ${N}.`
+                        : 'Output differs from the big model. That should never happen.';
+                }
+            }
+
+            function chart() {
+                const values = GAMMAS.map(speedup);
+                const best = GAMMAS[values.indexOf(Math.max(...values))];
+                const top = Math.max(2, ...values) * 1.25;
+                barEls.forEach((bar, i) => {
+                    bar.style.setProperty('--h', (values[i] / top * 100).toFixed(2) + '%');
+                    bar.classList.toggle('is-current', GAMMAS[i] === P.gamma);
+                    bar.classList.toggle('is-best', GAMMAS[i] === best);
+                    bar.querySelector('b').textContent = values[i].toFixed(2);
+                });
+                refEl.style.setProperty('--ref', (100 / top).toFixed(2) + '%');
+                metricEl('predicted').textContent = speedup(P.gamma).toFixed(2) + '×';
+                captionEl.textContent = `Predicted speedup for each draft length γ at these settings. Dashed line: no gain. Best γ: ${best}.`;
+            }
+
+            function stop() {
+                if (raf) cancelAnimationFrame(raf);
+                raf = null;
+                last = 0;
+                runBtn.textContent = S && S.plainDone !== null && S.specDone !== null ? 'run again' : 'run';
+            }
+
+            function reset() {
+                stop();
+                readInputs();
+                S = { clock: 0, plain: 0, plainNext: STEP, plainDone: null, out: [], round: null, lastRound: null, passes: 0, guessed: 0, accepted: 0, specDone: null };
+                newRound(0);
+                render();
+                chart();
+                runBtn.textContent = 'run';
+            }
+
+            function tick(now) {
+                if (!lab.isConnected) return;
+                if (!last) last = now;
+                const dt = Math.min(now - last, 50);
+                last = now;
+                S.clock += dt * SLOW;
+                advance();
+                render();
+                if (S.plainDone !== null && S.specDone !== null) {
+                    stop();
+                    return;
+                }
+                raf = requestAnimationFrame(tick);
+            }
+
+            runBtn.addEventListener('click', () => {
+                if (raf) {
+                    stop();
+                    return;
+                }
+                if (S.plainDone !== null && S.specDone !== null) reset();
+                runBtn.textContent = 'pause';
+                raf = requestAnimationFrame(tick);
+            });
+            resetBtn.addEventListener('click', reset);
+            ['alpha', 'gamma', 'cost'].forEach(name => field(name).addEventListener('input', reset));
+            reset();
+        }
+
+        // Five placements under one latency model: a speculative round costs
+        // gamma draft steps + one verification pass + any network round trip, and
+        // yields tau tokens. Leniency waves a share of would-be rejections through,
+        // which raises the effective acceptance and lets unvetted tokens out.
+        function initEdgeLab(lab) {
+            const DRAFT_MS = 7;
+            const PHONE_MS = 70;
+            const SERVER_MS = 35;
+            const PHONE_PER_POSITION = 0.08;
+            const SERVER_PER_POSITION = 0.03;
+            const DRAFT_GB = 0.5;
+            const PHONE_GB = 4.5;
+            const REPLY_TOKENS = 100;
+            const AXIS_MS = 150;
+            const MAX_GAMMA = 12;
+
+            const field = name => lab.querySelector(`[data-edge-in="${name}"]`);
+            const out = name => lab.querySelector(`[data-edge-out="${name}"]`);
+            const offlineBtn = lab.querySelector('[data-edge-offline]');
+            const fieldEl = lab.querySelector('[data-edge-field]');
+            const axisEl = lab.querySelector('[data-edge-axis]');
+            const rowsEl = lab.querySelector('[data-edge-rows]');
+            const headlineEl = lab.querySelector('[data-edge-headline]');
+            const copyEl = lab.querySelector('[data-edge-copy]');
+            let offline = false;
+
+            const TICKS = [0, 30, 60, 90, 120, 150];
+            axisEl.innerHTML = TICKS.map(ms => `<span style="--x:${ms / AXIS_MS}">${ms}</span>`).join('');
+            fieldEl.insertAdjacentHTML('beforeend',
+                TICKS.slice(1, -1).map(ms => `<span class="edge-gridline" style="--x:${ms / AXIS_MS}"></span>`).join('') +
+                ['01', '02', '03', '04', '05'].map(id => `<span class="edge-marker" data-marker="${id}">${id}</span>`).join(''));
+            const markers = Object.fromEntries(Array.from(fieldEl.querySelectorAll('[data-marker]')).map(m => [m.dataset.marker, m]));
+
+            // Best draft length for one speculative placement.
+            const speculate = (alpha, verifyMs, perPosition, netMs) => {
+                let best = null;
+                for (let gamma = 1; gamma <= MAX_GAMMA; gamma++) {
+                    const tau = expectedTokens(alpha, gamma);
+                    const ms = (gamma * DRAFT_MS + verifyMs * (1 + perPosition * gamma) + netMs) / tau;
+                    if (!best || ms < best.ms) best = { gamma, ms, tau };
+                }
+                return best;
+            };
+
+            // Share of emitted tokens that were waved through rather than approved.
+            // Every round ends with one big-model token, so tau - 1 of tau are guesses.
+            const unvettedShare = (alpha, effective, tau) =>
+                effective > alpha ? (tau - 1) / tau * (effective - alpha) / effective : 0;
+
+            const splitMs = (effective, rtt) => speculate(effective, SERVER_MS, SERVER_PER_POSITION, rtt).ms;
+            const cloudMs = rtt => SERVER_MS + rtt / REPLY_TOKENS;
+
+            // Largest round trip at which the split setup still matches cloud streaming.
+            const breakEven = effective => {
+                if (splitMs(effective, 0) > cloudMs(0)) return null;
+                let rtt = 0;
+                while (rtt < 400 && splitMs(effective, rtt + 1) <= cloudMs(rtt + 1)) rtt++;
+                return rtt;
+            };
+
+            const pct = share => (100 * share).toFixed(share > 0 && share < 0.1 ? 1 : 0) + '%';
+            const fmtMs = ms => ms < 10 ? ms.toFixed(1) : Math.round(ms).toString();
+            const fmtCount = n => n === 0 ? '0' : (n < 10 ? n.toFixed(1) : Math.round(n).toString());
+            const fmtGb = gb => gb === 0 ? 'none' : gb.toFixed(1) + ' GB';
+
+            function update() {
+                const rtt = Number(field('rtt').value);
+                const alpha = Number(field('alpha').value);
+                const lenient = Number(field('lenient').value) / 100;
+                const effective = alpha + lenient * (1 - alpha);
+                out('rtt').textContent = rtt + ' ms';
+                out('alpha').textContent = alpha.toFixed(2);
+                out('lenient').textContent = Math.round(lenient * 100) + '%';
+
+                const phone = speculate(effective, PHONE_MS, PHONE_PER_POSITION, 0);
+                const split = speculate(effective, SERVER_MS, SERVER_PER_POSITION, rtt);
+                const phoneUnvetted = unvettedShare(alpha, effective, phone.tau);
+                const splitUnvetted = unvettedShare(alpha, effective, split.tau);
+                const exact = (model, share) => share > 0 ? `${model}, ${pct(share)} unvetted` : `${model}, exact`;
+
+                // tier: 2 server-class, 1 phone-class, 0 draft. slot nudges markers
+                // that share a row apart so equal speeds never overlap.
+                const rows = [
+                    { id: '01', setup: 'phone, draft only', tier: 0, slot: offline ? -1 : 0, ms: DRAFT_MS, kind: 'plain',
+                        output: 'draft model, unchecked', passes: 0, trips: 0, gb: DRAFT_GB },
+                    { id: '02', setup: 'phone, big model only', tier: 1, slot: 1, ms: PHONE_MS, kind: 'plain',
+                        output: 'phone model, exact', passes: REPLY_TOKENS, trips: 0, gb: PHONE_GB },
+                    { id: '03', setup: 'phone, speculative', gamma: phone.gamma, tier: 1, slot: -1, ms: phone.ms, kind: 'spec',
+                        output: exact('phone model', phoneUnvetted), passes: REPLY_TOKENS / phone.tau, trips: 0,
+                        gb: PHONE_GB + DRAFT_GB, lenient: phoneUnvetted > 0 },
+                    offline
+                        ? { id: '04', setup: 'split, fell back to its draft', tier: 0, slot: 1, ms: DRAFT_MS, kind: 'plain',
+                            output: 'draft model, unchecked', passes: 0, trips: 0, gb: DRAFT_GB }
+                        : { id: '04', setup: 'split: phone drafts, server verifies', gamma: split.gamma, tier: 2, slot: -1, ms: split.ms, kind: 'spec',
+                            output: exact('server model', splitUnvetted), passes: REPLY_TOKENS / split.tau, trips: REPLY_TOKENS / split.tau,
+                            gb: DRAFT_GB, lenient: splitUnvetted > 0 },
+                    { id: '05', setup: 'cloud, big model streams', tier: 2, slot: 1, ms: cloudMs(rtt), kind: offline ? 'off' : 'plain',
+                        output: offline ? 'unavailable' : 'server model, exact', passes: offline ? null : REPLY_TOKENS,
+                        trips: offline ? null : 1, gb: 0 }
+                ];
+
+                rows.forEach(row => {
+                    const marker = markers[row.id];
+                    marker.style.setProperty('--x', Math.min(row.ms, AXIS_MS) / AXIS_MS);
+                    marker.style.setProperty('--row', 2 - row.tier);
+                    marker.style.setProperty('--slot', row.slot);
+                    marker.className = `edge-marker is-${row.kind}`;
+                    marker.classList.toggle('is-lenient', Boolean(row.lenient));
+                    marker.classList.toggle('is-clipped', row.ms > AXIS_MS);
+                });
+
+                rowsEl.innerHTML = rows.map(row => `
+                    <tr class="${row.kind === 'off' ? 'is-off' : ''}">
+                        <td><b>${row.id}</b>${row.setup}${row.gamma ? `<small>best γ = ${row.gamma}</small>` : ''}</td>
+                        <td class="num">${row.kind === 'off' ? 'offline' : fmtMs(row.ms)}</td>
+                        <td class="${row.lenient ? 'is-lenient' : ''}">${row.output}</td>
+                        <td class="num">${row.passes === null ? 'n/a' : fmtCount(row.passes)}</td>
+                        <td class="num">${row.trips === null ? 'n/a' : fmtCount(row.trips)}</td>
+                        <td class="num">${fmtGb(row.gb)}</td>
+                    </tr>`).join('');
+
+                const phoneGain = PHONE_MS / phone.ms;
+                const sentences = [
+                    `On the phone, speculation is ${phoneGain.toFixed(2)}× faster than the big model alone and needs ${DRAFT_GB} GB more memory.`
+                ];
+                let headline;
+                if (offline) {
+                    headline = 'Network down: only the phone keeps talking.';
+                    sentences.push('The split setup falls back to its draft model. Cloud streaming has nothing to fall back to.');
+                } else {
+                    const cloud = cloudMs(rtt);
+                    const even = breakEven(effective);
+                    headline = split.ms <= cloud
+                        ? `Over a ${rtt} ms round trip, the split setup beats cloud streaming by ${(cloud / split.ms).toFixed(2)}×.`
+                        : `Over a ${rtt} ms round trip, cloud streaming beats the split setup by ${(split.ms / cloud).toFixed(2)}×.`;
+                    sentences.push(even === null
+                        ? 'At this acceptance, the split setup never catches cloud streaming, even with no round trip at all.'
+                        : `The split setup keeps up until the round trip reaches about ${even} ms.`);
+                    sentences.push(`At any round trip, it needs ${split.tau.toFixed(1)}× fewer server passes than cloud streaming.`);
+                }
+                if (lenient > 0) {
+                    sentences.push(offline
+                        ? `Leniency lets ${pct(phoneUnvetted)} of speculative phone tokens skip the big model's veto.`
+                        : `Leniency lets ${pct(phoneUnvetted)} of speculative phone tokens and ${pct(splitUnvetted)} of split tokens skip the big model's veto.`);
+                }
+                headlineEl.textContent = headline;
+                copyEl.textContent = sentences.join(' ');
+            }
+
+            ['rtt', 'alpha', 'lenient'].forEach(name => field(name).addEventListener('input', update));
+            offlineBtn.addEventListener('click', () => {
+                offline = !offline;
+                offlineBtn.setAttribute('aria-pressed', String(offline));
+                offlineBtn.textContent = offline ? 'restore the network' : 'cut the network';
+                update();
+            });
+            update();
         }
 
         // Scroll rule: --read is 0 at the top, 1 at the bottom.

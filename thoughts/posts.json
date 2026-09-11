@@ -1,5 +1,12 @@
 [
     {
+        "title": "Let the Small Model Guess",
+        "date": "2026-09-11",
+        "tag": "research",
+        "file": "speculative-decoding-at-the-edge.md",
+        "layout": "lab"
+    },
+    {
         "title": "An MRI for an LLM (Metaphorically)",
         "date": "2026-09-09",
         "tag": "research",

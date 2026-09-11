@@ -2005,7 +2005,9 @@ footer {
     line-height: 1.55;
 }
 
-.post--lab .post-content > p > strong:only-child {
+/* Marked by the renderer, not matched with :only-child, which also caught a
+   single bold word in the middle of an ordinary sentence. */
+.post--lab .post-content > p.md-callout > strong {
     display: block;
     width: fit-content;
     max-width: 100%;
@@ -2271,14 +2273,16 @@ footer {
 }
 
 .lab-control label,
-.evidence-controls label {
+.evidence-controls label,
+.lab-sliders label {
     font-family: var(--mono);
     font-size: var(--t-micro);
     color: var(--muted);
 }
 
 .lab-control output,
-.evidence-controls output {
+.evidence-controls output,
+.lab-sliders output {
     font-family: var(--mono);
     font-variant-numeric: tabular-nums;
     color: var(--ink);
@@ -2358,7 +2362,9 @@ footer {
     color: var(--muted);
 }
 
-.evidence-controls {
+/* .lab-sliders is the same label/range grid, for labs with any number of rows */
+.evidence-controls,
+.lab-sliders {
     display: grid;
     grid-template-columns: minmax(14rem, 1fr) 1.25fr;
     gap: var(--sp-3) var(--sp-5);
@@ -2366,13 +2372,15 @@ footer {
     margin-bottom: var(--sp-5);
 }
 
-.evidence-controls label {
+.evidence-controls label,
+.lab-sliders label {
     display: flex;
     justify-content: space-between;
     gap: var(--sp-4);
 }
 
-.evidence-controls output {
+.evidence-controls output,
+.lab-sliders output {
     min-width: 2rem;
     text-align: right;
 }
@@ -2486,7 +2494,9 @@ footer {
     pointer-events: none;
 }
 
-.evidence-result {
+/* .lab-verdict: the same navy readout, for labs that end on a conclusion */
+.evidence-result,
+.lab-verdict {
     display: grid;
     grid-template-columns: minmax(12rem, .75fr) 1.25fr;
     gap: var(--sp-4);
@@ -2496,17 +2506,21 @@ footer {
 }
 
 .evidence-result strong,
-.evidence-result span {
+.evidence-result span,
+.lab-verdict strong,
+.lab-verdict span {
     display: block;
 }
 
-.evidence-result strong {
+.evidence-result strong,
+.lab-verdict strong {
     font-family: var(--serif);
     font-size: var(--t-lg);
     font-weight: 400;
 }
 
-.evidence-result span {
+.evidence-result span,
+.lab-verdict span {
     font-size: var(--t-sm);
     color: var(--band-muted);
 }
@@ -2612,6 +2626,609 @@ footer {
     width: 5px;
     height: 5px;
     background: var(--spark);
+}
+
+/* ---------- Shared lab parts: buttons, legends ---------- */
+.lab-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-5);
+}
+
+.lab-button {
+    padding: var(--sp-2) var(--sp-4);
+    border: 1px solid var(--rule);
+    border-radius: var(--r-sm);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: var(--t-micro);
+    line-height: 1.4;
+    cursor: pointer;
+    transition: background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+
+.lab-button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.lab-button:active {
+    transform: translateY(1px);
+}
+
+.lab-button--primary,
+.lab-button[aria-pressed="true"] {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--paper);
+}
+
+.lab-button--primary:hover,
+.lab-button[aria-pressed="true"]:hover {
+    border-color: var(--accent-hover);
+    background: var(--accent-hover);
+    color: var(--paper);
+}
+
+.lab-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-5);
+    margin-top: var(--sp-3);
+    font-family: var(--mono);
+    font-size: .62rem;
+    line-height: 1.5;
+    color: var(--muted);
+}
+
+.lab-legend > span {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+}
+
+.lab-legend > span > i:not(.race-tok) {
+    display: inline-block;
+    width: .8rem;
+    height: .8rem;
+    flex-shrink: 0;
+}
+
+/* ---------- Rejection sampler: stacked probability mass ----------
+   Each column is one candidate token. The target is an outline; inside it the
+   kept draft mass (blue) and the redrawn leftover (ochre) fill it exactly. */
+.mass-bars {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: var(--sp-3);
+    padding: var(--sp-5) var(--sp-4) var(--sp-4);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+}
+
+.mass-col {
+    display: grid;
+    gap: var(--sp-1);
+    min-width: 0;
+    text-align: center;
+}
+
+.mass-track {
+    position: relative;
+    height: 11rem;
+    border-bottom: 1px solid var(--ink);
+}
+
+.mass-track > span {
+    position: absolute;
+    left: 20%;
+    right: 20%;
+    bottom: 0;
+    transition: height .25s var(--ease), bottom .25s var(--ease), opacity .18s ease;
+}
+
+.mass-track .mass-accept {
+    height: var(--accept);
+    background: var(--accent);
+}
+
+.mass-track .mass-resid {
+    bottom: var(--accept);
+    height: var(--resid);
+    background: var(--spark);
+}
+
+.mass-track .mass-target {
+    left: calc(20% - 4px);
+    right: calc(20% - 4px);
+    height: var(--target);
+    border: 1px solid var(--ink);
+    border-bottom: none;
+}
+
+.mass-track .mass-excess {
+    bottom: var(--target);
+    height: var(--excess);
+    border: 1px dashed var(--muted);
+    border-bottom: none;
+    background: color-mix(in srgb, var(--muted) 8%, transparent);
+}
+
+.mass-track .mass-sample {
+    left: 8%;
+    right: 8%;
+    bottom: calc(var(--sample, 0%) - 1.5px);
+    height: 3px;
+    background: var(--ink);
+    opacity: 0;
+}
+
+.mass-lab.has-samples .mass-sample {
+    opacity: 1;
+}
+
+.mass-col b {
+    margin-top: var(--sp-2);
+    font-family: var(--mono);
+    font-size: var(--t-sm);
+    font-weight: 500;
+    color: var(--ink);
+}
+
+.mass-col small {
+    font-family: var(--mono);
+    font-size: .6rem;
+    line-height: 1.4;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+}
+
+.lab-legend > span > i.key-accept { background: var(--accent); }
+.lab-legend > span > i.key-resid { background: var(--spark); }
+.lab-legend > span > i.key-excess { border: 1px dashed var(--muted); }
+.lab-legend > span > i.key-target { border: 1px solid var(--ink); border-bottom: none; }
+.lab-legend > span > i.key-sample { height: 3px; background: var(--ink); }
+
+.mass-readout {
+    margin-top: var(--sp-4);
+}
+
+/* ---------- The race: two token lanes and a round in flight ---------- */
+.race-lane {
+    padding: var(--sp-4);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+}
+
+.race-lane + .race-lane {
+    border-top: none;
+}
+
+.race-lane-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--sp-1) var(--sp-4);
+    margin-bottom: var(--sp-3);
+}
+
+.race-lane-head strong {
+    font-family: var(--serif);
+    font-size: var(--t-lg);
+    font-weight: 400;
+    color: var(--ink);
+}
+
+.race-lane-head span {
+    font-family: var(--mono);
+    font-size: .62rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+}
+
+.race-tokens {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: flex-start;
+    gap: .3rem;
+    min-height: 1.75rem;
+}
+
+.race-tok {
+    display: inline-block;
+    padding: 0 .4rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--r-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: .72rem;
+    font-style: normal;
+    line-height: 1.6;
+}
+
+.race-tok.is-acc {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+}
+
+.race-tok.is-tgt {
+    border-color: var(--spark);
+    background: color-mix(in srgb, var(--spark) 18%, var(--surface));
+}
+
+.race-tok.is-pend {
+    border-style: dashed;
+    border-color: var(--accent);
+    background: none;
+    color: var(--accent);
+}
+
+.race-tok.is-rej {
+    border-color: var(--muted);
+    background: none;
+    color: var(--muted);
+    text-decoration: line-through;
+}
+
+.race-tok.is-drop {
+    border-style: dashed;
+    background: none;
+    color: var(--muted);
+}
+
+.race-round {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    gap: var(--sp-3);
+    align-items: center;
+    margin-top: var(--sp-3);
+    padding-top: var(--sp-3);
+    border-top: 1px dashed var(--rule);
+}
+
+.race-round-label,
+.race-note {
+    font-family: var(--mono);
+    font-size: .62rem;
+    color: var(--muted);
+}
+
+.race-note {
+    margin-left: var(--sp-2);
+}
+
+.race-legend {
+    margin: var(--sp-3) 0 var(--sp-5);
+}
+
+.race-legend .race-tok {
+    font-size: .6rem;
+}
+
+.race-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    padding: 1px;
+    background: var(--rule);
+}
+
+.race-metrics > div {
+    min-width: 0;
+    padding: var(--sp-3) var(--sp-4);
+    background: var(--paper);
+}
+
+.race-metrics span,
+.race-metrics strong {
+    display: block;
+}
+
+.race-metrics span {
+    font-family: var(--mono);
+    font-size: .62rem;
+    color: var(--muted);
+}
+
+.race-metrics strong {
+    margin-top: var(--sp-1);
+    font-family: var(--serif);
+    font-size: var(--t-h3);
+    font-weight: 400;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+}
+
+.post-content .race-match {
+    min-height: 1.6em;
+    margin: var(--sp-3) 0 0;
+    font-family: var(--mono);
+    font-size: var(--t-micro);
+    color: var(--accent);
+}
+
+.race-chart {
+    margin-top: var(--sp-5);
+}
+
+.post-content .race-chart-caption {
+    margin: 0 0 var(--sp-4);
+    font-size: var(--t-sm);
+    color: var(--muted);
+}
+
+/* Bars grow from the baseline; the value sits on top of each one. Percent
+   heights resolve because stretched grid items count as definite. */
+.race-bars,
+.race-bars-axis {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: var(--sp-2);
+}
+
+.race-bars {
+    position: relative;
+    height: 8rem;
+    border-bottom: 1px solid var(--ink);
+}
+
+.race-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    min-width: 0;
+}
+
+.race-bar b {
+    margin-bottom: .2rem;
+    font-family: var(--mono);
+    font-size: .6rem;
+    font-weight: 400;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+}
+
+.race-bar i {
+    display: block;
+    flex-shrink: 0;
+    width: 70%;
+    height: var(--h, 0%);
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    border-bottom: none;
+    background: color-mix(in srgb, var(--accent) 16%, var(--surface));
+    transition: height .25s var(--ease);
+}
+
+.race-bar.is-current i {
+    border-color: var(--accent);
+    background: var(--accent);
+}
+
+.race-bar.is-best b {
+    font-weight: 500;
+    color: var(--ink);
+}
+
+.race-bars-ref {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: var(--ref, 50%);
+    border-top: 1px dashed var(--muted);
+    pointer-events: none;
+}
+
+.race-bars-axis {
+    margin-top: var(--sp-1);
+    font-family: var(--mono);
+    font-size: .6rem;
+    text-align: center;
+    color: var(--muted);
+}
+
+/* ---------- Placement map: speed across, whose output down ----------
+   Rows are categories, not a score: the model whose distribution you sample.
+   Markers share one coordinate space so they can move between rows. */
+.edge-plot {
+    --lane: 4.5rem;
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr);
+    border: 1px solid var(--rule);
+    background: var(--paper);
+}
+
+.edge-tiers {
+    display: grid;
+    grid-template-rows: repeat(3, var(--lane));
+    border-right: 1px solid var(--rule);
+}
+
+.edge-tiers span,
+.edge-axis-title {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--sp-3);
+    font-family: var(--mono);
+    font-size: .62rem;
+    line-height: 1.35;
+    color: var(--muted);
+}
+
+.edge-tiers span {
+    border-bottom: 1px solid var(--rule);
+}
+
+.edge-field {
+    position: relative;
+    display: grid;
+    grid-template-rows: repeat(3, var(--lane));
+}
+
+.edge-lane {
+    border-bottom: 1px solid var(--rule);
+}
+
+.edge-lane:first-child {
+    background: color-mix(in srgb, var(--accent) 4%, transparent);
+}
+
+.edge-gridline,
+.edge-marker,
+.edge-axis span {
+    position: absolute;
+    left: calc(1rem + var(--x) * (100% - 2rem));
+}
+
+.edge-gridline {
+    top: 0;
+    bottom: 0;
+    border-left: 1px dashed var(--rule);
+}
+
+.edge-marker {
+    z-index: 1;
+    top: calc((var(--row) + .5) * var(--lane) + var(--slot) * .8rem);
+    display: grid;
+    place-items: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    transform: translate(-50%, -50%);
+    border: 1px solid var(--ink);
+    border-radius: var(--r-pill);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: .6rem;
+    font-variant-numeric: tabular-nums;
+    transition: left .35s var(--ease), top .35s var(--ease), background-color .18s ease, color .18s ease;
+}
+
+.edge-marker.is-spec {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--paper);
+}
+
+.edge-marker.is-lenient {
+    outline: 2px solid var(--spark);
+    outline-offset: 2px;
+}
+
+.edge-marker.is-off {
+    border-style: dashed;
+    border-color: var(--muted);
+    color: var(--muted);
+    text-decoration: line-through;
+}
+
+.edge-marker.is-clipped::after {
+    content: '›';
+    position: absolute;
+    left: 100%;
+    margin-left: .2rem;
+    color: var(--muted);
+}
+
+.edge-axis-title {
+    justify-content: flex-end;
+    border-right: 1px solid var(--rule);
+}
+
+.edge-axis {
+    position: relative;
+    height: 1.75rem;
+    font-family: var(--mono);
+    font-size: .6rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+}
+
+.edge-axis span {
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.edge-table-wrap {
+    margin-top: var(--sp-4);
+    overflow-x: auto;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+}
+
+/* Numbers never wrap; the two text columns do. Narrower than the minimum,
+   the wrapper scrolls rather than crushing the figures. */
+.edge-table {
+    width: 100%;
+    min-width: 36rem;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: .66rem;
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+}
+
+.edge-table th,
+.edge-table td {
+    padding: var(--sp-2) var(--sp-3);
+    border-bottom: 1px solid var(--rule);
+    text-align: left;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+.edge-table td:first-child,
+.edge-table td:nth-child(3) {
+    white-space: normal;
+}
+
+.edge-table td:first-child {
+    min-width: 11rem;
+}
+
+.edge-table th {
+    font-weight: 400;
+    color: var(--muted);
+    vertical-align: bottom;
+}
+
+.edge-table td small {
+    display: block;
+    padding-left: 1.3rem;
+    font-size: .6rem;
+    color: var(--muted);
+}
+
+.edge-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.edge-table .num {
+    text-align: right;
+}
+
+.edge-table td b {
+    margin-right: .5rem;
+    font-weight: 500;
+    color: var(--spark-text);
+}
+
+.edge-table td.is-lenient {
+    color: var(--spark-text);
+}
+
+.edge-table tr.is-off td {
+    color: var(--muted);
+}
+
+.edge-lab .lab-verdict {
+    margin-top: var(--sp-4);
 }
 
 /* ==========================================================================
@@ -3000,13 +3617,77 @@ footer {
         grid-row: 2;
     }
 
-    .evidence-controls {
+    .evidence-controls,
+    .lab-sliders {
         grid-template-columns: 1fr;
         gap: var(--sp-2);
     }
 
-    .evidence-controls input + label {
+    .evidence-controls input + label,
+    .lab-sliders input + label {
         margin-top: var(--sp-3);
+    }
+
+    .mass-bars {
+        gap: var(--sp-1);
+        padding: var(--sp-4) var(--sp-2) var(--sp-3);
+    }
+
+    .mass-track > span {
+        left: 12%;
+        right: 12%;
+    }
+
+    .mass-track .mass-target {
+        left: calc(12% - 3px);
+        right: calc(12% - 3px);
+    }
+
+    .mass-col b {
+        font-size: .66rem;
+    }
+
+    .mass-col small {
+        font-size: .54rem;
+    }
+
+    .race-round {
+        grid-template-columns: 1fr;
+        gap: var(--sp-2);
+    }
+
+    .race-metrics {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .race-bars,
+    .race-bars-axis {
+        gap: 2px;
+    }
+
+    .race-bar b {
+        font-size: .5rem;
+    }
+
+    .race-bar i {
+        width: 80%;
+    }
+
+    .edge-plot {
+        --lane: 4rem;
+        grid-template-columns: 4.75rem minmax(0, 1fr);
+    }
+
+    .edge-tiers span,
+    .edge-axis-title {
+        padding: 0 var(--sp-2);
+        font-size: .56rem;
+    }
+
+    .edge-marker {
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: .54rem;
     }
 
     .evidence-plane {
@@ -3027,6 +3708,7 @@ footer {
     }
 
     .evidence-result,
+    .lab-verdict,
     .access-result {
         grid-template-columns: 1fr;
     }
